@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { cards as initialCards } from "../../data";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import PopUser from "../popups/PopUser/PopUser";
@@ -6,52 +7,21 @@ import PopNewCard from "../popups/PopNewCard/PopNewCard";
 import PopBrowse from "../popups/PopBrowse/PopBrowse";
 
 export default function App() {
-    // Состояния модалок
     const [isPopNewCardOpen, setIsPopNewCardOpen] = useState(false);
     const [isPopBrowseOpen, setIsPopBrowseOpen] = useState(false);
     const [isPopUserOpen, setIsPopUserOpen] = useState(false);
-
-    // Состояния данных
     const [cards, setCards] = useState([]);
     const [selectedCard, setSelectedCard] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Имитация загрузки
     useEffect(() => {
-        const initialCards = [
-            {
-                id: 1,
-                title: "Создать макет главной",
-                description: "Figma",
-                category: "Web Design",
-                date: "30.10.23",
-                status: "Без статуса",
-            },
-            {
-                id: 2,
-                title: "Исследование конкурентов",
-                description: "Анализ",
-                category: "Research",
-                date: "05.11.23",
-                status: "Нужно сделать",
-            },
-            {
-                id: 3,
-                title: "Написать техзадание",
-                description: "",
-                category: "Copywriting",
-                date: "10.11.23",
-                status: "В работе",
-            },
-        ];
         const timer = setTimeout(() => {
-            setCards(initialCards);
+            setCards(initialCards); // используем данные из data.js
             setLoading(false);
         }, 800);
         return () => clearTimeout(timer);
     }, []);
 
-    // Обработчики
     const handleCardClick = (card) => {
         setSelectedCard(card);
         setIsPopBrowseOpen(true);
@@ -70,7 +40,6 @@ export default function App() {
 
     return (
         <div className="wrapper">
-            {/* Модальные окна */}
             <PopNewCard
                 isOpen={isPopNewCardOpen}
                 onClose={() => setIsPopNewCardOpen(false)}

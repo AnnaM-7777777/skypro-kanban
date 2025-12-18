@@ -100,18 +100,18 @@ ul li {
 }
 
 ._hover01:hover {
-    background-color: #565EEF;
+    background-color: #565eef;
 }
 
 ._hover02:hover,
 .header__user:hover {
-    color: #565EEF;
+    color: #565eef;
 }
 
 ._hover02:hover::after,
 .header__user:hover::after {
-    border-left-color: #565EEF;
-    border-bottom-color: #565EEF;
+    border-left-color: #565eef;
+    border-bottom-color: #565eef;
 }
 
 .pop-user-set:target,
@@ -141,7 +141,7 @@ ul li {
     color: #ffffff;
 }
 
-._active-category {
+._active-topic {
     opacity: 1 !important;
 }
 
@@ -559,19 +559,19 @@ ul li {
     font-weight: 700;
 }
 
-.categories {
+.topics {
     margin-bottom: 20px;
 }
-.categories__themes {
+.topics__themes {
     display: flex;
     flex-wrap: nowrap;
     align-items: flex-start;
     justify-content: flex-start;
 }
-.categories__p {
+.topics__p {
     margin-bottom: 14px;
 }
-.categories__theme {
+.topics__theme {
     display: inline-block;
     width: auto;
     height: 30px;
@@ -580,7 +580,7 @@ ul li {
     margin-right: 7px;
     opacity: 0.4;
 }
-.categories__theme p {
+.topics__theme p {
     font-size: 14px;
     font-weight: 600;
     line-height: 14px;
@@ -624,7 +624,7 @@ ul li {
     display: block;
     text-align: left;
 }
-.pop-browse__content .categories__theme {
+.pop-browse__content .topics__theme {
     opacity: 1;
 }
 .pop-browse__content .theme-down {
@@ -803,7 +803,7 @@ ul li {
 }
 
 .header__btn-main-new p {
-    color: #ffffff;    
+    color: #ffffff;
     font-size: 14px;
     line-height: 1;
     font-weight: 500;
@@ -834,7 +834,6 @@ ul li {
     border-bottom: 1.9px solid #565eef;
     transform: rotate(-45deg);
     padding: 0;
-
 }
 
 /* Обёртка для кнопки и попапа */
@@ -959,9 +958,9 @@ ul li {
 .card__title {
     font-size: 14px;
     font-weight: 500;
-    line-height: 18px;
     color: #000000;
     margin-bottom: 10px;
+    text-align: left;
 }
 .card__content {
     height: 64px;
@@ -986,7 +985,6 @@ ul li {
     letter-spacing: 0.2px;
 }
 
-
 /* новые стили */
 .skeleton {
     background: #e0e0e0;
@@ -1005,7 +1003,6 @@ ul li {
     width: 80px;
 }
 /* новые стили */
-
 
 @media screen and (max-width: 1200px) {
     .main__block {

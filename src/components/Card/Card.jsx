@@ -1,9 +1,9 @@
 export default function Card({ card, onClick }) {
-    const { title, category, date } = card;
-    const categoryClass =
-        category === "Web Design"
+    const { title, topic, date } = card;
+    const topicClass =
+        topic === "Web Design"
             ? "_orange"
-            : category === "Research"
+            : topic === "Research"
             ? "_green"
             : "_purple";
 
@@ -11,8 +11,8 @@ export default function Card({ card, onClick }) {
         <div className="cards__item">
             <div className="cards__card card">
                 <div className="card__group">
-                    <div className={`card__theme ${categoryClass}`}>
-                        <p className={categoryClass}>{category}</p>
+                    <div className={`card__theme ${topicClass}`}>
+                        <p className={topicClass}>{topic}</p>
                     </div>
                     <button className="card__btn" onClick={onClick}>
                         <div></div>
