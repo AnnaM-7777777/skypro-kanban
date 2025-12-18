@@ -1,4 +1,5 @@
-export default function Card({ category, title, date }) {
+export default function Card({ card, onClick }) {
+    const { title, category, date } = card;
     const categoryClass =
         category === "Web Design"
             ? "_orange"
@@ -13,18 +14,22 @@ export default function Card({ category, title, date }) {
                     <div className={`card__theme ${categoryClass}`}>
                         <p className={categoryClass}>{category}</p>
                     </div>
-
-                    <button className="card__btn">
+                    <button className="card__btn" onClick={onClick}>
                         <div></div>
                         <div></div>
                         <div></div>
                     </button>
                 </div>
-
                 <div className="card__content">
                     <h3 className="card__title">{title}</h3>
                     <div className="card__date">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="13"
+                            height="13"
+                            viewBox="0 0 13 13"
+                            fill="none"
+                        >
                             <g clipPath="url(#clip0_1_415)">
                                 <path
                                     d="M10.5625 2.03125H2.4375C1.7644 2.03125 1.21875 2.5769 1.21875 3.25V10.5625C1.21875 11.2356 1.7644 11.7812 2.4375 11.7812H10.5625C11.2356 11.7812 11.7812 11.2356 11.7812 10.5625V3.25C11.7812 2.5769 11.2356 2.03125 10.5625 2.03125Z"

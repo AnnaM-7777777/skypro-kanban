@@ -1,80 +1,26 @@
-import Column from "../Column/Column.jsx";
+import Column from "../Column/Column";
 
-const columnsData = [
-    {
-        title: "Без статуса",
-        cards: [
-            {
-                category: "Web Design",
-                title: "Название задачи",
-                date: "30.10.23",
-            },
-            {
-                category: "Research",
-                title: "Название задачи",
-                date: "30.10.23",
-            },
-            // ... остальные карточки
-        ],
-    },
-    {
-        title: "Нужно сделать",
-        cards: [
-            {
-                category: "Research",
-                title: "Название задачи",
-                date: "30.10.23",
-            },
-        ],
-    },
-    {
-        title: "В работе",
-        cards: [
-            {
-                category: "Research",
-                title: "Название задачи",
-                date: "30.10.23",
-            },
-            {
-                category: "Copywriting",
-                title: "Название задачи",
-                date: "30.10.23",
-            },
-        ],
-    },
-    {
-        title: "Тестирование",
-        cards: [
-            {
-                category: "Research",
-                title: "Название задачи",
-                date: "30.10.23",
-            },
-        ],
-    },
-    {
-        title: "Готово",
-        cards: [
-            {
-                category: "Research",
-                title: "Название задачи",
-                date: "30.10.23",
-            },
-        ],
-    },
-];
+export default function Main({ cards, loading, onCardClick }) {
+    const columnTitles = [
+        "Без статуса",
+        "Нужно сделать",
+        "В работе",
+        "Тестирование",
+        "Готово",
+    ];
 
-const Main = () => {
     return (
         <main className="main">
             <div className="container">
                 <div className="main__block">
                     <div className="main__content">
-                        {columnsData.map((col, idx) => (
+                        {columnTitles.map((title) => (
                             <Column
-                                key={idx}
-                                title={col.title}
-                                cards={col.cards}
+                                key={title}
+                                title={title}
+                                cards={cards}
+                                loading={loading}
+                                onCardClick={onCardClick}
                             />
                         ))}
                     </div>
@@ -82,6 +28,4 @@ const Main = () => {
             </div>
         </main>
     );
-};
-
-export default Main;
+}
