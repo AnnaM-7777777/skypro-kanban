@@ -1,4 +1,5 @@
 import Column from "../Column/Column";
+import Loader from "../Loader";
 
 export default function Main({ cards, loading, onCardClick }) {
     const columnTitles = [
@@ -8,6 +9,16 @@ export default function Main({ cards, loading, onCardClick }) {
         "Тестирование",
         "Готово",
     ];
+
+    if (loading) {
+        return (
+            <main className="main">
+                <div className="container">
+                    <Loader/>
+                </div>
+            </main>
+        );
+    }
 
     return (
         <main className="main">
