@@ -1,20 +1,12 @@
 import Column from "../Column/Column";
 import Loader from "../Loader";
 
-export default function Main({ cards, loading, onCardClick }) {
-    const columnTitles = [
-        "Без статуса",
-        "Нужно сделать",
-        "В работе",
-        "Тестирование",
-        "Готово",
-    ];
-
+export default function Main({ columns, loading, onCardClick }) {
     if (loading) {
         return (
             <main className="main">
                 <div className="container">
-                    <Loader/>
+                    <Loader />
                 </div>
             </main>
         );
@@ -25,12 +17,11 @@ export default function Main({ cards, loading, onCardClick }) {
             <div className="container">
                 <div className="main__block">
                     <div className="main__content">
-                        {columnTitles.map((title) => (
+                        {columns.map((col) => (
                             <Column
-                                key={title}
-                                title={title}
-                                cards={cards}
-                                loading={loading}
+                                key={col.id}
+                                title={col.title}
+                                cards={col.cards} // ← уже отфильтрованные!
                                 onCardClick={onCardClick}
                             />
                         ))}

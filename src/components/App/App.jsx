@@ -16,11 +16,25 @@ export default function App() {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setCards(initialCards); // используем данные из data.js
+            setCards(initialCards);
             setLoading(false);
-        }, 800);
+        }, 400);
         return () => clearTimeout(timer);
     }, []);
+
+    // Группировка карточек по статусу
+    const columnConfigs = [
+        { id: "backlog", title: "Без статуса" },
+        { id: "todo", title: "Нужно сделать" },
+        { id: "inprogress", title: "В работе" },
+        { id: "testing", title: "Тестирование" },
+        { id: "done", title: "Готово" },
+    ];
+
+    const columnsWithCards = columnConfigs.map((col) => ({
+        ...col,
+        cards: cards.filter((card) => card.status === col.title),
+    }));
 
     const handleCardClick = (card) => {
         setSelectedCard(card);
@@ -30,9 +44,10 @@ export default function App() {
     const handleCreateCard = (newCardData) => {
         const newCard = {
             id: Date.now(),
-            ...newCardData,
-            status: "Без статуса",
-            date: "01.01.25",
+            topic: newCardData.topic, // ← важно: в data.js поле называется `topic`
+            title: newCardData.title,
+            date: newCardData.date || "01.01.25",
+            status: "Без статуса", // ← по умолчанию
         };
         setCards((prev) => [...prev, newCard]);
         setIsPopNewCardOpen(false);
@@ -57,12 +72,12 @@ export default function App() {
             />
             <Header
                 onOpenNewCard={() => setIsPopNewCardOpen(true)}
-                isPopUserOpen={isPopUserOpen}
                 onTogglePopUser={() => setIsPopUserOpen((prev) => !prev)}
+                isPopUserOpen={isPopUserOpen}
                 user={{ name: "Ivan Ivanov", email: "ivan@example.com" }}
             />
             <Main
-                cards={cards}
+                columns={columnsWithCards}
                 loading={loading}
                 onCardClick={handleCardClick}
             />
