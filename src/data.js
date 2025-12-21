@@ -1,0 +1,58 @@
+export const cards = [
+  {
+    id: 1,
+    topic: "Web Design",
+    title: "Создать макет главной страницы",
+    date: "30.10.2023",
+    status: "Без статуса",
+  },
+  {
+    id: 2,
+    topic: "Research",
+    title: "Исследование конкурентов",
+    date: "05.11.2023",
+    status: "Нужно сделать",
+  },
+  {
+    id: 3,
+    topic: "Copywriting",
+    title: "Написать техническое задание",
+    date: "10.11.2023",
+    status: "В работе",
+  },
+  {
+    id: 4,
+    topic: "Web Design",
+    title: "Адаптивная верстка карточки товара",
+    date: "12.11.2023",
+    status: "В работе",
+  },
+  {
+    id: 5,
+    topic: "Research",
+    title: "Сбор требований от заказчика",
+    date: "08.11.2023",
+    status: "Нужно сделать",
+  },
+  {
+    id: 6,
+    topic: "Copywriting",
+    title: "Написать текст для landing page",
+    date: "15.11.2023",
+    status: "Тестирование",
+  },
+  {
+    id: 7,
+    topic: "Web Design",
+    title: "Дизайн иконок для мобильного приложения",
+    date: "20.11.2023",
+    status: "Готово",
+  },
+  {
+    id: 8,
+    topic: "Research",
+    title: "Анализ пользовательских сценариев",
+    date: "25.11.2023",
+    status: "Готово",
+  },
+];

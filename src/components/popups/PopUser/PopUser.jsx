@@ -1,29 +1,45 @@
-const PopUser = () => {
+import { useEffect } from "react";
+
+export default function PopUser({ isOpen, onClose, user }) {
+    // Закрытие по Esc и клику снаружи
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const handleEsc = (e) => {
+            if (e.key === "Escape") onClose();
+        };
+        const handleClickOutside = (e) => {
+            if (!e.target.closest(".pop-user-set")) {
+                onClose();
+            }
+        };
+
+        document.addEventListener("keydown", handleEsc);
+        document.addEventListener("click", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("keydown", handleEsc);
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, [isOpen, onClose]);
+
+    if (!isOpen) return null;
+
     return (
-        <div className="pop-exit" id="popExit">
-            <div className="pop-exit__container">
-                <div className="pop-exit__block">
-                    <div className="pop-exit__ttl">
-                        <h2>Выйти из аккаунта?</h2>
-                    </div>
-
-                    <form className="pop-exit__form" id="formExit" action="#">
-                        <div className="pop-exit__form-group">
-                            <button className="pop-exit__exit-yes _hover01" id="exitYes">
-                                <a href="modal/signin.html"> Да, выйти </a>
-                                {" "}
-                            </button>
-
-                            <button className="pop-exit__exit-no _hover03" id="exitNo">
-                                <a href="main.html">Нет, остаться</a>
-                                {" "}
-                            </button>
-                        </div>
-                    </form>
-                </div>
+        <div className="header__pop-user-set pop-user-set">
+            <p className="pop-user-set__name">{user.name}</p>
+            <p className="pop-user-set__mail">{user.email}</p>
+            <div className="pop-user-set__theme">
+                <p>Темная тема</p>
+                <input type="checkbox" className="checkbox" name="checkbox" />
             </div>
+            <button
+                type="button"
+                className="_hover03"
+                onClick={onClose}
+            >
+                <p>Выйти</p>
+            </button>
         </div>
-    )
+    );
 }
-
-export default PopUser;

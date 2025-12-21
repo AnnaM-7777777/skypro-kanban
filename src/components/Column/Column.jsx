@@ -1,6 +1,6 @@
-import Card from "../Card/Card.jsx";
+import Card from "../Card/Card";
 
-export default function Column({ title, cards }) {
+export default function Column({ title, cards, onCardClick }) {
     return (
         <div className="main__column column">
             <div className="column__title">
@@ -8,14 +8,17 @@ export default function Column({ title, cards }) {
             </div>
 
             <div className="cards">
-                {cards.map((card, index) => (
-                    <Card
-                        key={index}
-                        category={card.category}
-                        title={card.title}
-                        date={card.date}
-                    />
-                ))}
+                {cards.length > 0 ? (
+                    cards.map((card) => (
+                        <Card
+                            key={card.id}
+                            card={card}
+                            onClick={() => onCardClick(card)}
+                        />
+                    ))
+                ) : (
+                    <div className="cards__empty">Нет задач</div>
+                )}
             </div>
         </div>
     );

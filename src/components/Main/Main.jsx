@@ -1,80 +1,28 @@
-import Column from "../Column/Column.jsx";
+import Column from "../Column/Column";
+import Loader from "../Loader";
 
-const columnsData = [
-    {
-        title: "Без статуса",
-        cards: [
-            {
-                category: "Web Design",
-                title: "Название задачи",
-                date: "30.10.23",
-            },
-            {
-                category: "Research",
-                title: "Название задачи",
-                date: "30.10.23",
-            },
-            // ... остальные карточки
-        ],
-    },
-    {
-        title: "Нужно сделать",
-        cards: [
-            {
-                category: "Research",
-                title: "Название задачи",
-                date: "30.10.23",
-            },
-        ],
-    },
-    {
-        title: "В работе",
-        cards: [
-            {
-                category: "Research",
-                title: "Название задачи",
-                date: "30.10.23",
-            },
-            {
-                category: "Copywriting",
-                title: "Название задачи",
-                date: "30.10.23",
-            },
-        ],
-    },
-    {
-        title: "Тестирование",
-        cards: [
-            {
-                category: "Research",
-                title: "Название задачи",
-                date: "30.10.23",
-            },
-        ],
-    },
-    {
-        title: "Готово",
-        cards: [
-            {
-                category: "Research",
-                title: "Название задачи",
-                date: "30.10.23",
-            },
-        ],
-    },
-];
+export default function Main({ columns, loading, onCardClick }) {
+    if (loading) {
+        return (
+            <main className="main">
+                <div className="container">
+                    <Loader />
+                </div>
+            </main>
+        );
+    }
 
-const Main = () => {
     return (
         <main className="main">
             <div className="container">
                 <div className="main__block">
                     <div className="main__content">
-                        {columnsData.map((col, idx) => (
+                        {columns.map((col) => (
                             <Column
-                                key={idx}
+                                key={col.id}
                                 title={col.title}
-                                cards={col.cards}
+                                cards={col.cards} // ← уже отфильтрованные!
+                                onCardClick={onCardClick}
                             />
                         ))}
                     </div>
@@ -82,6 +30,4 @@ const Main = () => {
             </div>
         </main>
     );
-};
-
-export default Main;
+}

@@ -8,7 +8,7 @@ const PopBrowse = () => {
                     <div className="pop-browse__content">
                         <div className="pop-browse__top-block">
                             <h3 className="pop-browse__ttl">Название задачи</h3>
-                            <div className="categories__theme theme-top _orange _active-category">
+                            <div className="topics__theme theme-top _orange _active-topic">
                                 <p className="_orange">Web Design</p>
                             </div>
                         </div>
@@ -61,9 +61,9 @@ const PopBrowse = () => {
                             />
                         </div>
 
-                        <div className="theme-down__categories theme-down">
-                            <p className="categories__p subttl">Категория</p>
-                            <div className="categories__theme _orange _active-category">
+                        <div className="theme-down__topics theme-down">
+                            <p className="topics__p subttl">Категория</p>
+                            <div className="topics__theme _orange _active-topic">
                                 <p className="_orange">Web Design</p>
                             </div>
                         </div>
