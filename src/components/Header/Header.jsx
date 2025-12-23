@@ -1,4 +1,14 @@
+import { useState } from "react";
 import PopUser from "../popups/PopUser/PopUser";
+import {
+    SHeader,
+    SHeaderBlock,
+    LogoWrapper,
+    Nav,
+    CreateButton,
+    UserWrapper,
+    UserButton,
+} from "./Header.styled";
 
 export default function Header({
     onOpenNewCard,
@@ -6,55 +16,54 @@ export default function Header({
     onTogglePopUser,
     user,
 }) {
+    // Можно управлять темой через состояние, если нужно
+    const [isDarkTheme, setIsDarkTheme] = useState(false);
+
     return (
-        <header className="header">
+        <SHeader>
             <div className="container">
-                <div className="header__block">
+                <SHeaderBlock>
                     {/* Логотипы */}
-                    <div className="header__logo _show _light">
-                        <a href="" target="_self">
-                            <img src="/assets/logo.png" alt="logo" />
+                    <LogoWrapper $isDark={isDarkTheme}>
+                        <a href="/">
+                            <img src={
+                                isDarkTheme ? "/assets/logo_dark.png" : "/assets/logo.png"
+                                }
+                                alt="TaskManager — главная"
+                            />
                         </a>
-                    </div>
-                    <div className="header__logo _dark">
-                        <a href="" target="_self">
-                            <img src="/assets/logo_dark.png" alt="logo" />
-                        </a>
-                    </div>
+                    </LogoWrapper>
 
                     {/* Навигация */}
-                    <nav className="header__nav">
-                        <button
-                            className="header__btn-main-new _hover01"
-                            onClick={onOpenNewCard}
-                        >
-                            <p>Создать новую задачу</p>
-                        </button>
+                    <Nav>
+                        <CreateButton onClick={onOpenNewCard}>
+                            Создать новую задачу
+                        </CreateButton>
 
-                        {/* Кнопка пользователя */}
-                        <div className="header__user-wrapper">
-                            <button
-                                className="header__user _hover02"
+                        <UserWrapper>
+                            <UserButton
                                 onClick={(e) => {
-                                    e.stopPropagation(); // ← остановить всплытие
+                                    e.stopPropagation();
                                     onTogglePopUser();
                                 }}
                             >
                                 {user.name}
-                            </button>
+                            </UserButton>
 
-                            {/* Всплывающее окно внутри header__nav */}
                             {isPopUserOpen && (
                                 <PopUser
                                     isOpen={isPopUserOpen}
                                     onClose={onTogglePopUser}
                                     user={user}
+                                    onThemeToggle={() =>
+                                        setIsDarkTheme(!isDarkTheme)
+                                    }
                                 />
                             )}
-                        </div>
-                    </nav>
-                </div>
+                        </UserWrapper>
+                    </Nav>
+                </SHeaderBlock>
             </div>
-        </header>
+        </SHeader>
     );
 }

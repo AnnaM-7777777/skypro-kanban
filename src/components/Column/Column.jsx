@@ -1,13 +1,20 @@
 import Card from "../Card/Card";
+import {
+    SColumn,
+    SColumnTitle,
+    SColumnTitleP,
+    SCards,
+    EmptyMessage,
+} from "./Column.styled";
 
 export default function Column({ title, cards, onCardClick }) {
     return (
-        <div className="main__column column">
-            <div className="column__title">
-                <p>{title}</p>
-            </div>
+        <SColumn>
+            <SColumnTitle>
+                <SColumnTitleP>{title}</SColumnTitleP>
+            </SColumnTitle>
 
-            <div className="cards">
+            <SCards>
                 {cards.length > 0 ? (
                     cards.map((card) => (
                         <Card
@@ -17,9 +24,9 @@ export default function Column({ title, cards, onCardClick }) {
                         />
                     ))
                 ) : (
-                    <div className="cards__empty">Нет задач</div>
+                    <EmptyMessage>Нет задач</EmptyMessage>
                 )}
-            </div>
-        </div>
+            </SCards>
+        </SColumn>
     );
 }
