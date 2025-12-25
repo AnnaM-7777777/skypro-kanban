@@ -53,11 +53,6 @@ export const CreateButton = styled.button`
     }
 `;
 
-export const UserWrapper = styled.div`
-    position: relative;
-    display: inline-block;
-`;
-
 export const UserButton = styled.button`
     display: flex;
     align-items: center;

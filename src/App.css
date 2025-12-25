@@ -98,6 +98,20 @@ ul li {
     border-bottom-color: #565eef;
 }
 
+.header__pop-user-set {
+    position: absolute;
+    top: 61px;
+    right: calc(50% - 600px);
+    width: 213px;
+    height: 205px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 39px 0px rgba(58, 123, 221, 0.21);
+    background-color: #ffffff;
+    padding: 34px;
+    text-align: center;
+    z-index: 10;
+}
+
 .pop-user-set:target,
 .pop-exit:target,
 .pop-new-card:target,
@@ -298,7 +312,6 @@ ul li {
 }
 
 .pop-new-card {
-    display: none;
     width: 100%;
     min-width: 375px;
     height: 100%;
@@ -482,7 +495,6 @@ ul li {
 }
 
 .pop-browse {
-    display: none;
     width: 100%;
     height: 100%;
     min-width: 375px;
