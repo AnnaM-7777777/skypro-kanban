@@ -127,22 +127,22 @@ export const SCalendarCell = styled.div`
         opacity: 0;
     }
 
-    &._cell-day:hover {
-        color: #94a6be;
+    /* При наведении — светло-серый фон */
+    &:not(._other-month):hover:not(._active-day) {
         background-color: #eaeef6;
+        color: #94A6BE;
     }
 
+    /* Активная дата — тёмный фон, белый текст */
     &._active-day {
-        background-color: #94a6be;
+        background-color: #94A6BE;
         color: #ffffff;
     }
 
+    /* Сегодня — только жирный текст, без фона */
     &._current {
         font-weight: 700;
-    }
-
-    &._weekend {
-        /* Специфичные стили для выходных можно добавить здесь */
+        color: #94A6BE;
     }
 
     @media screen and (max-width: 660px) {

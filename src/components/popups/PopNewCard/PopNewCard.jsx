@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Calendar from "../../Calendar/Calendar.jsx";
 
 const PopNewCard = ({ isOpen, onClose, onSubmit }) => {
@@ -6,17 +6,51 @@ const PopNewCard = ({ isOpen, onClose, onSubmit }) => {
     const descriptionRef = useRef(null);
     const [selectedTopic, setSelectedTopic] = useState("Web Design");
 
+    // Состояния для даты
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [isDateSelected, setIsDateSelected] = useState(false);
+
+    // Форматирование даты: "16.01.2026" → "16.01.26"
+    const formatDateShortYear = (dateStr) => {
+        if (!dateStr) return "";
+        const parts = dateStr.split(".");
+        if (parts.length === 3) {
+            const day = parts[0];
+            const month = parts[1];
+            const shortYear = parts[2].slice(-2); // последние 2 цифры года
+            return `${day}.${month}.${shortYear}`;
+        }
+        return dateStr;
+    };
+
+    // Обработчик выбора даты
+    const handleDateSelect = (date) => {
+        setSelectedDate(date);
+        setIsDateSelected(true);
+    };
+
+    // Сброс формы при открытии
+    useEffect(() => {
+        if (isOpen) {
+            setSelectedTopic("Web Design");
+            setSelectedDate(null);
+            setIsDateSelected(false);
+            if (titleRef.current) titleRef.current.value = "";
+            if (descriptionRef.current) descriptionRef.current.value = "";
+        }
+    }, [isOpen]);
+
     if (!isOpen) return null;
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!onSubmit) return;
+        if (!onSubmit || !selectedDate) return;
 
         const newCard = {
             topic: selectedTopic,
-            title: titleRef.current?.value || "",
-            description: descriptionRef.current?.value || "",
-            date: "08.09.2023",
+            title: titleRef.current?.value.trim() || "",
+            description: descriptionRef.current?.value.trim() || "",
+            date: selectedDate,
         };
 
         onSubmit(newCard);
@@ -25,17 +59,17 @@ const PopNewCard = ({ isOpen, onClose, onSubmit }) => {
 
     return (
         <div className="pop-new-card">
-            <div className="pop-new-card__container">
-                <div className="pop-new-card__block">
+            <div 
+                className="pop-new-card__container"
+                onClick={onClose} // клик по фону → закрыть
+            >
+                <div 
+                    className="pop-new-card__block"
+                    onClick={(e) => e.stopPropagation()} // клик внутри → не закрывать
+                >
+                
                     <div className="pop-new-card__content">
                         <h3 className="pop-new-card__ttl">Создание задачи</h3>
-                        <button
-                            className="pop-new-card__close"
-                            onClick={onClose}
-                            aria-label="Закрыть"
-                        >
-                            &#10006;
-                        </button>
 
                         <div className="pop-new-card__wrap">
                             <form className="pop-new-card__form form-new" onSubmit={handleSubmit}>
@@ -67,7 +101,25 @@ const PopNewCard = ({ isOpen, onClose, onSubmit }) => {
                                 </div>
                             </form>
 
-                            <Calendar month="Сентябрь 2023" selectedDate="08.09.2023" />
+                            <div className="pop-new-card__сalendar">
+                                {/* Календарь */}
+                                <Calendar
+                                    month="Январь 2026"
+                                    selectedDate={selectedDate}
+                                    onDateSelect={handleDateSelect}
+                                />
+
+                                {/* Текст под календарём */}
+                                {isDateSelected ? (
+                                    <p className="pop-new-card__deadline subttl" style={{ marginTop: '12px', textAlign: 'left' }}>
+                                        Срок исполнения: <span className="pop-new-card__span">{formatDateShortYear(selectedDate)}</span>
+                                    </p>
+                                ) : (
+                                    <p className="pop-new-card__deadline subttl" style={{ marginTop: '12px', textAlign: 'left' }}>
+                                        Выберите срок исполнения.
+                                    </p>
+                                )}
+                            </div>
                         </div>
 
                         <div className="pop-new-card__topics topics">

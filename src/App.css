@@ -340,6 +340,7 @@ ul li {
     background-color: #ffffff;
     max-width: 630px;
     width: 100%;
+    height: 596px;
     padding: 40px 30px 48px;
     border-radius: 10px;
     border: 0.7px solid #d4dbe5;
@@ -374,7 +375,8 @@ ul li {
 .pop-new-card__wrap {
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    column-gap: 14px;
+    width: 100%;
 }
 
 .pop-new-card__form {
@@ -382,6 +384,25 @@ ul li {
     width: 100%;
     display: block;
     margin-bottom: 20px;
+    padding: 0;
+}
+
+.pop-new-card__сalendar {
+    max-width: 168px;
+    width: 100%;
+    padding: 0;
+
+}
+
+.pop-new-card__deadline {
+    font-weight: 400;
+    font-size: 10px;
+    color: #94A6BE;
+    text-align: left;
+}
+
+.pop-new-card__span {
+    color: #000000;
 }
 
 .form-new__block {
@@ -422,12 +443,18 @@ ul li {
 
 .form-new__input {
     margin: 20px 0;
+    height: 49px;
 }
 
 .form-new__area {
-    max-width: 370px;
+    width: 100%;
     margin-top: 14px;
     height: 200px;
+}
+
+.form-new__label {
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .form-new__create {
@@ -471,10 +498,13 @@ ul li {
     flex-wrap: nowrap;
     align-items: flex-start;
     justify-content: flex-start;
+    column-gap: 7px;
 }
 
 .topics__p {
     margin-bottom: 14px;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .topics__theme {
@@ -483,7 +513,6 @@ ul li {
     height: 30px;
     padding: 8px 20px;
     border-radius: 24px;
-    margin-right: 7px;
     opacity: 0.4;
 }
 
@@ -492,6 +521,21 @@ ul li {
     font-weight: 600;
     line-height: 14px;
     white-space: nowrap;
+}
+
+._orange {
+    background-color: #FFE4C2;
+    color: #FF6D00;
+}
+
+._green {
+    background-color: #B4FDD1;
+    color: #06B16E;
+}
+
+._purple {
+    background-color: #E9D4FF;
+    color: #9a48f1;
 }
 
 .pop-browse {

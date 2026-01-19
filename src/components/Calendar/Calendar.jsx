@@ -15,10 +15,59 @@ import {
     SCalendarP,
 } from "./Calendar.styled";
 
+// Формат: DD.MM.YYYY
+const formatDate = (day, monthStr, yearStr) => {
+    const dayStr = String(day).padStart(2, "0");
+    const monthMap = {
+        Январь: "01",
+        Февраль: "02",
+        Март: "03",
+        Апрель: "04",
+        Май: "05",
+        Июнь: "06",
+        Июль: "07",
+        Август: "08",
+        Сентябрь: "09",
+        Октябрь: "10",
+        Ноябрь: "11",
+        Декабрь: "12",
+    };
+    const monthNum = monthMap[monthStr.split(" ")[0]] || "09"; // fallback на сентябрь
+    return `${dayStr}.${monthNum}.${yearStr}`;
+};
+
 export default function Calendar({
-    month = "Сентябрь 2023",
-    selectedDate = "08.09.2023",
+    month = "Январь 2026",
+    selectedDate = "16.01.2026",
+    onDateSelect,
 }) {
+    // Разбиваем месяц и год
+    const [monthName, year] = month.split(" ");
+
+    // Дни месяца (статичные)
+    // Январь 2026 начинается с четверга (1-е число — индекс 3)
+    const days = [
+        // дек 2025: вс, пн, вт, ср
+        28, 29, 30, 31,
+        // янв 2026
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+        21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+        // фев 2026: вс
+        1,
+    ];
+    // Сегодняшняя дата (для выделения жирным)
+    const today = new Date();
+    const todayString = `${String(today.getDate()).padStart(2, "0")}.${String(
+        today.getMonth() + 1
+    ).padStart(2, "0")}.${today.getFullYear()}`;
+
+    const handleDayClick = (day) => {
+        const formattedDate = formatDate(day, monthName, year);
+        if (onDateSelect) {
+            onDateSelect(formattedDate);
+        }
+    };
+
     return (
         <SCalendar>
             <SCalendarTitle>Даты</SCalendarTitle>
@@ -54,18 +103,17 @@ export default function Calendar({
                     <SCalendarDaysNames>
                         {["пн", "вт", "ср", "чт", "пт", "сб", "вс"].map(
                             (day, i) => (
-                                <SCalendarDayName key={i}>{day}</SCalendarDayName>
+                                <SCalendarDayName key={i}>
+                                    {day}
+                                </SCalendarDayName>
                             )
                         )}
                     </SCalendarDaysNames>
                     <SCalendarCells>
-                        {[
-                            28, 29, 30, 31, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-                            12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
-                            25, 26, 27, 28, 29, 30, 1,
-                        ].map((day, i) => {
+                        {days.map((day, i) => {
                             const isOtherMonth = i < 3 || i >= 30;
-                            const isCurrent = day === 8;
+                            const isCurrent = formatDate(day, monthName, year) === todayString;
+                            const isSelected = selectedDate && formatDate(day, monthName, year) === selectedDate;
                             const isWeekend = [
                                 5, 6, 12, 13, 19, 20, 26, 27,
                             ].includes(i);
@@ -74,10 +122,24 @@ export default function Calendar({
                                 <SCalendarCell
                                     key={i}
                                     className={`
-                    ${isOtherMonth ? "_other-month" : "_cell-day"}
-                    ${isCurrent ? "_current" : ""}
-                    ${isWeekend ? "_weekend" : ""}
-                  `}
+                                        ${
+                                            isOtherMonth
+                                                ? "_other-month"
+                                                : "_cell-day"
+                                        }
+                                        ${isCurrent ? "_current" : ""}
+                                        ${isWeekend ? "_weekend" : ""}
+                                        ${isSelected ? "_active-day" : ""}
+                                    `}
+                                    onClick={() =>
+                                        !isOtherMonth && handleDayClick(day)
+                                    }
+                                    style={{
+                                        cursor: isOtherMonth
+                                            ? "default"
+                                            : "pointer",
+                                        opacity: isOtherMonth ? 0 : 1,
+                                    }}
                                 >
                                     {day}
                                 </SCalendarCell>
@@ -85,15 +147,6 @@ export default function Calendar({
                         })}
                     </SCalendarCells>
                 </SCalendarContent>
-
-                <input type="hidden" value={selectedDate} />
-
-                <SCalendarPeriod>
-                    <SCalendarP>
-                        Выберите срок исполнения{" "}
-                        <span className="date-control"></span>.
-                    </SCalendarP>
-                </SCalendarPeriod>
             </SCalendarBlock>
         </SCalendar>
     );
