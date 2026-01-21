@@ -52,6 +52,16 @@ export default function App() {
         setActivePopup(activePopup === "user" ? null : "user");
     };
 
+    const handleDeleteCard = (cardId) => {
+        setCards((prev) => prev.filter((card) => card.id !== cardId));
+        const handleDelete = () => {
+            if (onDelete && card) {
+                onDelete(card.id);
+            }
+            onClose();
+        };
+    };
+
     // Обработчик создания карточки
     const handleCreateCard = (newCardData) => {
         const newCard = {
@@ -81,6 +91,16 @@ export default function App() {
                 isOpen={activePopup === "browse"}
                 card={selectedCard}
                 onClose={() => setActivePopup(null)}
+                onUpdate={(updatedCard) => {
+                    setCards((prev) =>
+                        prev.map((c) =>
+                            c.id === updatedCard.id ? updatedCard : c,
+                        ),
+                    );
+                }}
+                onDelete={(cardId) => {
+                    setCards((prev) => prev.filter((c) => c.id !== cardId));
+                }}
             />
             <PopUser
                 isOpen={activePopup === "user"}

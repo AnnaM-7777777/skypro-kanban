@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const SCalendar = styled.div`
     width: 182px;
-    margin-bottom: 20px;
 
     @media screen and (max-width: 660px) {
         display: none;
@@ -35,7 +34,7 @@ export const SCalendarNav = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-top: 14px;
-    padding: 0 7px;
+    padding-left: 7px;
 
     @media screen and (max-width: 660px) {
         padding: 0;

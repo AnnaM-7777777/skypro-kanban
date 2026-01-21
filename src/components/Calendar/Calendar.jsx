@@ -47,18 +47,18 @@ export default function Calendar({
     // Дни месяца (статичные)
     // Январь 2026 начинается с четверга (1-е число — индекс 3)
     const days = [
-        // дек 2025: вс, пн, вт, ср
-        28, 29, 30, 31,
-        // янв 2026
+        // Декабрь 2025 (пн, вт, ср)
+        29, 30, 31,
+        // Январь 2026 (1–31)
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
-        // фев 2026: вс
-        1,
+        // Февраль 2026 (вс, пн, ...)
+        1, 2, 3, 4, 5, 6, 7,
     ];
     // Сегодняшняя дата (для выделения жирным)
     const today = new Date();
     const todayString = `${String(today.getDate()).padStart(2, "0")}.${String(
-        today.getMonth() + 1
+        today.getMonth() + 1,
     ).padStart(2, "0")}.${today.getFullYear()}`;
 
     const handleDayClick = (day) => {
@@ -106,14 +106,19 @@ export default function Calendar({
                                 <SCalendarDayName key={i}>
                                     {day}
                                 </SCalendarDayName>
-                            )
+                            ),
                         )}
                     </SCalendarDaysNames>
                     <SCalendarCells>
                         {days.map((day, i) => {
-                            const isOtherMonth = i < 3 || i >= 30;
-                            const isCurrent = formatDate(day, monthName, year) === todayString;
-                            const isSelected = selectedDate && formatDate(day, monthName, year) === selectedDate;
+                            const isOtherMonth = i < 3 || i >= 34;
+                            const isCurrent =
+                                formatDate(day, monthName, year) ===
+                                todayString;
+                            const isSelected =
+                                selectedDate &&
+                                formatDate(day, monthName, year) ===
+                                    selectedDate;
                             const isWeekend = [
                                 5, 6, 12, 13, 19, 20, 26, 27,
                             ].includes(i);

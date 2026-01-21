@@ -102,9 +102,7 @@ const PopNewCard = ({ isOpen, onClose, onSubmit }) => {
                             </form>
 
                             <div className="pop-new-card__сalendar">
-                                {/* Календарь */}
                                 <Calendar
-                                    month="Январь 2026"
                                     selectedDate={selectedDate}
                                     onDateSelect={handleDateSelect}
                                 />
