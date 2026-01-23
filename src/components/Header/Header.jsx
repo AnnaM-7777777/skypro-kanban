@@ -1,10 +1,18 @@
-import { SHeader, SHeaderBlock, LogoWrapper, Nav, CreateButton, UserButton } from "./Header.styled";
+import React from "react";
+import {
+    SHeader,
+    SHeaderBlock,
+    LogoWrapper,
+    Nav,
+    CreateButton,
+    UserButton,
+} from "./Header.styled.js";
 
 export default function Header({
     onOpenNewCard,
     onTogglePopUser,
     user,
-    isDarkTheme, // ← получаем тему из App
+    isDarkTheme,
 }) {
     return (
         <SHeader>
@@ -19,7 +27,7 @@ export default function Header({
                                         ? "/assets/logo_dark.png"
                                         : "/assets/logo.png"
                                 }
-                                alt="TaskManager — главная"
+                                alt="TaskManager"
                             />
                         </a>
                     </LogoWrapper>
@@ -31,13 +39,8 @@ export default function Header({
                         </CreateButton>
 
                         <div className="pop-wrap">
-                            <UserButton
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    onTogglePopUser();
-                                }}
-                            >
-                                {user.name}
+                            <UserButton onClick={onTogglePopUser}>
+                                {user ? user.name : "Войти"}
                             </UserButton>
                         </div>
                     </Nav>

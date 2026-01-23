@@ -6,7 +6,7 @@ export const SHeader = styled.header`
     background-color: #ffffff;
 `;
 
-export const SHeaderBlock = styled.header`
+export const SHeaderBlock = styled.div`
     height: 70px;
     display: flex;
     flex-wrap: nowrap;
@@ -61,7 +61,7 @@ export const UserButton = styled.button`
     font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-size: 14px;
     font-weight: 500;
-    line-height: 10px;
+    line-height: 20px;
     color: #565eef;
     background-color: transparent;
     border: none;
@@ -71,13 +71,14 @@ export const UserButton = styled.button`
     &::after {
         content: "";
         display: block;
-        width: 6px;
-        height: 6px;
+        width: 8px;
+        height: 8px;
         border-radius: 1px;
-        border-left: 1.9px solid #565eef;
-        border-bottom: 1.9px solid #565eef;
+        border-left: 2.9px solid #565eef;
+        border-bottom: 2.9px solid #565eef;
         transform: rotate(-45deg);
         padding: 0;
+        margin-bottom: 6px;
     }
 
     &:hover,

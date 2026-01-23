@@ -98,6 +98,7 @@ ul li {
     border-bottom-color: #565eef;
 }
 
+/* PopUser */
 .header__pop-user-set {
     position: absolute;
     top: 61px;
@@ -105,7 +106,8 @@ ul li {
     width: 213px;
     height: 205px;
     border-radius: 10px;
-    box-shadow: 0px 10px 39px 0px rgba(58, 123, 221, 0.21);
+    border: 0.7px solid #94a6be66;
+    box-shadow: 0px 10px 39px 0px #1a386536;
     background-color: #ffffff;
     padding: 34px;
     text-align: center;
@@ -311,7 +313,6 @@ ul li {
     color: #ffffff;
 }
 
-
 .subttl {
     font-size: 14px;
     font-weight: 600;
@@ -395,7 +396,7 @@ ul li {
 .pop-new-card__deadline {
     font-weight: 400;
     font-size: 10px;
-    color: #94A6BE;
+    color: #94a6be;
     text-align: left;
     margin-left: 7px;
 }
@@ -518,17 +519,17 @@ ul li {
 }
 
 ._orange {
-    background-color: #FFE4C2;
-    color: #FF6D00;
+    background-color: #ffe4c2;
+    color: #ff6d00;
 }
 
 ._green {
-    background-color: #B4FDD1;
-    color: #06B16E;
+    background-color: #b4fdd1;
+    color: #06b16e;
 }
 
 ._purple {
-    background-color: #E9D4FF;
+    background-color: #e9d4ff;
     color: #9a48f1;
 }
 
@@ -649,7 +650,7 @@ ul li {
     line-height: 1;
     letter-spacing: -0.14px;
     margin-top: 14px;
-    background-color: #EAEEF6;
+    background-color: #eaeef6;
 }
 
 .form-browse__area::-moz-placeholder {
@@ -690,7 +691,7 @@ ul li {
     height: 30px;
     border-radius: 24px;
     padding: 0 14px;
-    border: 0.7px solid #94A6BE66;
+    border: 0.7px solid #94a6be66;
     background-color: #ffffff;
     color: #94a6be;
     cursor: pointer;
@@ -701,15 +702,15 @@ ul li {
     font-size: 14px;
     font-weight: 400;
     line-height: 1;
-    color: #94A6BE;
+    color: #94a6be;
 }
 
 /* Активный статус — серый фон, белый текст */
 ._active-status,
 ._gray {
-    background-color: #94A6BE !important;
-    color: #FFFFFF !important;
-    border-color: #94A6BE !important;
+    background-color: #94a6be !important;
+    color: #ffffff !important;
+    border-color: #94a6be !important;
 }
 
 ._gray {
@@ -763,6 +764,188 @@ ul li {
     padding-right: calc(50% - 600px);
 }
 
+/* PopLogin */
+/* Оверлей */
+.login-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #eaeef6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Центральное окно */
+.login-modal-content {
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 0.7px solid #d4dbe5;
+    box-shadow: 0px 4px 67px -12px #00000021;
+    padding: 50px 60px;
+    width: 368px;
+    height: 329px;
+    text-align: center;
+    position: relative;
+}
+
+/* Заголовок */
+.login-modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 150%;
+}
+
+/* Форма */
+.login-modal-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 7px;
+}
+
+/* Поля ввода */
+.login-modal-input {
+    width: 100%;
+    height: 30px;
+    padding: 8px 10px;
+    border: 0.7px solid #94a6be66;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #000;
+}
+
+.login-modal-input:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+.login-modal-input::placeholder {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: -2%;
+    color: #94a6be;
+}
+
+/* Кнопка "Войти" */
+.login-modal-button {
+    height: 30px;
+    padding: 8px auto;
+    background: #565eef;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 13px;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+}
+
+/* Подвал с ссылкой */
+.login-modal-footer {
+    margin-top: 20px;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    text-align: center;
+    text-decoration: none;
+    color: #94a6be66;
+}
+
+.login-modal-link {
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    text-align: center;
+    text-decoration: underline;
+    color: #94a6be66;
+    border: none;
+    background-color: #ffffff00;
+}
+
+.login-modal-link:hover {
+    color: #4f46e5;
+    text-decoration: none;
+}
+
+/* PopExitConfirm */
+/* Оверлей */
+.pop-exit-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Центральное окно */
+.pop-exit-content {
+    background-color: white;
+    border-radius: 10px;
+    border: 0.7px solid #d4dbe5;
+    box-shadow: 0px 4px 67px -12px #00000021;
+    padding: 50px 28.5px;
+    text-align: center;
+    width: 370px;
+    height: 180px;
+}
+
+.pop-exit-title {
+    margin-bottom: 20px;
+    color: #000;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 150%;
+}
+
+.pop-exit-buttons {
+    width: 100%;
+    display: flex;
+    column-gap: 7px;
+    justify-content: center;
+}
+
+.pop-exit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 153px;
+    height: 30px;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pop-exit-btn-yes {
+    background-color: #565EEF;
+    color: white;
+    border: none;
+}
+
+.pop-exit-btn-no {
+    background-color: #ffffff00;
+    color: #565EEF;
+    border: 0.7px solid #565EEF
+}
+
+
 @media screen and (max-width: 1200px) {
     .main__block {
         width: 100%;
@@ -788,7 +971,7 @@ ul li {
     .pop-new-card__wrap {
         display: block;
     }
-   
+
     .date-create {
         display: none;
         margin-bottom: 7px;
@@ -921,7 +1104,7 @@ ul li {
         width: 100%;
         height: 40px;
     }
-    
+
     .pop-exit__form-group {
         display: block;
     }

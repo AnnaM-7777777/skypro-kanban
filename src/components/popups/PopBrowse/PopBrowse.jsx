@@ -1,14 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Calendar from "../../Calendar/Calendar.jsx";
 
 const PopBrowse = ({ isOpen, onClose, card, onUpdate, onDelete }) => {
     if (!isOpen || !card) return null;
 
     const [isEditing, setIsEditing] = useState(false);
-    const [editTitle, setEditTitle] = useState(card.title);
-    const [editDescription, setEditDescription] = useState(card.description);
-    const [editStatus, setEditStatus] = useState(card.status);
-    const [editDate, setEditDate] = useState(card.date);
+    const [editTitle, setEditTitle] = useState("");
+    const [editDescription, setEditDescription] = useState("");
+    const [editStatus, setEditStatus] = useState("");
+    const [editDate, setEditDate] = useState("");
+    
+  // Синхронизация состояния с пропсом card
+  useEffect(() => {
+    if (card) {
+      setEditTitle(card.title);
+      setEditDescription(card.description);
+      setEditStatus(card.status);
+      setEditDate(card.date);
+    }
+  }, [card]); // ← зависимость: обновлять при изменении card
 
     // Форматирование даты: "16.01.2026" → "16.01.26"
     const formatDateShortYear = (dateStr) => {
@@ -161,7 +171,7 @@ const PopBrowse = ({ isOpen, onClose, card, onUpdate, onDelete }) => {
                                 </div>
                             </form>
 
-                            <div className="pop-new-card__сalendar">
+                            <div className="pop-new-card__calendar">
                                 {isEditing ? (
                                     <>
                                         <Calendar
@@ -197,10 +207,7 @@ const PopBrowse = ({ isOpen, onClose, card, onUpdate, onDelete }) => {
                                     </>
                                 ) : (
                                     <>
-                                        <Calendar
-                                            month="Январь 2026"
-                                            selectedDate={editDate}
-                                        />
+                                        <Calendar selectedDate={editDate}/>
                                         {editDate ? (
                                             <p
                                                 className="pop-new-card__deadline subttl"
