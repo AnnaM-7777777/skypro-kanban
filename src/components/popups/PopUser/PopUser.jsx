@@ -1,45 +1,57 @@
-import { useEffect } from "react";
+import React, { useState } from 'react';
+import PopExitConfirm from '../PopExitConfirm/PopExitConfirm'; // ← импортируем новое окно
 
-export default function PopUser({ isOpen, onClose, user }) {
-    // Закрытие по Esc и клику снаружи
-    useEffect(() => {
-        if (!isOpen) return;
+export default function PopUser({
+    isOpen,
+    onClose,
+    user,
+    onThemeToggle,
+    onLogout,
+    isDarkTheme,
+}) {
+    const [isExitConfirmOpen, setIsExitConfirmOpen] = useState(false);
 
-        const handleEsc = (e) => {
-            if (e.key === "Escape") onClose();
-        };
-        const handleClickOutside = (e) => {
-            if (!e.target.closest(".pop-user-set")) {
-                onClose();
-            }
-        };
+    if (!isOpen || !user) return null;
 
-        document.addEventListener("keydown", handleEsc);
-        document.addEventListener("click", handleClickOutside);
+    const handleExitClick = () => {
+        setIsExitConfirmOpen(true);
+    };
 
-        return () => {
-            document.removeEventListener("keydown", handleEsc);
-            document.removeEventListener("click", handleClickOutside);
-        };
-    }, [isOpen, onClose]);
-
-    if (!isOpen) return null;
+    const handleConfirmExit = () => {
+        onLogout(); // ← вызываем logout
+        onClose();  // ← закрываем pop-user
+        setIsExitConfirmOpen(false); // ← закрываем окно подтверждения
+    };
 
     return (
-        <div className="header__pop-user-set pop-user-set">
-            <p className="pop-user-set__name">{user.name}</p>
-            <p className="pop-user-set__mail">{user.email}</p>
-            <div className="pop-user-set__theme">
-                <p>Темная тема</p>
-                <input type="checkbox" className="checkbox" name="checkbox" />
+        <>
+            <div className="header__pop-user-set pop-user-set">
+                <p className="pop-user-set__name">{user.name}</p>
+                <p className="pop-user-set__mail">{user.email}</p>
+                <div className="pop-user-set__theme">
+                    <p>Тёмная тема</p>
+                    <input
+                        type="checkbox"
+                        checked={isDarkTheme}
+                        onChange={onThemeToggle}
+                        className="checkbox"
+                    />
+                </div>
+                <button
+                    type="button"
+                    className="_hover03"
+                    onClick={handleExitClick} // ← открывает окно подтверждения
+                >
+                    Выйти
+                </button>
             </div>
-            <button
-                type="button"
-                className="_hover03"
-                onClick={onClose}
-            >
-                <p>Выйти</p>
-            </button>
-        </div>
+
+            {/* Окно подтверждения */}
+            <PopExitConfirm
+                isOpen={isExitConfirmOpen}
+                onClose={() => setIsExitConfirmOpen(false)}
+                onConfirm={handleConfirmExit}
+            />
+        </>
     );
 }

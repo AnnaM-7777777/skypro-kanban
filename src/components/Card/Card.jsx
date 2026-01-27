@@ -1,28 +1,36 @@
+import {
+    SCardItem,
+    SCardsCard,
+    SCardGroup,
+    SCardTheme,
+    SCardBtn,
+    SCardBtnDiv,
+    SCardContent,
+    SCardTitle,
+    SCardDate,
+    SCardDateP,
+} from "./Card.styled";
+
 export default function Card({ card, onClick }) {
-    const { title, topic, date } = card;
-    const topicClass =
-        topic === "Web Design"
-            ? "_orange"
-            : topic === "Research"
-            ? "_green"
-            : "_purple";
+    const { topic, title, date } = card;
 
     return (
-        <div className="cards__item">
-            <div className="cards__card card">
-                <div className="card__group">
-                    <div className={`card__theme ${topicClass}`}>
-                        <p className={topicClass}>{topic}</p>
-                    </div>
-                    <button className="card__btn" onClick={onClick}>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </button>
-                </div>
-                <div className="card__content">
-                    <h3 className="card__title">{title}</h3>
-                    <div className="card__date">
+        <SCardItem>
+            <SCardsCard>
+                <SCardGroup>
+                    <SCardTheme $topic={topic}>{topic}</SCardTheme>
+
+                    <SCardBtn onClick={onClick}>
+                        <SCardBtnDiv />
+                        <SCardBtnDiv />
+                        <SCardBtnDiv />
+                    </SCardBtn>
+                </SCardGroup>
+
+                <SCardContent>
+                    <SCardTitle>{title}</SCardTitle>
+
+                    <SCardDate>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="13"
@@ -51,10 +59,10 @@ export default function Card({ card, onClick }) {
                                 </clipPath>
                             </defs>
                         </svg>
-                        <p>{date}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        <SCardDateP>{date}</SCardDateP>
+                    </SCardDate>
+                </SCardContent>
+            </SCardsCard>
+        </SCardItem>
     );
 }

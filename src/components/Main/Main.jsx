@@ -1,33 +1,38 @@
 import Column from "../Column/Column";
 import Loader from "../Loader";
+import {
+    SMain,
+    SMainBlock,
+    SMainContent,
+} from "./Main.styled";
 
 export default function Main({ columns, loading, onCardClick }) {
     if (loading) {
         return (
-            <main className="main">
+            <SMain>
                 <div className="container">
                     <Loader />
                 </div>
-            </main>
+            </SMain>
         );
     }
 
     return (
-        <main className="main">
+        <SMain>
             <div className="container">
-                <div className="main__block">
-                    <div className="main__content">
+                <SMainBlock>
+                    <SMainContent>
                         {columns.map((col) => (
                             <Column
                                 key={col.id}
                                 title={col.title}
-                                cards={col.cards} // ← уже отфильтрованные!
+                                cards={col.cards}
                                 onCardClick={onCardClick}
                             />
                         ))}
-                    </div>
-                </div>
+                    </SMainContent>
+                </SMainBlock>
             </div>
-        </main>
+        </SMain>
     );
 }

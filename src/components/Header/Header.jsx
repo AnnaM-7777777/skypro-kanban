@@ -1,60 +1,51 @@
-import PopUser from "../popups/PopUser/PopUser";
+import React from "react";
+import {
+    SHeader,
+    SHeaderBlock,
+    LogoWrapper,
+    Nav,
+    CreateButton,
+    UserButton,
+} from "./Header.styled.js";
 
 export default function Header({
     onOpenNewCard,
-    isPopUserOpen,
     onTogglePopUser,
     user,
+    isDarkTheme,
 }) {
     return (
-        <header className="header">
+        <SHeader>
             <div className="container">
-                <div className="header__block">
-                    {/* Логотипы */}
-                    <div className="header__logo _show _light">
-                        <a href="" target="_self">
-                            <img src="/assets/logo.png" alt="logo" />
+                <SHeaderBlock>
+                    {/* Логотип */}
+                    <LogoWrapper $isDark={isDarkTheme}>
+                        <a href="/">
+                            <img
+                                src={
+                                    isDarkTheme
+                                        ? "/assets/logo_dark.png"
+                                        : "/assets/logo.png"
+                                }
+                                alt="TaskManager"
+                            />
                         </a>
-                    </div>
-                    <div className="header__logo _dark">
-                        <a href="" target="_self">
-                            <img src="/assets/logo_dark.png" alt="logo" />
-                        </a>
-                    </div>
+                    </LogoWrapper>
 
                     {/* Навигация */}
-                    <nav className="header__nav">
-                        <button
-                            className="header__btn-main-new _hover01"
-                            onClick={onOpenNewCard}
-                        >
-                            <p>Создать новую задачу</p>
-                        </button>
+                    <Nav>
+                        <CreateButton onClick={onOpenNewCard}>
+                            Создать новую задачу
+                        </CreateButton>
 
-                        {/* Кнопка пользователя */}
-                        <div className="header__user-wrapper">
-                            <button
-                                className="header__user _hover02"
-                                onClick={(e) => {
-                                    e.stopPropagation(); // ← остановить всплытие
-                                    onTogglePopUser();
-                                }}
-                            >
-                                {user.name}
-                            </button>
-
-                            {/* Всплывающее окно внутри header__nav */}
-                            {isPopUserOpen && (
-                                <PopUser
-                                    isOpen={isPopUserOpen}
-                                    onClose={onTogglePopUser}
-                                    user={user}
-                                />
-                            )}
+                        <div className="pop-wrap">
+                            <UserButton onClick={onTogglePopUser}>
+                                {user ? user.name : "Войти"}
+                            </UserButton>
                         </div>
-                    </nav>
-                </div>
+                    </Nav>
+                </SHeaderBlock>
             </div>
-        </header>
+        </SHeader>
     );
 }

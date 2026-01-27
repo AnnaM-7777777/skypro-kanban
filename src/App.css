@@ -19,7 +19,6 @@ body {
 
 #root {
     width: 100%;
-    text-align: center;
 }
 
 a,
@@ -53,17 +52,6 @@ ul li {
     list-style: none;
 }
 
-@keyframes card-animation {
-    0% {
-        height: 0;
-        opacity: 0;
-    }
-    100% {
-        height: auto;
-        opacity: 1;
-    }
-}
-
 @keyframes logo-spin {
     from {
         transform: rotate(0deg);
@@ -95,12 +83,6 @@ ul li {
     background-color: #f1f1f1;
 }
 
-.container {
-    width: 100%;
-    padding-left: calc(50% - 600px);
-    padding-right: calc(50% - 600px);
-}
-
 ._hover01:hover {
     background-color: #565eef;
 }
@@ -116,31 +98,27 @@ ul li {
     border-bottom-color: #565eef;
 }
 
+/* PopUser */
+.header__pop-user-set {
+    position: absolute;
+    top: 61px;
+    right: calc(50% - 600px);
+    width: 213px;
+    height: 205px;
+    border-radius: 10px;
+    border: 0.7px solid #94a6be66;
+    box-shadow: 0px 10px 39px 0px #1a386536;
+    background-color: #ffffff;
+    padding: 34px;
+    text-align: center;
+    z-index: 10;
+}
+
 .pop-user-set:target,
 .pop-exit:target,
 .pop-new-card:target,
 .pop-browse:target {
     display: block;
-}
-
-._orange {
-    background-color: #ffe4c2;
-    color: #ff6d00;
-}
-
-._green {
-    background-color: #b4fdd1;
-    color: #06b16e;
-}
-
-._purple {
-    background-color: #e9d4ff;
-    color: #9a48f1;
-}
-
-._gray {
-    background: #94a6be;
-    color: #ffffff;
 }
 
 ._active-topic {
@@ -335,8 +313,12 @@ ul li {
     color: #ffffff;
 }
 
+.subttl {
+    font-size: 14px;
+    font-weight: 600;
+}
+
 .pop-new-card {
-    display: none;
     width: 100%;
     min-width: 375px;
     height: 100%;
@@ -365,6 +347,7 @@ ul li {
     background-color: #ffffff;
     max-width: 630px;
     width: 100%;
+    height: 596px;
     padding: 40px 30px 48px;
     border-radius: 10px;
     border: 0.7px solid #d4dbe5;
@@ -391,25 +374,42 @@ ul li {
     color: #94a6be;
     cursor: pointer;
 }
+
 .pop-new-card__close:hover {
     color: #000000;
 }
+
 .pop-new-card__wrap {
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    column-gap: 14px;
+    width: 559px;
 }
+
 .pop-new-card__form {
-    max-width: 370px;
-    width: 100%;
+    width: 370px;
     display: block;
     margin-bottom: 20px;
+    padding: 0;
+}
+
+.pop-new-card__deadline {
+    font-weight: 400;
+    font-size: 10px;
+    color: #94a6be;
+    text-align: left;
+    margin-left: 7px;
+}
+
+.pop-new-card__span {
+    color: #000000;
 }
 
 .form-new__block {
     display: flex;
     flex-direction: column;
 }
+
 .form-new__input,
 .form-new__area {
     width: 100%;
@@ -422,6 +422,7 @@ ul li {
     line-height: 1;
     letter-spacing: -0.14px;
 }
+
 .form-new__input::-moz-placeholder,
 .form-new__area::-moz-placeholder {
     font-weight: 400;
@@ -430,6 +431,7 @@ ul li {
     color: #94a6be;
     letter-spacing: -0.14px;
 }
+
 .form-new__input::placeholder,
 .form-new__area::placeholder {
     font-weight: 400;
@@ -438,14 +440,18 @@ ul li {
     color: #94a6be;
     letter-spacing: -0.14px;
 }
+
 .form-new__input {
     margin: 20px 0;
+    height: 49px;
 }
+
 .form-new__area {
-    max-width: 370px;
+    width: 100%;
     margin-top: 14px;
     height: 200px;
 }
+
 .form-new__create {
     width: 132px;
     height: 30px;
@@ -458,106 +464,6 @@ ul li {
     line-height: 1;
     color: #ffffff;
     float: right;
-}
-
-.subttl {
-    color: #000;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1;
-}
-
-.calendar {
-    width: 182px;
-    margin-bottom: 20px;
-}
-.calendar__ttl {
-    margin-bottom: 14px;
-    padding: 0 7px;
-}
-.calendar__p {
-    color: #94a6be;
-    font-size: 10px;
-    line-height: 1;
-}
-.calendar__p span {
-    color: #000000;
-}
-.calendar__block {
-    display: block;
-}
-.calendar__month {
-    color: #94a6be;
-    font-size: 14px;
-    line-height: 25px;
-    font-weight: 600;
-}
-.calendar__content {
-    margin-bottom: 12px;
-}
-.calendar__days-names {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-    margin: 7px 0;
-    padding: 0 7px;
-}
-.calendar__day-name {
-    color: #94a6be;
-    font-size: 10px;
-    font-weight: 500;
-    line-height: normal;
-    letter-spacing: -0.2px;
-}
-.calendar__cells {
-    width: 182px;
-    height: 126px;
-    display: flex;
-    flex-wrap: wrap;
-}
-.calendar__cell {
-    width: 22px;
-    height: 22px;
-    margin: 2px;
-    border-radius: 50%;
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    color: #94a6be;
-    font-size: 10px;
-    line-height: 1;
-    letter-spacing: -0.2px;
-    cursor: pointer;
-}
-.calendar__nav {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 14px;
-    padding: 0 7px;
-}
-.calendar__period {
-    padding: 0 7px;
-}
-
-.nav__actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.nav__action {
-    width: 18px;
-    height: 25px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.nav__action svg {
-    fill: #94a6be;
 }
 
 ._other-month {
@@ -581,24 +487,30 @@ ul li {
 .topics {
     margin-bottom: 20px;
 }
+
 .topics__themes {
     display: flex;
     flex-wrap: nowrap;
     align-items: flex-start;
     justify-content: flex-start;
+    column-gap: 7px;
 }
+
 .topics__p {
     margin-bottom: 14px;
+    font-size: 14px;
+    font-weight: 600;
 }
+
 .topics__theme {
     display: inline-block;
     width: auto;
     height: 30px;
     padding: 8px 20px;
     border-radius: 24px;
-    margin-right: 7px;
     opacity: 0.4;
 }
+
 .topics__theme p {
     font-size: 14px;
     font-weight: 600;
@@ -606,8 +518,22 @@ ul li {
     white-space: nowrap;
 }
 
+._orange {
+    background-color: #ffe4c2;
+    color: #ff6d00;
+}
+
+._green {
+    background-color: #b4fdd1;
+    color: #06b16e;
+}
+
+._purple {
+    background-color: #e9d4ff;
+    color: #9a48f1;
+}
+
 .pop-browse {
-    display: none;
     width: 100%;
     height: 100%;
     min-width: 375px;
@@ -617,6 +543,7 @@ ul li {
     left: 0;
     z-index: 7;
 }
+
 .pop-browse__container {
     width: 100%;
     height: 100%;
@@ -628,54 +555,65 @@ ul li {
     justify-content: center;
     background: rgba(0, 0, 0, 0.4);
 }
+
 .pop-browse__block {
     display: block;
     margin: 0 auto;
     background-color: #ffffff;
     max-width: 630px;
     width: 100%;
-    padding: 40px 30px 38px;
+    height: 492px;
+    padding: 40px 30px 48px;
     border-radius: 10px;
     border: 0.7px solid #d4dbe5;
     position: relative;
 }
+
 .pop-browse__content {
     display: block;
     text-align: left;
 }
+
 .pop-browse__content .topics__theme {
     opacity: 1;
 }
+
 .pop-browse__content .theme-down {
     display: none;
     margin-bottom: 20px;
 }
+
 .pop-browse__content .theme-top {
     display: block;
 }
+
 .pop-browse__top-block {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 18px;
 }
+
 .pop-browse__ttl {
     color: #000;
     font-size: 20px;
     font-weight: 600;
     line-height: 24px;
 }
+
 .pop-browse__wrap {
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    column-gap: 14px;
+    margin-bottom: 18px;
+    width: 570px;
 }
+
 .pop-browse__form {
-    max-width: 370px;
-    width: 100%;
+    width: 370px;
     display: block;
-    margin-bottom: 20px;
 }
+
 .pop-browse__btn-browse,
 .pop-browse__btn-edit {
     display: flex;
@@ -683,35 +621,38 @@ ul li {
     align-items: flex-start;
     justify-content: space-between;
 }
+
+.pop-browse__btn-browse .btn-group {
+    display: flex;
+    column-gap: 8px;
+}
+
 .pop-browse__btn-browse button,
 .pop-browse__btn-edit button {
     height: 30px;
-    margin-bottom: 10px;
     padding: 0 14px;
-}
-.pop-browse__btn-browse .btn-group button,
-.pop-browse__btn-edit .btn-group button {
-    margin-right: 8px;
 }
 
 .form-browse__block {
     display: flex;
     flex-direction: column;
 }
+
 .form-browse__area {
     max-width: 370px;
     width: 100%;
+    height: 200px;
     outline: none;
-    padding: 14px;
-    background: #eaeef6;
+    padding: 20px 14px;
     border: 0.7px solid rgba(148, 166, 190, 0.4);
     border-radius: 8px;
     font-size: 14px;
     line-height: 1;
     letter-spacing: -0.14px;
     margin-top: 14px;
-    height: 200px;
+    background-color: #eaeef6;
 }
+
 .form-browse__area::-moz-placeholder {
     font-weight: 400;
     font-size: 14px;
@@ -719,6 +660,7 @@ ul li {
     color: #94a6be;
     letter-spacing: -0.14px;
 }
+
 .form-browse__area::placeholder {
     font-weight: 400;
     font-size: 14px;
@@ -728,29 +670,56 @@ ul li {
 }
 
 .status {
-    margin-bottom: 11px;
+    margin-bottom: 18px;
 }
+
 .status__p {
     margin-bottom: 14px;
+    font-size: 14px;
+    font-weight: 600;
 }
+
 .status__themes {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
-    justify-content: flex-start;
+    justify-content: space-between;
+    width: 570px;
 }
+
 .status__theme {
+    height: 30px;
     border-radius: 24px;
-    border: 0.7px solid rgba(148, 166, 190, 0.4);
+    padding: 0 14px;
+    border: 0.7px solid #94a6be66;
+    background-color: #ffffff;
     color: #94a6be;
-    padding: 11px 14px 10px;
-    margin-right: 7px;
-    margin-bottom: 7px;
+    cursor: pointer;
 }
+
 .status__theme p {
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-size: 14px;
+    font-weight: 400;
     line-height: 1;
-    letter-spacing: -0.14px;
+    color: #94a6be;
+}
+
+/* Активный статус — серый фон, белый текст */
+._active-status,
+._gray {
+    background-color: #94a6be !important;
+    color: #ffffff !important;
+    border-color: #94a6be !important;
+}
+
+._gray {
+    padding-top: 7px;
+}
+
+._active-status p,
+._gray p {
+    color: #ffffff !important;
 }
 
 ._btn-bor {
@@ -759,10 +728,13 @@ ul li {
     outline: none;
     background: transparent;
     color: #565eef;
+    font-size: 14px;
+    font-weight: 500;
 }
-._btn-bor a {
+
+/* ._btn-bor a {
     color: #565eef;
-}
+} */
 
 ._btn-bg {
     border-radius: 4px;
@@ -770,10 +742,13 @@ ul li {
     border: none;
     outline: none;
     color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
 }
-._btn-bg a {
+
+/* ._btn-bg a {
     color: #ffffff;
-}
+} */
 
 ._hide {
     display: none;
@@ -783,247 +758,193 @@ ul li {
     display: none;
 }
 
-.header {
+.container {
     width: 100%;
-    margin: 0 auto;
-    background-color: #ffffff;
+    padding-left: calc(50% - 600px);
+    padding-right: calc(50% - 600px);
 }
 
-.header__block {
-    height: 70px;
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
+/* PopLogin */
+/* Оверлей */
+.login-modal-overlay {
+    position: fixed;
     top: 0;
     left: 0;
-}
-
-.header__logo img {
-    width: 85px;
-}
-
-.header__nav {
-    max-width: 290px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: 20px;
-}
-
-.header__btn-main-new {
-    width: 178px;
-    height: 30px;
-    border-radius: 4px;
-    background-color: #565eef;
-    border: none;
-}
-
-.header__btn-main-new p {
-    color: #ffffff;
-    font-size: 14px;
-    line-height: 1;
-    font-weight: 500;
-}
-
-.header__user {
-    display: flex;
-    column-gap: 5px;
+    width: 100%;
     height: 100%;
-    flex-wrap: nowrap;
-    align-items: center;
+    background: #eaeef6;
+    display: flex;
     justify-content: center;
-    font-family: "Roboto", Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 10px;
-    color: #565eef;
-    background-color: #ffffff00;
-    border: none;
-}
-.header__user::after {
-    content: "";
-    display: block;
-    width: 6px;
-    height: 6px;
-    border-radius: 1px;
-    border-left: 1.9px solid #565eef;
-    border-bottom: 1.9px solid #565eef;
-    transform: rotate(-45deg);
-    padding: 0;
+    align-items: center;
+    z-index: 1000;
 }
 
-/* Обёртка для кнопки и попапа */
-.header__user-wrapper {
-    position: relative; /* ← важно! */
-    display: inline-block;
-}
-
-.header__pop-user-set {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 213px;
-    height: 205px;
-    border-radius: 10px;
-    border: 0.7px solid rgba(148, 166, 190, 0.4);
-    background: #fff;
-    box-shadow: 0px 10px 39px 0px rgba(26, 56, 101, 0.21);
-    padding: 34px;
-    text-align: center;
-    z-index: 10;
-    margin-top: 22px;
-
-    /* Эти свойства предотвращают влияние на layout */
-    pointer-events: auto;
-}
-
-.main {
-    width: 100%;
-    height: 90vh;
-    padding: 40px 0 64px 0;
-    background-color: #eaeef6;
-}
-
-.main__block {
-    width: 100%;
-}
-
-.main__content {
-    width: 100%;
-    display: flex;
-    column-gap: 19px;
-    overflow-x: auto;
-    padding: 16px 0;
-}
-
-.main__column {
-    width: 20%;
-    display: block;
-}
-
-.column__title {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.column__title p {
-    color: #94a6be;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1;
-    text-transform: uppercase;
-}
-
-.cards {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    row-gap: 10px;
-    position: relative;
-}
-.cards__item {
-    animation-name: card-animation;
-    animation-duration: 500ms;
-    animation-timing-function: linear;
-}
-.cards__card {
-    width: 220px;
-    height: 130px;
+/* Центральное окно */
+.login-modal-content {
     background-color: #ffffff;
     border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: stretch;
-    padding: 15px 13px 19px;
+    border: 0.7px solid #d4dbe5;
+    box-shadow: 0px 4px 67px -12px #00000021;
+    padding: 50px 60px;
+    width: 368px;
+    height: 329px;
+    text-align: center;
+    position: relative;
 }
 
-.card__group {
+/* Заголовок */
+.login-modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 150%;
+}
+
+/* Форма */
+.login-modal-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 7px;
+}
+
+/* Поля ввода */
+.login-modal-input {
     width: 100%;
-    height: 20px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.card__theme {
-    width: auto;
-    height: 20px;
-    padding: 5px 14px;
-    border-radius: 18px;
-}
-.card__theme p {
-    font-size: 10px;
-    font-weight: 600;
-    line-height: 10px;
-}
-.card__btn {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 2px;
-    border: none;
-    background-color: rgba(255, 255, 255, 0);
-}
-.card__btn div {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background-color: #94a6be;
-}
-.card__title {
+    height: 30px;
+    padding: 8px 10px;
+    border: 0.7px solid #94a6be66;
+    border-radius: 8px;
     font-size: 14px;
-    font-weight: 500;
-    color: #000000;
-    margin-bottom: 10px;
-    text-align: left;
-}
-.card__content {
-    height: 64px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-}
-.card__date {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-.card__date svg {
-    width: 13px;
-}
-.card__date p {
-    margin-left: 6px;
-    font-size: 10px;
-    line-height: 13px;
-    color: #94a6be;
-    letter-spacing: 0.2px;
+    color: #000;
 }
 
-/* новые стили */
-.skeleton {
-    background: #e0e0e0;
+.login-modal-input:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+.login-modal-input::placeholder {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: -2%;
+    color: #94a6be;
+}
+
+/* Кнопка "Войти" */
+.login-modal-button {
+    height: 30px;
+    padding: 8px auto;
+    background: #565eef;
+    color: #ffffff;
+    border: none;
     border-radius: 4px;
+    cursor: pointer;
+    margin-top: 13px;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
 }
-.card--loading .card__theme {
-    width: 60px;
-    height: 20px;
+
+/* Подвал с ссылкой */
+.login-modal-footer {
+    margin-top: 20px;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    text-align: center;
+    text-decoration: none;
+    color: #94a6be66;
 }
-.card--loading .card__title {
-    height: 20px;
-    margin-bottom: 8px;
+
+.login-modal-link {
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    text-align: center;
+    text-decoration: underline;
+    color: #94a6be66;
+    border: none;
+    background-color: #ffffff00;
 }
-.card--loading .card__date {
-    height: 16px;
-    width: 80px;
+
+.login-modal-link:hover {
+    color: #4f46e5;
+    text-decoration: none;
 }
-/* новые стили */
+
+/* PopExitConfirm */
+/* Оверлей */
+.pop-exit-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Центральное окно */
+.pop-exit-content {
+    background-color: white;
+    border-radius: 10px;
+    border: 0.7px solid #d4dbe5;
+    box-shadow: 0px 4px 67px -12px #00000021;
+    padding: 50px 28.5px;
+    text-align: center;
+    width: 370px;
+    height: 180px;
+}
+
+.pop-exit-title {
+    margin-bottom: 20px;
+    color: #000;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 150%;
+}
+
+.pop-exit-buttons {
+    width: 100%;
+    display: flex;
+    column-gap: 7px;
+    justify-content: center;
+}
+
+.pop-exit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 153px;
+    height: 30px;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pop-exit-btn-yes {
+    background-color: #565EEF;
+    color: white;
+    border: none;
+}
+
+.pop-exit-btn-no {
+    background-color: #ffffff00;
+    color: #565EEF;
+    border: 0.7px solid #565EEF
+}
+
 
 @media screen and (max-width: 1200px) {
     .main__block {
@@ -1031,87 +952,44 @@ ul li {
         margin: 0 auto;
         padding: 40px 0 64px;
     }
-    /* .main__content {
-        display: block;
-    } */
-    .main__column {
-        width: 100%;
-        margin: 0 auto;
-        display: block;
-    }
-    .cards {
-        width: 100%;
-        display: flex;
-        overflow-y: auto;
-    }
-    .cards__card {
-        width: 220px;
-        height: 130px;
-        background-color: #ffffff;
-        border-radius: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: stretch;
-        padding: 15px 13px 19px;
-    }
 }
 
 @media screen and (max-width: 660px) {
     .pop-new-card {
         top: 70px;
     }
+
     .pop-new-card__container {
         padding: 0;
         justify-content: flex-start;
     }
+
     .pop-new-card__block {
         border-radius: 0;
     }
+
     .pop-new-card__wrap {
         display: block;
     }
-    .calendar {
-        max-width: 340px;
-        width: 100%;
-    }
-    .calendar__ttl,
-    .calendar__nav,
-    .calendar__period {
-        padding: 0;
-    }
-    .calendar .date-create {
+
+    .date-create {
         display: none;
         margin-bottom: 7px;
     }
-    .calendar__p {
-        font-size: 14px;
-    }
-    .calendar__day-name {
-        font-size: 14px;
-    }
-    .calendar__cells {
-        width: 344px;
-        height: auto;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
-    .calendar__cell {
-        width: 42px;
-        height: 42px;
-        font-size: 14px;
-    }
+
     .pop-browse {
         top: 70px;
     }
+
     .pop-browse__container {
         padding: 0;
         justify-content: flex-start;
     }
+
     .pop-browse__block {
         border-radius: 0;
     }
+
     .pop-browse__wrap {
         display: block;
     }
@@ -1122,6 +1000,7 @@ ul li {
         width: 100%;
         padding: 0 16px;
     }
+
     .header__btn-main-new {
         z-index: 3;
         position: fixed;
@@ -1133,61 +1012,77 @@ ul li {
         border-radius: 4px;
         margin-right: 0;
     }
+
     .pop-new-card__container {
         padding: 0;
         justify-content: flex-start;
     }
+
     .pop-new-card__block {
         padding: 20px 16px 32px;
     }
+
     .pop-new-card__form {
         max-width: 100%;
         width: 100%;
         display: block;
     }
+
     .pop-new-card__calendar {
         width: 100%;
     }
+
     .form-new__area {
         max-width: 100%;
         height: 34px;
     }
+
     .form-new__create {
         width: 100%;
         height: 40px;
     }
+
     .pop-browse__block {
         padding: 20px 16px 32px;
     }
+
     .pop-browse__content .theme-down {
         display: block;
         margin-bottom: 20px;
     }
+
     .pop-browse__content .theme-top {
         display: none;
     }
+
     .pop-browse__form {
         max-width: 100%;
     }
+
     .pop-browse__calendar {
         width: 100%;
     }
+
     .pop-browse__btn-browse button,
     .pop-browse__btn-edit button {
         width: 100%;
         height: 40px;
     }
+
     .pop-browse__btn-browse .btn-group,
     .pop-browse__btn-edit .btn-group {
         width: 100%;
     }
+
     .pop-browse__btn-browse .btn-group button,
     .pop-browse__btn-edit .btn-group button {
         margin-right: 0px;
     }
+
     .form-browse__area {
         max-width: 100%;
     }
+
     .form-browse__area {
         height: 37px;
     }
@@ -1197,16 +1092,19 @@ ul li {
     .pop-exit__block {
         padding: 50px 20px;
     }
+
     .pop-exit__exit-yes {
         width: 100%;
         height: 40px;
         margin-right: 0;
         margin-bottom: 10px;
     }
+
     .pop-exit__exit-no {
         width: 100%;
         height: 40px;
     }
+
     .pop-exit__form-group {
         display: block;
     }
