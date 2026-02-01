@@ -7,6 +7,7 @@ import CardEditPage from "../components/pages/CardEditPage";
 import SignInPage from "../components/pages/SignInPage";
 import SignUpPage from "../components/pages/SignUpPage";
 import NotFoundPage from "../components/pages/NotFoundPage";
+import LogoutPage from "../components/pages/LogoutPage";
 
 export default function AppRoutes() {
     return (
@@ -14,6 +15,7 @@ export default function AppRoutes() {
             {/* Публичные маршруты */}
             <Route path="/login" element={<SignInPage />} />
             <Route path="/register" element={<SignUpPage />} />
+            <Route path="/logout" element={<LogoutPage />} />
 
             {/* Защищённые маршруты */}
             <Route
