@@ -67,7 +67,7 @@ export default function CardNewPage() {
     };
 
     return (
-        <div className="pop-new-card">
+    
             <div className="pop-new-card__container" onClick={handleClose}>
                 <div
                     className="pop-new-card__block"
@@ -197,6 +197,6 @@ export default function CardNewPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        
     );
 }

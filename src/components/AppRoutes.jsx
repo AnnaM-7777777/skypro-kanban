@@ -17,7 +17,7 @@ export default function AppRoutes() {
             <Route path="/register" element={<SignUpPage />} />
             <Route path="/logout" element={<LogoutPage />} />
 
-            {/* Защищённые маршруты */}
+            {/* Защищённые маршруты с вложенными попапами */}
             <Route
                 path="/"
                 element={
@@ -25,31 +25,11 @@ export default function AppRoutes() {
                         <MainPage />
                     </ProtectedRoute>
                 }
-            />
-            <Route
-                path="/card/new"
-                element={
-                    <ProtectedRoute>
-                        <CardNewPage />
-                    </ProtectedRoute>
-                }
-            />
-            <Route
-                path="/card/:id"
-                element={
-                    <ProtectedRoute>
-                        <CardViewPage />
-                    </ProtectedRoute>
-                }
-            />
-            <Route
-                path="/card/:id/edit"
-                element={
-                    <ProtectedRoute>
-                        <CardEditPage />
-                    </ProtectedRoute>
-                }
-            />
+            >
+                <Route path="card/new" element={<CardNewPage />} />
+                <Route path="card/:id" element={<CardViewPage />} />
+                <Route path="card/:id/edit" element={<CardEditPage />} />
+            </Route>
 
             {/* Страница 404 */}
             <Route path="*" element={<NotFoundPage />} />

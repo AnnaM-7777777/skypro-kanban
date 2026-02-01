@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import PopUser from "../popups/PopUser/PopUser";
@@ -103,6 +103,9 @@ export default function MainPage() {
                 loading={loading}
                 onCardClick={handleCardClick}
             />
+
+            {/* Outlet для вложенных маршрутов (попапов) */}
+            <Outlet />
         </>
     );
 }
