@@ -17,12 +17,17 @@ body {
     color: #000000;
 }
 
+body {
+    background-color: #eaeef6;
+}
+
 #root {
     width: 100%;
 }
 
 a,
 a:visited {
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
     text-decoration: none;
     cursor: pointer;
 }
@@ -44,6 +49,7 @@ a:visited {
 
 button,
 ._btn {
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
     cursor: pointer;
     outline: none;
 }
@@ -79,8 +85,8 @@ ul li {
     max-width: 100%;
     width: 100vw;
     min-height: 100vh;
-    overflow: hidden;
-    background-color: #f1f1f1;
+    /* overflow: hidden;
+    background-color: #f1f1f1; */
 }
 
 ._hover01:hover {
@@ -152,7 +158,7 @@ ul li {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .pop-exit__block {
@@ -272,7 +278,7 @@ ul li {
     width: 24px;
     height: 13px;
     border-radius: 100px;
-    background: #eaeef6;
+    background-color: #eaeef6;
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -295,20 +301,19 @@ ul li {
     left: 12px;
 }
 
-.pop-user-set button {
-    width: 72px;
+._hover03 {
     height: 30px;
-    background: transparent;
+    background-color: transparent;
     color: #565eef;
     border-radius: 4px;
-    border: 1px solid #565eef;
+    border: 0.7px solid #565eef;
     cursor: pointer;
-    font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-size: 14px;
     font-weight: 500;
+    padding: 0 14px;
 }
 
-.pop-user-set button:hover {
+._hover03:hover {
     background-color: #565eef;
     color: #ffffff;
 }
@@ -338,7 +343,11 @@ ul li {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
 }
 
 .pop-new-card__block {
@@ -415,7 +424,7 @@ ul li {
     width: 100%;
     outline: none;
     padding: 14px;
-    background: transparent;
+    background-color: transparent;
     border: 0.7px solid rgba(148, 166, 190, 0.4);
     border-radius: 8px;
     font-size: 14px;
@@ -553,7 +562,7 @@ ul li {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .pop-browse__block {
@@ -698,7 +707,6 @@ ul li {
 }
 
 .status__theme p {
-    font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 1;
@@ -726,29 +734,21 @@ ul li {
     border-radius: 4px;
     border: 0.7px solid var(--palette-navy-60, #565eef);
     outline: none;
-    background: transparent;
+    background-color: transparent;
     color: #565eef;
     font-size: 14px;
     font-weight: 500;
 }
 
-/* ._btn-bor a {
-    color: #565eef;
-} */
-
 ._btn-bg {
     border-radius: 4px;
-    background: #565eef;
+    background-color: #565eef;
     border: none;
     outline: none;
     color: #ffffff;
     font-size: 14px;
     font-weight: 500;
 }
-
-/* ._btn-bg a {
-    color: #ffffff;
-} */
 
 ._hide {
     display: none;
@@ -764,7 +764,7 @@ ul li {
     padding-right: calc(50% - 600px);
 }
 
-/* PopLogin */
+/* PopLogin/SignInPage */
 /* Оверлей */
 .login-modal-overlay {
     position: fixed;
@@ -772,7 +772,7 @@ ul li {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #eaeef6;
+    background-color: #eaeef6;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -781,13 +781,12 @@ ul li {
 
 /* Центральное окно */
 .login-modal-content {
-    background-color: #ffffff;
+    width: 368px;
     border-radius: 10px;
     border: 0.7px solid #d4dbe5;
     box-shadow: 0px 4px 67px -12px #00000021;
+    background-color: #ffffff;
     padding: 50px 60px;
-    width: 368px;
-    height: 329px;
     text-align: center;
     position: relative;
 }
@@ -832,26 +831,53 @@ ul li {
     color: #94a6be;
 }
 
+/* Сообщение ошибки */
+.login-modal-input--error {
+    border-color: #f84d4d !important;
+}
+
+.login-modal-error {
+    color: #f84d4d;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: center;
+    line-height: 1.4;
+}
+
 /* Кнопка "Войти" */
 .login-modal-button {
     height: 30px;
     padding: 8px auto;
-    background: #565eef;
+    background-color: #565eef;
     color: #ffffff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     margin-top: 13px;
-    font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-weight: 500;
     font-size: 14px;
     line-height: 150%;
 }
 
+/* Кнопка активна, когда НЕТ ошибки */
+.login-modal-button:not([disabled]) {
+    background-color: #565eef;
+}
+
+/* Кнопка серая ТОЛЬКО когда есть ошибка */
+.login-modal-button[disabled] {
+    background-color: #94a6be !important;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.login-modal-button:not([disabled]):hover {
+    background-color: #565eef;
+}
+
 /* Подвал с ссылкой */
 .login-modal-footer {
     margin-top: 20px;
-    font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-weight: 400;
     font-size: 14px;
     line-height: 150%;
@@ -861,7 +887,6 @@ ul li {
 }
 
 .login-modal-link {
-    font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-weight: 400;
     font-size: 14px;
     line-height: 150%;
@@ -885,7 +910,7 @@ ul li {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -925,7 +950,6 @@ ul li {
     justify-content: center;
     width: 153px;
     height: 30px;
-    font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-weight: 500;
     font-size: 14px;
     line-height: 150%;
@@ -934,17 +958,16 @@ ul li {
 }
 
 .pop-exit-btn-yes {
-    background-color: #565EEF;
+    background-color: #565eef;
     color: white;
     border: none;
 }
 
 .pop-exit-btn-no {
     background-color: #ffffff00;
-    color: #565EEF;
-    border: 0.7px solid #565EEF
+    color: #565eef;
+    border: 0.7px solid #565eef;
 }
-
 
 @media screen and (max-width: 1200px) {
     .main__block {

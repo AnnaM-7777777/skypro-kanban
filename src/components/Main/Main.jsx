@@ -1,10 +1,6 @@
 import Column from "../Column/Column";
 import Loader from "../Loader";
-import {
-    SMain,
-    SMainBlock,
-    SMainContent,
-} from "./Main.styled";
+import { SMain, SMainBlock, SMainContent } from "./Main.styled";
 
 export default function Main({ columns, loading, onCardClick }) {
     if (loading) {

@@ -1,24 +1,31 @@
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Calendar from "../../Calendar/Calendar.jsx";
+import Calendar from "../Calendar/Calendar";
 
-const PopBrowse = ({ isOpen, onClose, card, onUpdate, onDelete }) => {
-    if (!isOpen || !card) return null;
+export default function CardViewPage() {
+    const { id } = useParams();
+    const navigate = useNavigate();
 
+    const [card, setCard] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [editTitle, setEditTitle] = useState("");
     const [editDescription, setEditDescription] = useState("");
     const [editStatus, setEditStatus] = useState("");
     const [editDate, setEditDate] = useState("");
-    
-  // Синхронизация состояния с пропсом card
-  useEffect(() => {
-    if (card) {
-      setEditTitle(card.title);
-      setEditDescription(card.description);
-      setEditStatus(card.status);
-      setEditDate(card.date);
-    }
-  }, [card]); // ← зависимость: обновлять при изменении card
+
+    // Загрузка карточки из localStorage
+    useEffect(() => {
+        const savedCards = localStorage.getItem("cards") || "[]";
+        const cards = JSON.parse(savedCards);
+        const found = cards.find((t) => t.id == id);
+        if (found) {
+            setCard(found);
+            setEditTitle(found.title);
+            setEditDescription(found.description);
+            setEditStatus(found.status);
+            setEditDate(found.date);
+        }
+    }, [id]);
 
     // Форматирование даты: "16.01.2026" → "16.01.26"
     const formatDateShortYear = (dateStr) => {
@@ -30,41 +37,67 @@ const PopBrowse = ({ isOpen, onClose, card, onUpdate, onDelete }) => {
         return dateStr;
     };
 
+    // Сохранение изменений
     const handleSave = () => {
-        if (onUpdate) {
-            onUpdate({
-                ...card,
-                title: editTitle,
-                description: editDescription,
-                status: editStatus,
-                date: editDate,
-            });
+        const savedCards = localStorage.getItem("cards") || "[]";
+        const cards = JSON.parse(savedCards);
+        const updatedCards = cards.map((c) =>
+            c.id == id
+                ? {
+                      ...c,
+                      title: editTitle,
+                      description: editDescription,
+                      status: editStatus,
+                      date: editDate,
+                  }
+                : c,
+        );
+        localStorage.setItem("cards", JSON.stringify(updatedCards));
+        setIsEditing(false);
+    };
+
+    // Отмена редактирования
+    const handleCancel = () => {
+        if (card) {
+            setEditTitle(card.title);
+            setEditDescription(card.description);
+            setEditStatus(card.status);
+            setEditDate(card.date);
         }
         setIsEditing(false);
     };
 
-    const handleCancel = () => {
-        setEditTitle(card.title);
-        setEditDescription(card.description);
-        setEditStatus(card.status);
-        setEditDate(card.date);
-        setIsEditing(false);
-    };
-
+    // Изменение статуса
     const handleStatusChange = (newStatus) => {
         setEditStatus(newStatus);
     };
 
+    // Выбор даты
     const handleDateSelect = (date) => {
         setEditDate(date);
     };
 
+    // Удаление карточки
     const handleDelete = () => {
-        if (onDelete && card) {
-            onDelete(card.id);
-        }
-        onClose();
+        const savedCards = localStorage.getItem("cards") || "[]";
+        const cards = JSON.parse(savedCards);
+        const updatedCards = cards.filter((t) => t.id != id);
+        localStorage.setItem("cards", JSON.stringify(updatedCards));
+        navigate("/");
     };
+
+    // Закрытие (навигация на главную)
+    const handleClose = () => {
+        navigate("/");
+    };
+
+    if (!card) {
+        return (
+            <div style={{ padding: "40px", textAlign: "center" }}>
+                Задача не найдена
+            </div>
+        );
+    }
 
     return (
         <div className="pop-browse">
@@ -207,7 +240,7 @@ const PopBrowse = ({ isOpen, onClose, card, onUpdate, onDelete }) => {
                                     </>
                                 ) : (
                                     <>
-                                        <Calendar selectedDate={editDate}/>
+                                        <Calendar selectedDate={editDate} />
                                         {editDate ? (
                                             <p
                                                 className="pop-new-card__deadline subttl"
@@ -290,7 +323,7 @@ const PopBrowse = ({ isOpen, onClose, card, onUpdate, onDelete }) => {
                                         className="btn-browse__delete _btn-bor _hover03"
                                         onClick={() => {
                                             if (confirm("Удалить задачу?")) {
-                                                handleDelete(); // ← вызываем функцию
+                                                handleDelete();
                                             }
                                         }}
                                     >
@@ -298,9 +331,10 @@ const PopBrowse = ({ isOpen, onClose, card, onUpdate, onDelete }) => {
                                     </button>
                                 </div>
                             )}
+
                             <button
                                 className="btn-browse__close _btn-bg _hover01"
-                                onClick={onClose}
+                                onClick={handleClose}
                             >
                                 Закрыть
                             </button>
@@ -310,6 +344,4 @@ const PopBrowse = ({ isOpen, onClose, card, onUpdate, onDelete }) => {
             </div>
         </div>
     );
-};
-
-export default PopBrowse;
+}

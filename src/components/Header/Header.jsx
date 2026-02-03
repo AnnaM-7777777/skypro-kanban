@@ -1,4 +1,4 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
     SHeader,
     SHeaderBlock,
@@ -6,40 +6,47 @@ import {
     Nav,
     CreateButton,
     UserButton,
-} from "./Header.styled.js";
+} from "./Header.styled";
 
-export default function Header({
-    onOpenNewCard,
-    onTogglePopUser,
-    user,
-    isDarkTheme,
-}) {
+export default function Header({ user, isDarkTheme, onTogglePopUser }) {
+    const navigate = useNavigate();
+
+    const handleUserClick = () => {
+        if (user) {
+            onTogglePopUser();
+        } else {
+            navigate("/login");
+        }
+    };
+
+    const handleCreateNewCard = () => {
+        navigate("/card/new");
+    };
+
     return (
         <SHeader>
             <div className="container">
                 <SHeaderBlock>
-                    {/* Логотип */}
                     <LogoWrapper $isDark={isDarkTheme}>
-                        <a href="/">
+                        <a href="/" onClick={(e) => e.preventDefault()}>
                             <img
                                 src={
                                     isDarkTheme
                                         ? "/assets/logo_dark.png"
                                         : "/assets/logo.png"
                                 }
-                                alt="TaskManager"
+                                alt="CardManager"
                             />
                         </a>
                     </LogoWrapper>
 
-                    {/* Навигация */}
                     <Nav>
-                        <CreateButton onClick={onOpenNewCard}>
+                        <CreateButton onClick={handleCreateNewCard}>
                             Создать новую задачу
                         </CreateButton>
 
                         <div className="pop-wrap">
-                            <UserButton onClick={onTogglePopUser}>
+                            <UserButton onClick={handleUserClick}>
                                 {user ? user.name : "Войти"}
                             </UserButton>
                         </div>
