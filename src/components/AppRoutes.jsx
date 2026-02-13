@@ -16,8 +16,8 @@ export default function AppRoutes() {
             <Route path="/login" element={<SignInPage />} />
             <Route path="/register" element={<SignUpPage />} />
             <Route path="/logout" element={<LogoutPage />} />
-
-            {/* Защищённые маршруты с вложенными попапами */}
+            
+            {/* Защищённые маршруты */}
             <Route
                 path="/"
                 element={

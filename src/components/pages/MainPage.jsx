@@ -3,12 +3,14 @@ import { useNavigate, Outlet } from "react-router-dom";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import PopUser from "../popups/PopUser/PopUser";
-import { cards as initialCards } from "../../data";
+import { fetchCards } from "../../services/api";
+import { getToken } from "../../services/auth";
 
 export default function MainPage() {
     const navigate = useNavigate();
     const [cards, setCards] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
     const [user, setUser] = useState(() => {
         const saved = localStorage.getItem("user");
         return saved ? JSON.parse(saved) : null;
@@ -16,23 +18,42 @@ export default function MainPage() {
     const [isDarkTheme, setIsDarkTheme] = useState(false);
     const [isPopUserOpen, setIsPopUserOpen] = useState(false);
 
-    // Загрузка задач из localStorage или initialCards
+    // Загрузка карточек с сервера
     useEffect(() => {
-        const savedCards = localStorage.getItem("cards");
-        if (savedCards) {
-            setCards(JSON.parse(savedCards));
-        } else {
-            setCards(initialCards);
-        }
-        setLoading(false);
-    }, []);
+        const loadCards = async () => {
+            try {
+                setLoading(true);
+                setError("");
 
-    // Сохранение задач в localStorage
-    useEffect(() => {
-        if (!loading) {
-            localStorage.setItem("cards", JSON.stringify(cards));
-        }
-    }, [cards, loading]);
+                const token = getToken();
+                if (!token) {
+                    navigate("/login");
+                    return;
+                }
+
+                const data = await fetchCards({ token });
+                
+                // Защита: убедимся, что данные — это массив
+                if (Array.isArray(data)) {
+                    setCards(data);
+                } else if (data && Array.isArray(data.cards)) {
+                    setCards(data.cards);
+                } else {
+                    setCards([]);
+                }
+            } catch (err) {
+                console.error("Ошибка загрузки карточек:", err);
+                setError(err.message || "Ошибка загрузки данных");
+                // Загрузка из localStorage как резерв
+                const savedCards = localStorage.getItem("cards") || "[]";
+                setCards(JSON.parse(savedCards));
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadCards();
+    }, [navigate]);
 
     // Сохранение пользователя
     useEffect(() => {
@@ -51,17 +72,18 @@ export default function MainPage() {
         { id: "done", title: "Готово" },
     ];
 
+    // Защита: убедимся, что cards — это массив
     const columnsWithCards = columnConfigs.map((col) => ({
         ...col,
-        cards: cards.filter((card) => card.status === col.title),
+        cards: Array.isArray(cards)
+            ? cards.filter((card) => 
+                card?.status?.trim() === col.title.trim()
+            )
+            : [],
     }));
 
     const handleCardClick = (card) => {
         navigate(`/card/${card.id}`);
-    };
-
-    const handleOpenNewCard = () => {
-        navigate("/card/new");
     };
 
     const handleThemeToggle = () => {
@@ -69,6 +91,8 @@ export default function MainPage() {
     };
 
     const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
         setUser(null);
         setIsPopUserOpen(false);
         navigate("/login");
@@ -77,6 +101,14 @@ export default function MainPage() {
     const togglePopUser = () => {
         setIsPopUserOpen((prev) => !prev);
     };
+
+    if (error) {
+        return (
+            <div style={{ padding: "40px", textAlign: "center", color: "red" }}>
+                {error}
+            </div>
+        );
+    }
 
     return (
         <>
@@ -104,7 +136,6 @@ export default function MainPage() {
                 onCardClick={handleCardClick}
             />
 
-            {/* Outlet для вложенных маршрутов (попапов) */}
             <Outlet />
         </>
     );
