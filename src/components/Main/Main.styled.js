@@ -34,3 +34,29 @@ export const SMainColumn = styled.div`
         display: block;
     }
 `;
+
+/* export const ErrorContainer = styled.div`
+    padding: 40px;
+    text-align: center;
+    background-color: #ffebee;
+    border-radius: 8px;
+    margin: 20px 0;
+
+    p {
+        color: #c62828;
+        margin-bottom: 16px;
+    }
+
+    button {
+        padding: 8px 16px;
+        background-color: #c62828;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #b71c1c;
+        }
+    }
+`; */
