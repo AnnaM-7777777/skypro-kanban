@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = "https://wedev-api.sky.pro/api/user";
 
 export const getToken = () => {
-    return localStorage.getItem("authToken");
+    return localStorage.getItem("token");
 };
 
 export async function signIn({ login, password }) {
@@ -15,7 +15,7 @@ export async function signIn({ login, password }) {
                 headers: {
                     "Content-Type": "",
                 },
-            }
+            },
         );
         return response.data; // ← { user: { token, name, ... } }
     } catch (error) {
@@ -33,7 +33,7 @@ export async function signUp({ name, login, password }) {
                 headers: {
                     "Content-Type": "",
                 },
-            }
+            },
         );
         return response.data; // ← { user: { token, name, ... } }
     } catch (error) {
@@ -41,5 +41,3 @@ export async function signUp({ name, login, password }) {
         throw new Error(error.response?.data?.error || "Ошибка регистрации");
     }
 }
-
-

@@ -27,12 +27,11 @@ export default function MainPage() {
 
                 const token = getToken();
                 if (!token) {
-                    navigate("/login");
                     return;
                 }
 
                 const data = await fetchCards({ token });
-                
+
                 // Защита: убедимся, что данные — это массив
                 if (Array.isArray(data)) {
                     setCards(data);
@@ -44,6 +43,7 @@ export default function MainPage() {
             } catch (err) {
                 console.error("Ошибка загрузки карточек:", err);
                 setError(err.message || "Ошибка загрузки данных");
+
                 // Загрузка из localStorage как резерв
                 const savedCards = localStorage.getItem("cards") || "[]";
                 setCards(JSON.parse(savedCards));
@@ -76,9 +76,7 @@ export default function MainPage() {
     const columnsWithCards = columnConfigs.map((col) => ({
         ...col,
         cards: Array.isArray(cards)
-            ? cards.filter((card) => 
-                card?.status?.trim() === col.title.trim()
-            )
+            ? cards.filter((card) => card?.status?.trim() === col.title.trim())
             : [],
     }));
 

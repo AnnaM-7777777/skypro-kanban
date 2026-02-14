@@ -7,6 +7,7 @@ export default function LogoutPage() {
     useEffect(() => {
         // Очистка данных пользователя
         localStorage.removeItem("user");
+        localStorage.removeItem("token");
         localStorage.removeItem("currentUser");
         localStorage.removeItem("darkTheme"); // опционально
 

@@ -4,7 +4,7 @@ import { signIn, signUp } from "../../services/auth";
 
 export default function AuthForm({ isSignUp = false }) {
     const navigate = useNavigate();
-    
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -14,10 +14,11 @@ export default function AuthForm({ isSignUp = false }) {
     // Валидация
     const isValidEmail = email.trim() !== "" && /\S+@\S+\.\S+/.test(email);
     const isValidPassword = password.trim().length >= 6;
-    const isValidName = !isSignUp || (name.trim() !== "" && name.trim().length >= 2);
-    
+    const isValidName =
+        !isSignUp || (name.trim() !== "" && name.trim().length >= 2);
+
     const allValid = isValidEmail && isValidPassword && isValidName;
-    
+
     const showEmailError = isSubmitted && !isValidEmail;
     const showPasswordError = isSubmitted && !isValidPassword;
     const showNameError = isSubmitted && isSignUp && !isValidName;
@@ -55,9 +56,9 @@ export default function AuthForm({ isSignUp = false }) {
             }
 
             // Сохраняем данные как в рабочем примере
-            localStorage.setItem("authToken", response.user.token);
-            localStorage.setItem("userName", response.user.name);
-            
+            localStorage.setItem("token", response.user.token);
+            localStorage.setItem("user", JSON.stringify(response.user)); // Полный объект
+
             navigate("/", { replace: true });
         } catch (err) {
             setError(err.message || "Ошибка авторизации");
@@ -69,11 +70,13 @@ export default function AuthForm({ isSignUp = false }) {
             <div className="modal">
                 <div className="logo">CardManager</div>
                 <div className="wrapper">
-                    <h2 className="title">{isSignUp ? "Регистрация" : "Вход"}</h2>
-                    
+                    <h2 className="title">
+                        {isSignUp ? "Регистрация" : "Вход"}
+                    </h2>
+
                     <form className="form" onSubmit={handleSubmit}>
                         {error && <p className="error-message">{error}</p>}
-                        
+
                         {isSignUp && (
                             <div className="input-wrapper">
                                 <input
@@ -86,7 +89,7 @@ export default function AuthForm({ isSignUp = false }) {
                                 />
                             </div>
                         )}
-                        
+
                         <div className="input-wrapper">
                             <input
                                 type="email"
@@ -97,7 +100,7 @@ export default function AuthForm({ isSignUp = false }) {
                                 autoFocus={!isSignUp}
                             />
                         </div>
-                        
+
                         <div className="input-wrapper">
                             <input
                                 type="password"
@@ -107,7 +110,7 @@ export default function AuthForm({ isSignUp = false }) {
                                 className={`form__input ${showPasswordError ? "error" : ""}`}
                             />
                         </div>
-                        
+
                         <button
                             type="submit"
                             className="btn btn-secondary"
@@ -115,7 +118,7 @@ export default function AuthForm({ isSignUp = false }) {
                         >
                             {isSignUp ? "Зарегистрироваться" : "Войти"}
                         </button>
-                        
+
                         <div className="form-group">
                             {isSignUp ? (
                                 <p>
