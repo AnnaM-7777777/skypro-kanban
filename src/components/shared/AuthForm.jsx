@@ -67,70 +67,74 @@ export default function AuthForm({ isSignUp = false }) {
 
     return (
         <div className="bg">
-            <div className="modal">
-                <div className="logo">CardManager</div>
-                <div className="wrapper">
-                    <h2 className="title">
+            <div className="login-modal-overlay">
+                <div className="wrapper login-modal-content">
+                    <h2 className="login-modal-title">
                         {isSignUp ? "Регистрация" : "Вход"}
                     </h2>
 
-                    <form className="form" onSubmit={handleSubmit}>
-                        {error && <p className="error-message">{error}</p>}
-
+                    <form
+                        className="login-modal-form"
+                        onSubmit={handleSubmit}
+                    >
                         {isSignUp && (
-                            <div className="input-wrapper">
-                                <input
-                                    type="text"
-                                    placeholder="Имя"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    className={`form__input ${showNameError ? "error" : ""}`}
-                                    autoFocus
-                                />
-                            </div>
+                            <input
+                                type="text"
+                                placeholder="Имя"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                className={`login-modal-input ${showNameError ? "error" : ""}`}
+                                autoFocus
+                            />
                         )}
 
-                        <div className="input-wrapper">
-                            <input
-                                type="email"
-                                placeholder="Эл. почта"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className={`form__input ${showEmailError ? "error" : ""}`}
-                                autoFocus={!isSignUp}
-                            />
-                        </div>
+                        <input
+                            type="email"
+                            placeholder="Эл. почта"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className={`login-modal-input ${showEmailError ? "error" : ""}`}
+                            autoFocus={!isSignUp}
+                        />
 
-                        <div className="input-wrapper">
-                            <input
-                                type="password"
-                                placeholder="Пароль"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className={`form__input ${showPasswordError ? "error" : ""}`}
-                            />
+                        <input
+                            type="password"
+                            placeholder="Пароль"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className={`login-modal-input ${showPasswordError ? "error" : ""}`}
+                        />
+
+                        <div className="login-modal-error">
+                            {error && <p>{error}</p>}
                         </div>
 
                         <button
                             type="submit"
-                            className="btn btn-secondary"
+                            className="btn login-modal-button"
                             disabled={isSubmitted && !allValid}
                         >
                             {isSignUp ? "Зарегистрироваться" : "Войти"}
                         </button>
 
-                        <div className="form-group">
+                        <div className="login-modal-footer">
                             {isSignUp ? (
                                 <p>
                                     Есть аккаунт?{" "}
-                                    <a href="/login" className="link">
+                                    <a
+                                        href="/login"
+                                        className="login-modal-link"
+                                    >
                                         Войдите здесь
                                     </a>
                                 </p>
                             ) : (
                                 <p>
                                     Нужно зарегистрироваться?{" "}
-                                    <a href="/register" className="link">
+                                    <a
+                                        href="/register"
+                                        className="login-modal-link"
+                                    >
                                         Регистрация
                                     </a>
                                 </p>

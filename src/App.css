@@ -81,13 +81,13 @@ ul li {
     color: #888;
 }
 
-.wrapper {
+/* .wrapper {
     max-width: 100%;
     width: 100vw;
     min-height: 100vh;
-    /* overflow: hidden;
-    background-color: #f1f1f1; */
-}
+    overflow: hidden;
+    background-color: #f1f1f1;
+} */
 
 ._hover01:hover {
     background-color: #565eef;
@@ -782,6 +782,7 @@ ul li {
 /* Центральное окно */
 .login-modal-content {
     width: 368px;
+    /* height: 329px; */
     border-radius: 10px;
     border: 0.7px solid #d4dbe5;
     box-shadow: 0px 4px 67px -12px #00000021;
@@ -831,17 +832,20 @@ ul li {
     color: #94a6be;
 }
 
-/* Сообщение ошибки */
-.login-modal-input--error {
-    border-color: #f84d4d !important;
+/* Бордер становится красным во время ошибки */
+.login-modal-input.error {
+    border-color: rgba(248, 77, 77, 1) !important;
 }
 
+/* Сообщение ошибки */
 .login-modal-error {
-    color: #f84d4d;
-    font-size: 12px;
+    font-family: Arial;
     font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: -1%;
     text-align: center;
-    line-height: 1.4;
+    color: rgba(248, 77, 77, 1);
 }
 
 /* Кнопка "Войти" */
