@@ -1,33 +1,64 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Calendar from "../Calendar/Calendar";
+import { fetchCardById, updateCard, deleteCard } from "../../services/api";
+import { getToken } from "../../services/auth";
 
 export default function CardViewPage() {
     const { id } = useParams();
     const navigate = useNavigate();
-
-    const [card, setCard] = useState(null);
+    const [task, setCard] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [editTitle, setEditTitle] = useState("");
     const [editDescription, setEditDescription] = useState("");
     const [editStatus, setEditStatus] = useState("");
     const [editDate, setEditDate] = useState("");
+    const [error, setError] = useState("");
 
-    // Загрузка карточки из localStorage
+    // Загрузка карточки с сервера
     useEffect(() => {
-        const savedCards = localStorage.getItem("cards") || "[]";
-        const cards = JSON.parse(savedCards);
-        const found = cards.find((t) => t.id == id);
-        if (found) {
-            setCard(found);
-            setEditTitle(found.title);
-            setEditDescription(found.description);
-            setEditStatus(found.status);
-            setEditDate(found.date);
-        }
-    }, [id]);
+        const loadCard = async () => {
+            try {
+                setLoading(true);
+                setError("");
 
-    // Форматирование даты: "16.01.2026" → "16.01.26"
+                const token = getToken();
+                if (!token) {
+                    navigate("/login");
+                    return;
+                }
+
+                const data = await fetchCardById({ token, id });
+                setCard(data);
+                setEditTitle(data.title);
+                setEditDescription(data.description);
+                setEditStatus(data.status);
+                setEditDate(data.date);
+            } catch (err) {
+                console.error("Ошибка загрузки задачи:", err);
+                setError(err.message);
+
+                // Резерв: загрузка из localStorage
+                const savedCards = localStorage.getItem("tasks") || "[]";
+                const tasks = JSON.parse(savedCards);
+                const found = tasks.find((t) => t.id == id);
+                if (found) {
+                    setCard(found);
+                    setEditTitle(found.title);
+                    setEditDescription(found.description);
+                    setEditStatus(found.status);
+                    setEditDate(found.date);
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadCard();
+    }, [id, navigate]);
+
+    // Форматирование даты
     const formatDateShortYear = (dateStr) => {
         if (!dateStr) return "";
         const parts = dateStr.split(".");
@@ -37,32 +68,38 @@ export default function CardViewPage() {
         return dateStr;
     };
 
-    // Сохранение изменений
-    const handleSave = () => {
-        const savedCards = localStorage.getItem("cards") || "[]";
-        const cards = JSON.parse(savedCards);
-        const updatedCards = cards.map((c) =>
-            c.id == id
-                ? {
-                      ...c,
-                      title: editTitle,
-                      description: editDescription,
-                      status: editStatus,
-                      date: editDate,
-                  }
-                : c,
-        );
-        localStorage.setItem("cards", JSON.stringify(updatedCards));
-        setIsEditing(false);
+    // Сохранение изменений через API
+    const handleSave = async () => {
+        try {
+            const token = getToken();
+            if (!token) {
+                setError("Необходима авторизация");
+                return;
+            }
+
+            const updatedTask = {
+                title: editTitle,
+                description: editDescription,
+                status: editStatus,
+                date: editDate,
+                topic: task.topic,
+            };
+
+            await updateCard({ token, id, task: updatedTask });
+            navigate("/");
+        } catch (err) {
+            console.error("Ошибка обновления задачи:", err);
+            setError(err.message);
+        }
     };
 
     // Отмена редактирования
     const handleCancel = () => {
-        if (card) {
-            setEditTitle(card.title);
-            setEditDescription(card.description);
-            setEditStatus(card.status);
-            setEditDate(card.date);
+        if (task) {
+            setEditTitle(task.title);
+            setEditDescription(task.description);
+            setEditStatus(task.status);
+            setEditDate(task.date);
         }
         setIsEditing(false);
     };
@@ -77,21 +114,46 @@ export default function CardViewPage() {
         setEditDate(date);
     };
 
-    // Удаление карточки
-    const handleDelete = () => {
-        const savedCards = localStorage.getItem("cards") || "[]";
-        const cards = JSON.parse(savedCards);
-        const updatedCards = cards.filter((t) => t.id != id);
-        localStorage.setItem("cards", JSON.stringify(updatedCards));
-        navigate("/");
+    // Удаление карточки через API
+    const handleDelete = async () => {
+        if (!confirm("Удалить задачу?")) return;
+
+        try {
+            const token = getToken();
+            if (!token) {
+                setError("Необходима авторизация");
+                return;
+            }
+
+            await deleteCard({ token, id });
+            navigate("/");
+        } catch (err) {
+            console.error("Ошибка удаления задачи:", err);
+            setError(err.message);
+
+            // Резерв: удаление из localStorage
+            const savedCards = localStorage.getItem("tasks") || "[]";
+            const tasks = JSON.parse(savedCards);
+            const updatedCards = tasks.filter((t) => t.id != id);
+            localStorage.setItem("tasks", JSON.stringify(updatedCards));
+            navigate("/");
+        }
     };
 
-    // Закрытие (навигация на главную)
+    // Закрытие
     const handleClose = () => {
         navigate("/");
     };
 
-    if (!card) {
+    if (loading) {
+        return (
+            <div style={{ padding: "40px", textAlign: "center" }}>
+                Загрузка...
+            </div>
+        );
+    }
+
+    if (!task) {
         return (
             <div style={{ padding: "40px", textAlign: "center" }}>
                 Задача не найдена
@@ -104,6 +166,20 @@ export default function CardViewPage() {
             <div className="pop-browse__container">
                 <div className="pop-browse__block">
                     <div className="pop-browse__content">
+                        {error && (
+                            <div
+                                style={{
+                                    color: "red",
+                                    marginBottom: "16px",
+                                    padding: "8px",
+                                    backgroundColor: "#ffebee",
+                                    borderRadius: "4px",
+                                }}
+                            >
+                                {error}
+                            </div>
+                        )}
+
                         <div className="pop-browse__top-block">
                             {isEditing ? (
                                 <input
@@ -125,12 +201,24 @@ export default function CardViewPage() {
                                 <h3 className="pop-browse__ttl">{editTitle}</h3>
                             )}
                             <div
-                                className={`topics__theme theme-top _${card.topic === "Web Design" ? "orange" : card.topic === "Research" ? "green" : "purple"} _active-topic`}
+                                className={`topics__theme theme-top _${
+                                    task.topic === "Web Design"
+                                        ? "orange"
+                                        : task.topic === "Research"
+                                          ? "green"
+                                          : "purple"
+                                } _active-topic`}
                             >
                                 <p
-                                    className={`_${card.topic === "Web Design" ? "orange" : card.topic === "Research" ? "green" : "purple"}`}
+                                    className={`_${
+                                        task.topic === "Web Design"
+                                            ? "orange"
+                                            : task.topic === "Research"
+                                              ? "green"
+                                              : "purple"
+                                    }`}
                                 >
-                                    {card.topic}
+                                    {task.topic}
                                 </p>
                             </div>
                         </div>
@@ -275,12 +363,24 @@ export default function CardViewPage() {
                         <div className="theme-down__topics theme-down">
                             <p className="topics__p subttl">Категория</p>
                             <div
-                                className={`topics__theme _${card.topic === "Web Design" ? "orange" : card.topic === "Research" ? "green" : "purple"} _active-topic`}
+                                className={`topics__theme _${
+                                    task.topic === "Web Design"
+                                        ? "orange"
+                                        : task.topic === "Research"
+                                          ? "green"
+                                          : "purple"
+                                } _active-topic`}
                             >
                                 <p
-                                    className={`_${card.topic === "Web Design" ? "orange" : card.topic === "Research" ? "green" : "purple"}`}
+                                    className={`_${
+                                        task.topic === "Web Design"
+                                            ? "orange"
+                                            : task.topic === "Research"
+                                              ? "green"
+                                              : "purple"
+                                    }`}
                                 >
-                                    {card.topic}
+                                    {task.topic}
                                 </p>
                             </div>
                         </div>
@@ -302,11 +402,7 @@ export default function CardViewPage() {
                                     </button>
                                     <button
                                         className="btn-browse__delete _btn-bor _hover03"
-                                        onClick={() => {
-                                            if (confirm("Удалить задачу?")) {
-                                                handleDelete();
-                                            }
-                                        }}
+                                        onClick={handleDelete}
                                     >
                                         Удалить задачу
                                     </button>
@@ -321,11 +417,7 @@ export default function CardViewPage() {
                                     </button>
                                     <button
                                         className="btn-browse__delete _btn-bor _hover03"
-                                        onClick={() => {
-                                            if (confirm("Удалить задачу?")) {
-                                                handleDelete();
-                                            }
-                                        }}
+                                        onClick={handleDelete}
                                     >
                                         Удалить задачу
                                     </button>

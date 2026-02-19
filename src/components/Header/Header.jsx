@@ -20,7 +20,7 @@ export default function Header({ user, isDarkTheme, onTogglePopUser }) {
     };
 
     const handleCreateNewCard = () => {
-        navigate("/card/new");
+        navigate("/task/new");
     };
 
     return (

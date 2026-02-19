@@ -27,7 +27,7 @@ export default function PopUser({
         <>
             <div className="header__pop-user-set pop-user-set">
                 <p className="pop-user-set__name">{user.name}</p>
-                <p className="pop-user-set__mail">{user.email}</p>
+                <p className="pop-user-set__mail">{user.login}</p>
                 <div className="pop-user-set__theme">
                     <p>Тёмная тема</p>
                     <input

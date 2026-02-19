@@ -11,8 +11,8 @@ import {
     SCardDateP,
 } from "./Card.styled";
 
-export default function Card({ card, onClick }) {
-    const { topic, title, date } = card;
+export default function Card({ task, onClick }) {
+    const { topic, title, date } = task;
 
     return (
         <SCardItem>

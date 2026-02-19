@@ -7,7 +7,7 @@ import {
     EmptyMessage,
 } from "./Column.styled";
 
-export default function Column({ title, cards, onCardClick }) {
+export default function Column({ title, tasks, onCardClick }) {
     return (
         <SColumn>
             <SColumnTitle>
@@ -15,12 +15,12 @@ export default function Column({ title, cards, onCardClick }) {
             </SColumnTitle>
 
             <SCards>
-                {cards.length > 0 ? (
-                    cards.map((card) => (
+                {tasks.length > 0 ? (
+                    tasks.map((task) => (
                         <Card
-                            key={card.id}
-                            card={card}
-                            onClick={() => onCardClick(card)}
+                            key={task.id}
+                            task={task}
+                            onClick={() => onCardClick(task)}
                         />
                     ))
                 ) : (
