@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 export default function CardEditPage() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [card, setCard] = useState(null);
+    const [task, setCard] = useState(null);
 
     useEffect(() => {
-        const savedCards = localStorage.getItem("cards") || "[]";
-        const cards = JSON.parse(savedCards);
-        const found = cards.find((t) => t.id == id);
+        const savedCards = localStorage.getItem("tasks") || "[]";
+        const tasks = JSON.parse(savedCards);
+        const found = tasks.find((t) => t.id == id);
         if (found) {
             setCard({ ...found });
         }
@@ -21,16 +21,16 @@ export default function CardEditPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (card) {
-            const savedCards = localStorage.getItem("cards") || "[]";
-            const cards = JSON.parse(savedCards);
-            const updatedCards = cards.map((t) => (t.id == id ? card : t));
-            localStorage.setItem("cards", JSON.stringify(updatedCards));
-            navigate(`/card/${id}`);
+        if (task) {
+            const savedCards = localStorage.getItem("tasks") || "[]";
+            const tasks = JSON.parse(savedCards);
+            const updatedCards = tasks.map((t) => (t.id == id ? task : t));
+            localStorage.setItem("tasks", JSON.stringify(updatedCards));
+            navigate(`/task/${id}`);
         }
     };
 
-    if (!card)
+    if (!task)
         return (
             <div style={{ padding: "40px", textAlign: "center" }}>
                 Загрузка...
@@ -38,11 +38,11 @@ export default function CardEditPage() {
         );
 
     return (
-        <div className="card-form-container">
+        <div className="task-form-container">
             <h2>Редактировать задачу</h2>
             <form onSubmit={handleSubmit}>
                 <select
-                    value={card.topic}
+                    value={task.topic}
                     onChange={(e) => handleChange("topic", e.target.value)}
                 >
                     <option value="Web Design">Web Design</option>
@@ -51,23 +51,23 @@ export default function CardEditPage() {
                 </select>
                 <input
                     type="text"
-                    value={card.title}
+                    value={task.title}
                     onChange={(e) => handleChange("title", e.target.value)}
                     required
                 />
                 <textarea
-                    value={card.description || ""}
+                    value={task.description || ""}
                     onChange={(e) =>
                         handleChange("description", e.target.value)
                     }
                 />
                 <input
                     type="date"
-                    value={card.date || ""}
+                    value={task.date || ""}
                     onChange={(e) => handleChange("date", e.target.value)}
                 />
                 <select
-                    value={card.status}
+                    value={task.status}
                     onChange={(e) => handleChange("status", e.target.value)}
                 >
                     <option value="Без статуса">Без статуса</option>
@@ -77,7 +77,7 @@ export default function CardEditPage() {
                     <option value="Готово">Готово</option>
                 </select>
                 <button type="submit">Сохранить</button>
-                <button type="button" onClick={() => navigate(`/card/${id}`)}>
+                <button type="button" onClick={() => navigate(`/task/${id}`)}>
                     Отмена
                 </button>
             </form>

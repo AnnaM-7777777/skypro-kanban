@@ -73,7 +73,7 @@ ul li {
     }
 }
 
-.card {
+.task {
     padding: 2em;
 }
 
@@ -122,7 +122,7 @@ ul li {
 
 .pop-user-set:target,
 .pop-exit:target,
-.pop-new-card:target,
+.pop-new-task:target,
 .pop-browse:target {
     display: block;
 }
@@ -323,7 +323,7 @@ ul li {
     font-weight: 600;
 }
 
-.pop-new-card {
+.pop-new-task {
     width: 100%;
     min-width: 375px;
     height: 100%;
@@ -982,7 +982,7 @@ ul li {
 }
 
 @media screen and (max-width: 660px) {
-    .pop-new-card {
+    .pop-new-task {
         top: 70px;
     }
 

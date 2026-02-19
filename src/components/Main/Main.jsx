@@ -22,7 +22,7 @@ export default function Main({ columns, loading, onCardClick }) {
                             <Column
                                 key={col.id}
                                 title={col.title}
-                                cards={col.cards}
+                                tasks={col.tasks}
                                 onCardClick={onCardClick}
                             />
                         ))}

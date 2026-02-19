@@ -15,16 +15,16 @@ export async function fetchCards({ token }) {
         console.error("Ошибка при загрузке карточек:", error);
         throw new Error(
             error.response?.data?.error ||
-            error.message ||
-            "Не удалось загрузить карточки"
+                error.message ||
+                "Не удалось загрузить карточки",
         );
     }
 }
 
 // Создание новой карточки
-export async function createCard({ token, card }) {
+export async function createCard({ token, task }) {
     try {
-        const response = await axios.post(API_BASE_URL, card, {
+        const response = await axios.post(API_BASE_URL, task, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "text/html",
@@ -35,8 +35,8 @@ export async function createCard({ token, card }) {
         console.error("Ошибка при создании карточки:", error);
         throw new Error(
             error.response?.data?.error ||
-            error.message ||
-            "Не удалось создать карточку"
+                error.message ||
+                "Не удалось создать карточку",
         );
     }
 }
@@ -54,16 +54,16 @@ export async function fetchCardById({ token, id }) {
         console.error("Ошибка при загрузке карточки:", error);
         throw new Error(
             error.response?.data?.error ||
-            error.message ||
-            "Не удалось загрузить карточку"
+                error.message ||
+                "Не удалось загрузить карточку",
         );
     }
 }
 
 // Обновление карточки
-export async function updateCard({ token, id, card }) {
+export async function updateCard({ token, id, task }) {
     try {
-        const response = await axios.patch(`${API_BASE_URL}/${id}`, card, {
+        const response = await axios.patch(`${API_BASE_URL}/${id}`, task, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "text/html",
@@ -74,8 +74,8 @@ export async function updateCard({ token, id, card }) {
         console.error("Ошибка при обновлении карточки:", error);
         throw new Error(
             error.response?.data?.error ||
-            error.message ||
-            "Не удалось обновить карточку"
+                error.message ||
+                "Не удалось обновить карточку",
         );
     }
 }
@@ -93,8 +93,8 @@ export async function deleteCard({ token, id }) {
         console.error("Ошибка при удалении карточки:", error);
         throw new Error(
             error.response?.data?.error ||
-            error.message ||
-            "Не удалось удалить карточку"
+                error.message ||
+                "Не удалось удалить карточку",
         );
     }
 }

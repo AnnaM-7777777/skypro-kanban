@@ -7,7 +7,7 @@ import { getToken } from "../../services/auth";
 export default function CardViewPage() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [card, setCard] = useState(null);
+    const [task, setCard] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [editTitle, setEditTitle] = useState("");
@@ -40,9 +40,9 @@ export default function CardViewPage() {
                 setError(err.message);
 
                 // Резерв: загрузка из localStorage
-                const savedCards = localStorage.getItem("cards") || "[]";
-                const cards = JSON.parse(savedCards);
-                const found = cards.find((t) => t.id == id);
+                const savedCards = localStorage.getItem("tasks") || "[]";
+                const tasks = JSON.parse(savedCards);
+                const found = tasks.find((t) => t.id == id);
                 if (found) {
                     setCard(found);
                     setEditTitle(found.title);
@@ -82,7 +82,7 @@ export default function CardViewPage() {
                 description: editDescription,
                 status: editStatus,
                 date: editDate,
-                topic: card.topic,
+                topic: task.topic,
             };
 
             await updateCard({ token, id, task: updatedTask });
@@ -95,11 +95,11 @@ export default function CardViewPage() {
 
     // Отмена редактирования
     const handleCancel = () => {
-        if (card) {
-            setEditTitle(card.title);
-            setEditDescription(card.description);
-            setEditStatus(card.status);
-            setEditDate(card.date);
+        if (task) {
+            setEditTitle(task.title);
+            setEditDescription(task.description);
+            setEditStatus(task.status);
+            setEditDate(task.date);
         }
         setIsEditing(false);
     };
@@ -132,10 +132,10 @@ export default function CardViewPage() {
             setError(err.message);
 
             // Резерв: удаление из localStorage
-            const savedCards = localStorage.getItem("cards") || "[]";
-            const cards = JSON.parse(savedCards);
-            const updatedCards = cards.filter((t) => t.id != id);
-            localStorage.setItem("cards", JSON.stringify(updatedCards));
+            const savedCards = localStorage.getItem("tasks") || "[]";
+            const tasks = JSON.parse(savedCards);
+            const updatedCards = tasks.filter((t) => t.id != id);
+            localStorage.setItem("tasks", JSON.stringify(updatedCards));
             navigate("/");
         }
     };
@@ -153,7 +153,7 @@ export default function CardViewPage() {
         );
     }
 
-    if (!card) {
+    if (!task) {
         return (
             <div style={{ padding: "40px", textAlign: "center" }}>
                 Задача не найдена
@@ -202,23 +202,23 @@ export default function CardViewPage() {
                             )}
                             <div
                                 className={`topics__theme theme-top _${
-                                    card.topic === "Web Design"
+                                    task.topic === "Web Design"
                                         ? "orange"
-                                        : card.topic === "Research"
+                                        : task.topic === "Research"
                                           ? "green"
                                           : "purple"
                                 } _active-topic`}
                             >
                                 <p
                                     className={`_${
-                                        card.topic === "Web Design"
+                                        task.topic === "Web Design"
                                             ? "orange"
-                                            : card.topic === "Research"
+                                            : task.topic === "Research"
                                               ? "green"
                                               : "purple"
                                     }`}
                                 >
-                                    {card.topic}
+                                    {task.topic}
                                 </p>
                             </div>
                         </div>
@@ -364,23 +364,23 @@ export default function CardViewPage() {
                             <p className="topics__p subttl">Категория</p>
                             <div
                                 className={`topics__theme _${
-                                    card.topic === "Web Design"
+                                    task.topic === "Web Design"
                                         ? "orange"
-                                        : card.topic === "Research"
+                                        : task.topic === "Research"
                                           ? "green"
                                           : "purple"
                                 } _active-topic`}
                             >
                                 <p
                                     className={`_${
-                                        card.topic === "Web Design"
+                                        task.topic === "Web Design"
                                             ? "orange"
-                                            : card.topic === "Research"
+                                            : task.topic === "Research"
                                               ? "green"
                                               : "purple"
                                     }`}
                                 >
-                                    {card.topic}
+                                    {task.topic}
                                 </p>
                             </div>
                         </div>

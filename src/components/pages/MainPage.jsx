@@ -8,7 +8,7 @@ import { getToken } from "../../services/auth";
 
 export default function MainPage() {
     const navigate = useNavigate();
-    const [cards, setCards] = useState([]);
+    const [tasks, setCards] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [user, setUser] = useState(() => {
@@ -35,8 +35,8 @@ export default function MainPage() {
                 // Защита: убедимся, что данные — это массив
                 if (Array.isArray(data)) {
                     setCards(data);
-                } else if (data && Array.isArray(data.cards)) {
-                    setCards(data.cards);
+                } else if (data && Array.isArray(data.tasks)) {
+                    setCards(data.tasks);
                 } else {
                     setCards([]);
                 }
@@ -45,7 +45,7 @@ export default function MainPage() {
                 setError(err.message || "Ошибка загрузки данных");
 
                 // Загрузка из localStorage как резерв
-                const savedCards = localStorage.getItem("cards") || "[]";
+                const savedCards = localStorage.getItem("tasks") || "[]";
                 setCards(JSON.parse(savedCards));
             } finally {
                 setLoading(false);
@@ -72,16 +72,16 @@ export default function MainPage() {
         { id: "done", title: "Готово" },
     ];
 
-    // Защита: убедимся, что cards — это массив
+    // Защита: убедимся, что tasks — это массив
     const columnsWithCards = columnConfigs.map((col) => ({
         ...col,
-        cards: Array.isArray(cards)
-            ? cards.filter((card) => card?.status?.trim() === col.title.trim())
+        tasks: Array.isArray(tasks)
+            ? tasks.filter((task) => task?.status?.trim() === col.title.trim())
             : [],
     }));
 
-    const handleCardClick = (card) => {
-        navigate(`/card/${card.id}`);
+    const handleCardClick = (task) => {
+        navigate(`/task/${task.id}`);
     };
 
     const handleThemeToggle = () => {

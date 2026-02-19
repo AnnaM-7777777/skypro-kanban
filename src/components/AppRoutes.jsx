@@ -16,7 +16,7 @@ export default function AppRoutes() {
             <Route path="/login" element={<SignInPage />} />
             <Route path="/register" element={<SignUpPage />} />
             <Route path="/logout" element={<LogoutPage />} />
-            
+
             {/* Защищённые маршруты */}
             <Route
                 path="/"
@@ -26,9 +26,9 @@ export default function AppRoutes() {
                     </ProtectedRoute>
                 }
             >
-                <Route path="card/new" element={<CardNewPage />} />
-                <Route path="card/:id" element={<CardViewPage />} />
-                <Route path="card/:id/edit" element={<CardEditPage />} />
+                <Route path="task/new" element={<CardNewPage />} />
+                <Route path="task/:id" element={<CardViewPage />} />
+                <Route path="task/:id/edit" element={<CardEditPage />} />
             </Route>
 
             {/* Страница 404 */}
