@@ -13,22 +13,16 @@ function AppRoutes({ isDark, toggleTheme }) {
         <>
             <Routes>
                 <Route path="/login" element={<SignInPage isDark={isDark} />} />
-                <Route
-                    path="/register"
-                    element={<SignUpPage isDark={isDark} />}
-                />
+                <Route path="/register" element={<SignUpPage isDark={isDark} />} />
 
                 <Route element={<ProtectedRoute />}>
-                    <Route
-                        path="/"
-                        element={
+                    <Route path="/" element={
                             <MainPage
                                 isDark={isDark}
                                 toggleTheme={toggleTheme}
                             />
                         }
                     >
-                        <Route path="exit" element={<PopUser />} />
                         <Route path="card/:id" element={<PopBrowse />} />
                         <Route path="add-task" element={<PopNewCard />} />
                     </Route>

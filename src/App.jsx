@@ -1,12 +1,3 @@
-/* import AppRoutes from "./components/AppRoutes";
-
-function App() {
-    return <AppRoutes />;
-}
-
-export default App;
- */
-
 import AppRoutes from "./components/AppRoutes";
 import { AuthProvider } from "./context/AuthProvider";
 import { TaskProvider } from "./context/TaskProvider";
