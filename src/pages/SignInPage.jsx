@@ -15,14 +15,12 @@ import {
 const SignInPage = ({ isDark }) => {
     const navigate = useNavigate();
     const { login: authLogin } = useAuth();
-
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loginError, setLoginError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [loading, setLoading] = useState(false);
-
     const handleLogin = async (e) => {
         e.preventDefault();
         setError("");
@@ -30,7 +28,7 @@ const SignInPage = ({ isDark }) => {
         setPasswordError(false);
 
         if (!login || !password) {
-            setError("Заполните все поля");
+            setError("Заполните все поля.");
             if (!login) setLoginError(true);
             if (!password) setPasswordError(true);
             return;
@@ -42,13 +40,24 @@ const SignInPage = ({ isDark }) => {
             navigate("/", { replace: true });
         } catch {
             setError(
-                "Введенные вами данные не распознаны. Проверьте логин и пароль.",
+                "Введенные вами данные не распознаны. Проверьте свой логин и пароль и повторите попытку входа.",
             );
             setLoginError(true);
             setPasswordError(true);
         } finally {
             setLoading(false);
         }
+    };
+
+    // Обработчики с очисткой ошибок при вводе
+    const handleLoginChange = (e) => {
+        setLogin(e.target.value);
+        if (loginError) setLoginError(false);
+    };
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+        if (passwordError) setPasswordError(false);
     };
 
     return (
@@ -61,7 +70,7 @@ const SignInPage = ({ isDark }) => {
                         type="text"
                         placeholder="Логин"
                         value={login}
-                        onChange={(e) => setLogin(e.target.value)}
+                        onChange={handleLoginChange}
                         $error={loginError}
                         $isDark={isDark}
                     />
@@ -70,17 +79,21 @@ const SignInPage = ({ isDark }) => {
                         type="password"
                         placeholder="Пароль"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={handlePasswordChange}
                         $error={passwordError}
                         $isDark={isDark}
                     />
 
-                    <Button type="submit" disabled={loading} $isDark={isDark}>
+                    {error && <ErrorText>{error}</ErrorText>}
+
+                    <Button 
+                        type="submit" 
+                        disabled={loading || loginError || passwordError}
+                        $isDark={isDark}
+                    >
                         {loading ? "Входим..." : "Войти"}
                     </Button>
-                </form>
-
-                {error && <ErrorText>{error}</ErrorText>}
+                </form>                
 
                 <RegisterLink $isDark={isDark}>
                     Нужно зарегистрироваться?{" "}

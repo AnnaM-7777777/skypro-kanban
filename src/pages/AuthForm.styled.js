@@ -47,12 +47,6 @@ export const Title = styled.h2`
 export const Form = styled.form`
     display: flex;
     flex-direction: column;
-    gap: 15px;
-`;
-
-export const InputWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
     gap: 7px;
 `;
 
@@ -62,10 +56,13 @@ export const Input = styled.input`
     font-size: 14px;
     box-sizing: border-box;
     border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s ease;
 
-    border: 1px solid
-        ${({ theme }) =>
-            theme.mode === "dark"
+    border: 1px solid ${({ $error, theme }) =>
+        $error
+            ? "rgba(248, 77, 77, 1)"
+            : theme.mode === "dark"
                 ? "rgba(255,255,255,0.4)"
                 : "rgba(148, 166, 190, 0.4)"};
 
@@ -80,7 +77,7 @@ export const Input = styled.input`
             theme.mode === "dark"
                 ? "rgba(255,255,255,0.6)"
                 : "rgba(148, 166, 190, 1)"};
-    }
+    }    
 
     @media screen and (max-width: 660px) {
         background: ${({ theme }) =>
@@ -97,17 +94,19 @@ export const Button = styled.button`
     font-weight: 500;
     text-align: center;
 
-    background-color: #4b6cf7;
+    background-color: ${({ disabled }) =>
+        disabled ? "rgba(148, 166, 190, 0.6)" : "#4b6cf7"};
+    
     color: rgba(255, 255, 255, 1);
-
     border: none;
     border-radius: 6px;
-    cursor: pointer;
+    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+    transition: background-color 0.2s ease;
 
     &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
+        opacity: 1;
     }
+
     @media screen and (max-width: 660px) {
         min-height: 40px;
         margin-top: 5px;
@@ -133,7 +132,7 @@ export const FormGroup = styled.div`
 `;
 
 export const ErrorText = styled.p`
-    color: red;
+    color: rgba(248, 77, 77, 1);
     font-size: 12px;
     text-align: center;
 `;

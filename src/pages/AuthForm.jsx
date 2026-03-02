@@ -1,19 +1,20 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
-
 import {
     Bg,
     Modal,
     ModalWrapper,
     Title,
     Form,
-    InputWrapper,
     Input,
     Button,
     FormGroup,
     ErrorText,
 } from "./AuthForm.styled";
+
+// Регулярное выражение для валидации email
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const AuthForm = ({ isSignUp }) => {
     const navigate = useNavigate();
@@ -22,6 +23,9 @@ const AuthForm = ({ isSignUp }) => {
     const [loginValue, setLoginValue] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+    const [loginError, setLoginError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [nameError, setNameError] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -29,8 +33,52 @@ const AuthForm = ({ isSignUp }) => {
         e.preventDefault();
         setError("");
 
-        if (!loginValue || !password || (isSignUp && !name)) {
-            setError("Заполните все поля");
+        // Сбрасываем ошибки полей
+        setLoginError(false);
+        setPasswordError(false);
+        setNameError(false);
+
+        let hasError = false;
+        let hasEmailError = false;
+
+        // Валидация email (отдельно)
+        if (!loginValue.trim()) {
+            setLoginError(true);
+            hasError = true;
+        } else if (!EMAIL_REGEX.test(loginValue.trim())) {
+            setLoginError(true);
+            hasEmailError = true;
+            hasError = true;
+        }
+
+        // Валидация пароля
+        if (!password.trim()) {
+            setPasswordError(true);
+            hasError = true;
+        } else if (password.length < 6) {
+            setPasswordError(true);
+            hasError = true;
+        }
+
+        // Валидация имени (только для регистрации)
+        if (isSignUp && !name.trim()) {
+            setNameError(true);
+            hasError = true;
+        }
+
+        // Показываем соответствующее сообщение
+        if (hasError) {
+            if (hasEmailError) {
+                // Некорректный email
+                setError(
+                    "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку.",
+                );
+            } else {
+                // Пустые поля или короткий пароль
+                setError(
+                    "Введенные вами данные не корректны. Чтобы завершить регистрацию, заполните все поля в форме.",
+                );
+            }
             return;
         }
 
@@ -51,13 +99,33 @@ const AuthForm = ({ isSignUp }) => {
             }
 
             navigate("/", { replace: true });
-        } catch {
+        } catch (err) {
             setError(
-                "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку.",
+                err ||
+                    "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку.",
             );
+            setLoginError(true);
+            setPasswordError(true);
+            if (isSignUp) setNameError(true);
         } finally {
             setLoading(false);
         }
+    };
+
+    // Обработчики onChange
+    const handleLoginChange = (e) => {
+        setLoginValue(e.target.value);
+        if (loginError) setLoginError(false);
+    };
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+        if (passwordError) setPasswordError(false);
+    };
+
+    const handleNameChange = (e) => {
+        setName(e.target.value);
+        if (nameError) setNameError(false);
     };
 
     return (
@@ -66,47 +134,55 @@ const AuthForm = ({ isSignUp }) => {
                 <ModalWrapper>
                     <Title>{isSignUp ? "Регистрация" : "Вход"}</Title>
 
-                    <Form onSubmit={handleSubmit}>
-                        <InputWrapper>
-                            {isSignUp && (
-                                <Input
-                                    type="text"
-                                    placeholder="Имя"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                />
-                            )}
-
+                    {/* Добавляем noValidate для отключения нативной валидации браузера */}
+                    <Form onSubmit={handleSubmit} noValidate>
+                        {isSignUp && (
                             <Input
                                 type="text"
-                                placeholder="Логин"
-                                value={loginValue}
-                                onChange={(e) => setLoginValue(e.target.value)}
-                                autoComplete="username"
+                                placeholder="Имя"
+                                value={name}
+                                onChange={handleNameChange}
+                                $error={nameError}
                             />
+                        )}
 
-                            <Input
-                                type="password"
-                                placeholder="Пароль"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                autoComplete={
-                                    isSignUp
-                                        ? "new-password"
-                                        : "current-password"
-                                }
-                            />
-                        </InputWrapper>
+                        <Input
+                            type="email"
+                            placeholder="Email"
+                            value={loginValue}
+                            onChange={handleLoginChange}
+                            autoComplete="email"
+                            $error={loginError}
+                        />
 
-                        <Button type="submit" disabled={loading}>
+                        <Input
+                            type="password"
+                            placeholder="Пароль"
+                            value={password}
+                            onChange={handlePasswordChange}
+                            autoComplete={
+                                isSignUp ? "new-password" : "current-password"
+                            }
+                            $error={passwordError}
+                        />
+
+                        {error && <ErrorText>{error}</ErrorText>}
+
+                        <Button
+                            type="submit"
+                            disabled={
+                                loading ||
+                                loginError ||
+                                passwordError ||
+                                (isSignUp && nameError)
+                            }
+                        >
                             {loading
                                 ? "Загрузка..."
                                 : isSignUp
                                   ? "Зарегистрироваться"
                                   : "Войти"}
                         </Button>
-
-                        {error && <ErrorText>{error}</ErrorText>}
 
                         {!isSignUp && (
                             <FormGroup>

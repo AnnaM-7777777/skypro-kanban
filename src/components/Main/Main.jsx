@@ -1,4 +1,3 @@
-// src/components/Main/Main.jsx
 import { useState, useCallback } from "react";
 import { DragDropContext } from "@hello-pangea/dnd";
 import Column from "../Column/Column";
@@ -30,7 +29,7 @@ const Main = ({
 
             if (!card) return;
 
-            // 🔄 Если переместили в ДРУГУЮ колонку — обновляем статус на сервере
+            // Если переместили в ДРУГУЮ колонку — обновляем статус на сервере
             if (source.droppableId !== destination.droppableId) {
                 onUpdateCard({
                     ...card,
@@ -38,7 +37,7 @@ const Main = ({
                 });
             }
 
-            // 💾 Сохраняем НОВЫЙ порядок для целевой колонки в localStorage
+            // Сохраняем НОВЫЙ порядок для целевой колонки в localStorage
             const destColumn = columns.find(
                 (col) => col.id === destination.droppableId,
             );

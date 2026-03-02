@@ -1,13 +1,9 @@
 import { Routes, Route, Link } from "react-router-dom";
-
-// Страницы: выходим из components (..) и заходим в pages
 import SignInPage from "../pages/SignInPage";
 import SignUpPage from "../pages/SignUpPage";
 import MainPage from "../pages/MainPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import ProtectedRoute from "../pages/ProtectedRoute";
-
-// Компоненты: выходим из components (..) и заходим в components/popups
 import PopUser from "../components/popups/popExitConfirm";
 import PopBrowse from "../components/popups/popBrowse";
 import PopNewCard from "../components/popups/popNewCard";
