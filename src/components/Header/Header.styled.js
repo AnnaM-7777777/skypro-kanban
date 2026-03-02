@@ -1,92 +1,111 @@
 import styled from "styled-components";
+import { COLORS } from "../../utils/theme.js";
 
 export const SHeader = styled.header`
     width: 100%;
-    margin: 0 auto;
-    background-color: #ffffff;
+    height: 70px;
+    background-color: ${({ theme }) => theme.colors.bgHeader};
+    color: ${({ theme }) => theme.colors.text};
+    box-sizing: border-box;
+    padding-left: calc(50% - 600px);
+    padding-right: calc(50% - 600px);
 `;
 
 export const SHeaderBlock = styled.div`
-    height: 70px;
     display: flex;
-    flex-wrap: nowrap;
+    width: 100%;
+    height: 100%;
     align-items: center;
     justify-content: space-between;
     position: relative;
-    top: 0;
-    left: 0;
 `;
 
 export const LogoWrapper = styled.div`
-    width: 85px;
-
-    a {
-        display: block;
-        img {
-            width: 100%;
-            display: block;
-        }
+    img {
+        width: 84px;
     }
 `;
 
 export const Nav = styled.nav`
     display: flex;
-    align-items: center;
     gap: 20px;
-    max-width: 290px;
+    align-items: center;
+    position: relative;
 `;
 
 export const CreateButton = styled.button`
     width: 178px;
     height: 30px;
     border-radius: 4px;
-    background-color: #565eef;
+    background-color: ${COLORS.primaryBtn};
     border: none;
-    color: white;
-    font-size: 14px;
-    font-weight: 500;
     cursor: pointer;
-    outline: none;
 
-    &:hover {
-        background-color: #565eef;
+    a {
+        color: ${COLORS.whiteTextBtn};
+        font-family: "Roboto", Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    @media screen and (max-width: 660px) {
+        display: none;
     }
 `;
 
-export const UserButton = styled.button`
+export const UserName = styled.button`
+    background: none;
+    border: none;
+    padding: 0;
     display: flex;
     align-items: center;
-    gap: 5px;
-    height: 100%;
-    font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-size: 14px;
-    font-weight: 500;
     line-height: 20px;
-    color: #565eef;
-    background-color: transparent;
-    border: none;
+    color: ${({ theme }) => theme.colors.btnText};
     cursor: pointer;
-    outline: none;
 
     &::after {
         content: "";
-        display: block;
-        width: 8px;
-        height: 8px;
-        border-radius: 1px;
-        border-left: 2.9px solid #565eef;
-        border-bottom: 2.9px solid #565eef;
+        width: 6px;
+        height: 6px;
+        margin-left: 5px;
+        border-left: 1.9px solid currentColor;
+        border-bottom: 1.9px solid currentColor;
         transform: rotate(-45deg);
-        padding: 0;
-        margin-bottom: 6px;
     }
+`;
 
-    &:hover,
-    &:focus {
-        color: #565eef;
-        &::after {
-            border-left-color: #565eef;
-            border-bottom-color: #565eef;
+export const MobileCreateButton = styled.button`
+    display: none;
+
+    @media screen and (max-width: 660px) {
+        display: flex;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        height: 50px;
+        border-radius: 8px;
+        color: rgba(255, 255, 255, 1);
+        border: none;
+        font-size: 16px;
+        font-weight: 500;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        cursor: pointer;
+
+        a {
+            color: rgba(255, 255, 255, 1);
+            text-decoration: none;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
 `;

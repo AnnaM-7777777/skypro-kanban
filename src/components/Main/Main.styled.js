@@ -1,4 +1,4 @@
-import styled from "styled-components";
+/* import styled from "styled-components";
 
 export const SMain = styled.main`
     width: 100%;
@@ -35,28 +35,33 @@ export const SMainColumn = styled.div`
     }
 `;
 
-/* export const ErrorContainer = styled.div`
-    padding: 40px;
-    text-align: center;
-    background-color: #ffebee;
-    border-radius: 8px;
-    margin: 20px 0;
+ */
 
-    p {
-        color: #c62828;
-        margin-bottom: 16px;
+import styled from "styled-components";
+
+export const SMain = styled.main`
+    width: 100%;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+`;
+
+export const SMainContent = styled.div`
+    display: flex;
+    column-gap: 19px;
+
+    @media screen and (max-width: 1200px) {
+        display: block;
     }
+`;
 
-    button {
-        padding: 8px 16px;
-        background-color: #c62828;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
+export const SMainColumn = styled.div`
+    width: 20%;
+    min-width: 220px;
 
-        &:hover {
-            background-color: #b71c1c;
-        }
+    @media screen and (max-width: 1200px) {
+        width: 100%;
+        margin: 0 auto;
+        display: block;
     }
-`; */
+`;

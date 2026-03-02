@@ -1,38 +1,47 @@
-import { Routes, Route } from "react-router-dom";
-import ProtectedRoute from "../components/ProtectedRoute";
-import MainPage from "../components/pages/MainPage";
-import CardNewPage from "../components/pages/CardNewPage";
-import CardViewPage from "../components/pages/CardViewPage";
-import CardEditPage from "../components/pages/CardEditPage";
-import SignInPage from "../components/pages/SignInPage";
-import SignUpPage from "../components/pages/SignUpPage";
-import NotFoundPage from "../components/pages/NotFoundPage";
-import LogoutPage from "../components/pages/LogoutPage";
+import { Routes, Route, Link } from "react-router-dom";
 
-export default function AppRoutes() {
+// Страницы: выходим из components (..) и заходим в pages
+import SignInPage from "../pages/SignInPage";
+import SignUpPage from "../pages/SignUpPage";
+import MainPage from "../pages/MainPage";
+import NotFoundPage from "../pages/NotFoundPage";
+import ProtectedRoute from "../pages/ProtectedRoute";
+
+// Компоненты: выходим из components (..) и заходим в components/popups
+import PopUser from "../components/popups/popExitConfirm";
+import PopBrowse from "../components/popups/popBrowse";
+import PopNewCard from "../components/popups/popNewCard";
+
+function AppRoutes({ isDark, toggleTheme }) {
     return (
-        <Routes>
-            {/* Публичные маршруты */}
-            <Route path="/login" element={<SignInPage />} />
-            <Route path="/register" element={<SignUpPage />} />
-            <Route path="/logout" element={<LogoutPage />} />
+        <>
+            <Routes>
+                <Route path="/login" element={<SignInPage isDark={isDark} />} />
+                <Route
+                    path="/register"
+                    element={<SignUpPage isDark={isDark} />}
+                />
 
-            {/* Защищённые маршруты */}
-            <Route
-                path="/"
-                element={
-                    <ProtectedRoute>
-                        <MainPage />
-                    </ProtectedRoute>
-                }
-            >
-                <Route path="task/new" element={<CardNewPage />} />
-                <Route path="task/:id" element={<CardViewPage />} />
-                <Route path="task/:id/edit" element={<CardEditPage />} />
-            </Route>
+                <Route element={<ProtectedRoute />}>
+                    <Route
+                        path="/"
+                        element={
+                            <MainPage
+                                isDark={isDark}
+                                toggleTheme={toggleTheme}
+                            />
+                        }
+                    >
+                        <Route path="exit" element={<PopUser />} />
+                        <Route path="card/:id" element={<PopBrowse />} />
+                        <Route path="add-task" element={<PopNewCard />} />
+                    </Route>
+                </Route>
 
-            {/* Страница 404 */}
-            <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+                <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+        </>
     );
 }
+
+export default AppRoutes;

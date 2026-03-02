@@ -1,47 +1,47 @@
 import styled from "styled-components";
+import { COLORS } from "../../utils/theme.js";
 
 export const SColumn = styled.div`
-    width: 20%;
-    display: block;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 
     @media screen and (max-width: 1200px) {
         width: 100%;
-        margin: 0 auto;
-        display: block;
     }
 `;
 
 export const SColumnTitle = styled.div`
-    margin-bottom: 20px;
-    text-align: left;
-`;
+    margin: 40px 0 20px 0;
 
-export const SColumnTitleP = styled.p`
-    color: #94a6be;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1;
-    text-transform: uppercase;
-`;
-
-export const SCards = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    row-gap: 10px;
-    position: relative;
-
-    @media screen and (max-width: 1200px) {
-        width: 100%;
-        display: flex;
-        overflow-y: auto;
+    p {
+        color: #94a6be;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
     }
 `;
 
-export const EmptyMessage = styled.div`
-    color: #94a6be;
-    font-size: 14px;
-    font-style: italic;
-    text-align: center;
-    padding: 20px 0;
+export const SCards = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: calc(130px * 5 + 10px * 4);
+    padding-bottom: 160px;
+    
+    @media screen and (max-width: 660px) {
+        flex-direction: row;
+        min-height: 130px;
+        padding-bottom: 0px;
+    }
+`;
+
+export const DropZone = styled.div`
+    width: 220px;
+    height: 130px;
+    border: 1px dashed ${COLORS.borderGrey};
+    border-radius: 10px;
+    margin-top: 5px;
+    flex-shrink: 0;
+    pointer-events: none;
 `;

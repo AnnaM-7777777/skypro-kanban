@@ -1,4 +1,4 @@
-import { useState } from "react";
+/* import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signIn, signUp } from "../../services/auth";
 
@@ -73,10 +73,7 @@ export default function AuthForm({ isSignUp = false }) {
                         {isSignUp ? "Регистрация" : "Вход"}
                     </h2>
 
-                    <form
-                        className="login-modal-form"
-                        onSubmit={handleSubmit}
-                    >
+                    <form className="login-modal-form" onSubmit={handleSubmit} >
                         {isSignUp && (
                             <input
                                 type="text"
@@ -146,3 +143,4 @@ export default function AuthForm({ isSignUp = false }) {
         </div>
     );
 }
+ */

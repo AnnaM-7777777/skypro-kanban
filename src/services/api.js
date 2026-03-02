@@ -1,100 +1,36 @@
 import axios from "axios";
 
-const API_BASE_URL = "https://wedev-api.sky.pro/api/words";
+const api = axios.create({
+    baseURL: "https://wedev-api.sky.pro/api",
+    headers: {
+        "Content-Type": "",
+    },
+});
 
-// Получение всех карточек
-export async function fetchCards({ token }) {
-    try {
-        const response = await axios.get(API_BASE_URL, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return response.data;
-    } catch (error) {
-        console.error("Ошибка при загрузке карточек:", error);
-        throw new Error(
-            error.response?.data?.error ||
-                error.message ||
-                "Не удалось загрузить карточки",
-        );
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
     }
-}
+    return config;
+});
 
-// Создание новой карточки
-export async function createCard({ token, task }) {
-    try {
-        const response = await axios.post(API_BASE_URL, task, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "text/html",
-            },
-        });
-        return response.data;
-    } catch (error) {
-        console.error("Ошибка при создании карточки:", error);
-        throw new Error(
-            error.response?.data?.error ||
-                error.message ||
-                "Не удалось создать карточку",
-        );
-    }
-}
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response) {
+            const data = error.response.data;
+            if (data?.message) return Promise.reject(data.message);
+            if (error.response.status === 400)
+                return Promise.reject("Неверные данные");
+            if (error.response.status === 401)
+                return Promise.reject("Необходима авторизация");
 
-// Получение карточки по ID
-export async function fetchCardById({ token, id }) {
-    try {
-        const response = await axios.get(`${API_BASE_URL}/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return response.data;
-    } catch (error) {
-        console.error("Ошибка при загрузке карточки:", error);
-        throw new Error(
-            error.response?.data?.error ||
-                error.message ||
-                "Не удалось загрузить карточку",
-        );
-    }
-}
+            return Promise.reject("Ошибка сервера");
+        }
 
-// Обновление карточки
-export async function updateCard({ token, id, task }) {
-    try {
-        const response = await axios.patch(`${API_BASE_URL}/${id}`, task, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "text/html",
-            },
-        });
-        return response.data;
-    } catch (error) {
-        console.error("Ошибка при обновлении карточки:", error);
-        throw new Error(
-            error.response?.data?.error ||
-                error.message ||
-                "Не удалось обновить карточку",
-        );
-    }
-}
+        return Promise.reject("Ошибка сети");
+    },
+);
 
-// Удаление карточки
-export async function deleteCard({ token, id }) {
-    try {
-        const response = await axios.delete(`${API_BASE_URL}/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return response.data;
-    } catch (error) {
-        console.error("Ошибка при удалении карточки:", error);
-        throw new Error(
-            error.response?.data?.error ||
-                error.message ||
-                "Не удалось удалить карточку",
-        );
-    }
-}
+export default api;

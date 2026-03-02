@@ -1,68 +1,96 @@
+import { useTheme } from "styled-components";
+import Calendar from "../Calendar/Calendar";
+import { getCategoryColors } from "../../utils/getCategoryColors";
 import {
-    SCardItem,
-    SCardsCard,
+    CardWrapper,
     SCardGroup,
-    SCardTheme,
-    SCardBtn,
-    SCardBtnDiv,
+    CardTheme,
+    CardBtn,
     SCardContent,
     SCardTitle,
     SCardDate,
-    SCardDateP,
-} from "./Card.styled";
+    SkeletonOverlay,
+    SkeletonLine,
+} from "./Card.styled.js";
+import { Link } from "react-router-dom";
 
-export default function Card({ task, onClick }) {
-    const { topic, title, date } = task;
+const Card = ({ id, topic, title, date, isLoading }) => {
+    const theme = useTheme();
+
+    // Получаем стили через утилиту
+    const { bg: bgColor, text: textColor } = getCategoryColors(
+        topic,
+        theme.mode,
+    );
+
+    const themeLabel = topic || "Other";
 
     return (
-        <SCardItem>
-            <SCardsCard>
-                <SCardGroup>
-                    <SCardTheme $topic={topic}>{topic}</SCardTheme>
+        <Link to={isLoading ? "#" : `/card/${id}`}>
+            <CardWrapper>
+                {isLoading && (
+                    <SkeletonOverlay>
+                        <SkeletonLine
+                            $width="82px"
+                            $height="20px"
+                            $top="15px"
+                            $left="13px"
+                            $borderRadius="18px"
+                            $gradient
+                        />
+                        <SkeletonLine
+                            $width="18px"
+                            $height="4px"
+                            $top="23px"
+                            $left="185px"
+                            $gradient
+                        />
+                        <SkeletonLine
+                            $width="113px"
+                            $height="13px"
+                            $top="50px"
+                            $left="13px"
+                            $gradient
+                        />
+                        <SkeletonLine
+                            $width="58px"
+                            $height="14px"
+                            $top="98px"
+                            $left="13px"
+                            $bottom="19px"
+                            $gradient
+                        />
+                    </SkeletonOverlay>
+                )}
 
-                    <SCardBtn onClick={onClick}>
-                        <SCardBtnDiv />
-                        <SCardBtnDiv />
-                        <SCardBtnDiv />
-                    </SCardBtn>
-                </SCardGroup>
+                {!isLoading && (
+                    <>
+                        <SCardGroup>
+                            <CardTheme
+                                $bgColor={bgColor}
+                                $textColor={textColor}
+                            >
+                                <p>{themeLabel}</p>
+                            </CardTheme>
 
-                <SCardContent>
-                    <SCardTitle>{title}</SCardTitle>
+                            <CardBtn>
+                                <div />
+                                <div />
+                                <div />
+                            </CardBtn>
+                        </SCardGroup>
 
-                    <SCardDate>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="13"
-                            height="13"
-                            viewBox="0 0 13 13"
-                            fill="none"
-                        >
-                            <g clipPath="url(#clip0_1_415)">
-                                <path
-                                    d="M10.5625 2.03125H2.4375C1.7644 2.03125 1.21875 2.5769 1.21875 3.25V10.5625C1.21875 11.2356 1.7644 11.7812 2.4375 11.7812H10.5625C11.2356 11.7812 11.7812 11.2356 11.7812 10.5625V3.25C11.7812 2.5769 11.2356 2.03125 10.5625 2.03125Z"
-                                    stroke="#94A6BE"
-                                    strokeWidth="0.8"
-                                    strokeLinejoin="round"
-                                />
-                                <path
-                                    d="M11.7812 4.0625H1.21875M3.25 1.21875V2.03125V1.21875ZM9.75 1.21875V2.03125V1.21875Z"
-                                    stroke="#94A6BE"
-                                    strokeWidth="0.8"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_1_415">
-                                    <rect width="13" height="13" fill="white" />
-                                </clipPath>
-                            </defs>
-                        </svg>
-                        <SCardDateP>{date}</SCardDateP>
-                    </SCardDate>
-                </SCardContent>
-            </SCardsCard>
-        </SCardItem>
+                        <SCardContent>
+                            <SCardTitle>{title || "Без названия"}</SCardTitle>
+                            <SCardDate>
+                                <Calendar date={date} variant="compact" />
+                            </SCardDate>
+                        </SCardContent>
+                    </>
+                )}
+            </CardWrapper>
+        </Link>
     );
-}
+};
+
+export default Card;
