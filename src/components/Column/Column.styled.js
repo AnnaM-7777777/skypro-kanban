@@ -12,7 +12,7 @@ export const SColumn = styled.div`
 `;
 
 export const SColumnTitle = styled.div`
-    margin: 40px 0 20px 0;
+    margin-bottom: 20px;
 
     p {
         color: #94a6be;

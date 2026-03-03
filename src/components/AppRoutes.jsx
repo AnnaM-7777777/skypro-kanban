@@ -1,10 +1,9 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import SignInPage from "../pages/SignInPage";
 import SignUpPage from "../pages/SignUpPage";
 import MainPage from "../pages/MainPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import ProtectedRoute from "../pages/ProtectedRoute";
-import PopUser from "../components/popups/popExitConfirm";
 import PopBrowse from "../components/popups/popBrowse";
 import PopNewCard from "../components/popups/popNewCard";
 

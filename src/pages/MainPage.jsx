@@ -37,7 +37,7 @@ function MainPage({ isDark, toggleTheme }) {
             skeletonShownRef.current = true;
             setTimeout(() => {
                 setShowSkeleton(true);
-                setTimeout(() => setShowSkeleton(false), 500);
+                setTimeout(() => setShowSkeleton(false), 10000);
             }, 0);
         }
     }, [isLoading, columns]);

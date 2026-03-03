@@ -42,6 +42,11 @@ export const CreateButton = styled.button`
     cursor: pointer;
 
     a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
         color: ${COLORS.whiteTextBtn};
         font-family: "Roboto", Arial, Helvetica, sans-serif;
         font-size: 14px;

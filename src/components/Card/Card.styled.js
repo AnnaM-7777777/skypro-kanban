@@ -3,11 +3,14 @@ import { COLORS } from "../../utils/theme.js";
 
 export const CardWrapper = styled.div`
     width: 100%;
-    height: 100%;
+    max-width: 250px;
+    min-height: 130px;
+    height: auto;
     background-color: ${({ theme }) => theme.colors.bgHeader};
     position: relative;
     padding: 13px 13px 19px;
     border-radius: 10px;
+    box-sizing: border-box;
 `;
 
 const shimmer = keyframes`
@@ -30,6 +33,9 @@ export const SkeletonLine = styled.div`
     width: ${({ $width }) => $width || "100%"};
     border-radius: ${({ $borderRadius }) => $borderRadius || "0px"};
     margin-bottom: 12px;
+
+    background: linear-gradient(90deg, #C1CDDC -6.32%, #E9EEF7 46.75%, #C1CDDC 106.46%);
+
 
     background: ${({ $gradient, theme }) =>
         $gradient

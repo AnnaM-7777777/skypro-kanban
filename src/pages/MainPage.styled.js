@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
     width: 100%;
+    height: 100vh;
     background-color: ${({ theme }) => theme.colors.bgMain};
     box-sizing: border-box;
-    padding-left: calc(50% - 600px);
-    padding-right: calc(50% - 600px);
+    padding: 40px calc(50% - 600px);
 
     @media screen and (max-width: 660px) {
         height: calc(100vh - 70px);
@@ -19,7 +19,6 @@ export const NoTasksText = styled.p`
     font-size: 18px;
     color: #94a6be;
     text-align: center;
-    margin-top: 40px;
 `;
 
 export const MobileCreateButton = styled.button`
