@@ -6,7 +6,7 @@ export const GlobalStyle = createGlobalStyle`
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    background-color: ${({ theme }) => theme.colors.mainBg};
+    background-color: ${({ theme }) => theme.colors.bgMain};
     color: ${({ theme }) => theme.colors.text};
   }
 

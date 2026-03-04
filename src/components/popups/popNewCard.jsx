@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import Calendar from "../Calendar/Calendar";
-import { useTasks } from "../../context/TaskContext";
+import { useTasks } from "../../hooks/useTasks";
 import { toast } from "react-toastify";
 
 const CATEGORY_MAP = {

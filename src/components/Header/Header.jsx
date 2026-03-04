@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../context/useAuth.js";
+import { useAuth } from "../../hooks/useAuth.js";
 import PopUser from "../popups/popExitConfirm.jsx";
 
 import {
