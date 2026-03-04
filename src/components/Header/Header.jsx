@@ -1,58 +1,99 @@
-import { useNavigate } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../context/useAuth.js";
+import PopUser from "../popups/popExitConfirm.jsx";
+
 import {
     SHeader,
     SHeaderBlock,
     LogoWrapper,
     Nav,
     CreateButton,
-    UserButton,
-} from "./Header.styled";
+    UserName,
+} from "./Header.styled.js";
 
-export default function Header({ user, isDarkTheme, onTogglePopUser }) {
-    const navigate = useNavigate();
+function Header({ isDark, toggleTheme }) {
+    const { user } = useAuth();
+    const [isOpen, setIsOpen] = useState(false);
+    const [isExitOpen, setIsExitOpen] = useState(false);
 
-    const handleUserClick = () => {
-        if (user) {
-            onTogglePopUser();
-        } else {
-            navigate("/login");
-        }
-    };
+    const popupRef = useRef(null);
 
-    const handleCreateNewCard = () => {
-        navigate("/card/new");
-    };
+    const handleToggle = () => setIsOpen((prev) => !prev);
 
     return (
         <SHeader>
-            <div className="container">
-                <SHeaderBlock>
-                    <LogoWrapper $isDark={isDarkTheme}>
-                        <a href="/" onClick={(e) => e.preventDefault()}>
-                            <img
-                                src={
-                                    isDarkTheme
-                                        ? "/assets/logo_dark.png"
-                                        : "/assets/logo.png"
-                                }
-                                alt="CardManager"
-                            />
-                        </a>
-                    </LogoWrapper>
+            <SHeaderBlock>
+                <LogoWrapper>
+                    <Link to="/">
+                        <img
+                            src={
+                                isDark
+                                    ? "/assets/logo_dark.png"
+                                    : "/assets/logo.png"
+                            }
+                            alt="logo"
+                        />
+                    </Link>
+                </LogoWrapper>
 
-                    <Nav>
-                        <CreateButton onClick={handleCreateNewCard}>
-                            Создать новую задачу
-                        </CreateButton>
+                <Nav>
+                    <CreateButton>
+                        <Link to="/add-task">Создать новую задачу</Link>
+                    </CreateButton>
 
-                        <div className="pop-wrap">
-                            <UserButton onClick={handleUserClick}>
-                                {user ? user.name : "Войти"}
-                            </UserButton>
+                    <UserName
+                        id="userNameButton"
+                        type="button"
+                        onClick={handleToggle}
+                    >
+                        {user?.name || "Пользователь"}
+                    </UserName>
+
+                    {isOpen && (
+                        <div
+                            ref={popupRef}
+                            className={`pop-user__menu ${isDark ? "dark-mode" : ""}`}
+                        >
+                            <p className="pop-user__name">
+                                {user?.name || "Пользователь"}
+                            </p>
+
+                            <p className="pop-user__login">
+                                {user?.login || "Пользователь"}
+                            </p>
+
+                            <div className="pop-user__theme">
+                                <p>Темная тема</p>
+                                <input
+                                    type="checkbox"
+                                    checked={isDark}
+                                    onChange={toggleTheme}
+                                />
+                            </div>
+
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setIsExitOpen(true);
+                                    setIsOpen(false);
+                                }}
+                            >
+                                Выйти
+                            </button>
                         </div>
-                    </Nav>
-                </SHeaderBlock>
-            </div>
+                    )}
+
+                    {isExitOpen && (
+                        <PopUser
+                            onClose={() => setIsExitOpen(false)}
+                            isDarkTheme={isDark}
+                        />
+                    )}
+                </Nav>
+            </SHeaderBlock>
         </SHeader>
     );
 }
+
+export default Header;
