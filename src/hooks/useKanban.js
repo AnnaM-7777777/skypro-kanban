@@ -1,6 +1,6 @@
 import { useMemo, useCallback } from "react";
-import { useTasks } from "../context/useTasks";
-import { useAuth } from "../context/useAuth";
+import { useTasks } from "./useTasks";
+import { useAuth } from "./useAuth";
 
 export const STATUSES = [
     "Без статуса",
@@ -26,13 +26,16 @@ export const useKanban = () => {
         }
     }, [storageKey]);
 
-    const saveOrderMap = useCallback((map) => {
-        try {
-            localStorage.setItem(storageKey, JSON.stringify(map));
-        } catch (e) {
-            console.error("Failed to save order to localStorage:", e);
-        }
-    }, [storageKey]);
+    const saveOrderMap = useCallback(
+        (map) => {
+            try {
+                localStorage.setItem(storageKey, JSON.stringify(map));
+            } catch (e) {
+                console.error("Failed to save order to localStorage:", e);
+            }
+        },
+        [storageKey],
+    );
 
     // Группировка + сортировка задач (мемоизируется)
     const groupedColumns = useMemo(() => {
@@ -88,33 +91,42 @@ export const useKanban = () => {
     }, [groupedColumns]);
 
     // Удаление задачи + очистка из localStorage
-    const handleDeleteCard = useCallback(async (id) => {
-        await removeTask(id);
+    const handleDeleteCard = useCallback(
+        async (id) => {
+            await removeTask(id);
 
-        const map = loadOrderMap();
-        Object.keys(map).forEach((status) => {
-            map[status] = map[status].filter((cardId) => cardId !== id);
-        });
-        saveOrderMap(map);
-    }, [removeTask, loadOrderMap, saveOrderMap]);
+            const map = loadOrderMap();
+            Object.keys(map).forEach((status) => {
+                map[status] = map[status].filter((cardId) => cardId !== id);
+            });
+            saveOrderMap(map);
+        },
+        [removeTask, loadOrderMap, saveOrderMap],
+    );
 
     // Обновление задачи (только данные, не порядок)
-    const handleUpdateCard = useCallback(async (updated) => {
-        await editTask(updated._id, {
-            title: updated.title,
-            topic: updated.topic,
-            status: updated.status,
-            description: updated.description,
-            date: updated.date,
-        });
-    }, [editTask]);
+    const handleUpdateCard = useCallback(
+        async (updated) => {
+            await editTask(updated._id, {
+                title: updated.title,
+                topic: updated.topic,
+                status: updated.status,
+                description: updated.description,
+                date: updated.date,
+            });
+        },
+        [editTask],
+    );
 
     // Сохранение нового порядка для одной колонки
-    const handleSaveOrder = useCallback((status, cardIds) => {
-        const map = loadOrderMap();
-        map[status] = cardIds;
-        saveOrderMap(map);
-    }, [loadOrderMap, saveOrderMap]);
+    const handleSaveOrder = useCallback(
+        (status, cardIds) => {
+            const map = loadOrderMap();
+            map[status] = cardIds;
+            saveOrderMap(map);
+        },
+        [loadOrderMap, saveOrderMap],
+    );
 
     return {
         columns,
