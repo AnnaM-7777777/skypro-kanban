@@ -128,7 +128,7 @@ function PopNewCard() {
                                     </label>
 
                                     <textarea
-                                        className="pop-new-card__form-area"
+                                        className="pop-new-card__form-area text-area"
                                         id="textArea"
                                         placeholder="Введите описание задачи..."
                                         value={description}

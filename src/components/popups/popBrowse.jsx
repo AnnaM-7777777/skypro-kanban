@@ -39,7 +39,12 @@ function PopBrowse() {
 
     useEffect(() => {
         if (task) {
-            const timeout = setTimeout(() => setDraft({ ...task }), 0);
+            const timeout = setTimeout(() => {
+                setDraft({
+                    ...task,
+                    description: task.description?.trim() || "", // ← Обрезаем пробелы
+                });
+            }, 0);
             return () => clearTimeout(timeout);
         }
     }, [task]);
@@ -101,8 +106,18 @@ function PopBrowse() {
         }
     };
 
-    const handleCancel = () => {
+    /* const handleCancel = () => {
         setDraft({ ...task });
+        setIsEdit(false);
+        setTitleError(false);
+        setDescriptionError(false);
+    }; */
+
+    const handleCancel = () => {
+        setDraft({
+            ...task,
+            description: task.description?.trim() || "",
+        });
         setIsEdit(false);
         setTitleError(false);
         setDescriptionError(false);
@@ -130,6 +145,7 @@ function PopBrowse() {
                                 {draft.title || "Без названия"}
                             </h3>
 
+                            {/* активен - скрыт в мобильной версии (495px) */}
                             <div
                                 className="pop-browse__category-theme theme-category _active-category"
                                 style={{
@@ -176,7 +192,7 @@ function PopBrowse() {
                                         </div>
                                     ))
                                 ) : (
-                                    // Режим просмотра: показываем ТОЛЬКО активный статус
+                                    // Режим просмотра: показываем только активный статус
                                     <div className="pop-browse__status-theme _active">
                                         <p>{draft.status}</p>
                                     </div>
@@ -200,6 +216,11 @@ function PopBrowse() {
                                             description: e.target.value,
                                         })
                                     }
+                                    placeholder={
+                                        isEdit
+                                            ? "Введите описание задачи..."
+                                            : "Описание задачи"
+                                    }
                                 />
                             </form>
 
@@ -212,13 +233,30 @@ function PopBrowse() {
                                     }
                                 />
                             </div>
+
+                            {/* скрыт - активен в мобильной версии (495px) */}
+                            <div className="pop-browse__category-theme-block-mobile">
+                                <p className="pop-browse__status-title subttl">
+                                    Категория
+                                </p>
+
+                                <div
+                                    className="pop-browse__category-theme-mobile theme-category _active-category"
+                                    style={{
+                                        backgroundColor: categoryColors.bg,
+                                        color: categoryColors.text,
+                                    }}
+                                >
+                                    <p>{category}</p>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="pop-browse__btn-block">
                             {isEdit ? (
                                 <>
                                     <button
-                                        className="pop-browse__btn-save"
+                                        className={`pop-browse__btn-save ${isEdit ? "_edit-mode" : "_view-mode"} ${isLoading ? "_loading" : ""}`}
                                         onClick={handleSave}
                                         disabled={isLoading}
                                     >
@@ -228,7 +266,7 @@ function PopBrowse() {
                                     </button>
 
                                     <button
-                                        className="pop-browse__btn-cancel"
+                                        className={`pop-browse__btn-cancel ${isEdit ? "_edit-mode" : "_view-mode"} ${isLoading ? "_loading" : ""}`}
                                         onClick={handleCancel}
                                         disabled={isLoading}
                                     >
@@ -236,7 +274,7 @@ function PopBrowse() {
                                     </button>
 
                                     <button
-                                        className="pop-browse__btn-delete"
+                                        className={`pop-browse__btn-delete ${isEdit ? "_edit-mode" : "_view-mode"} ${isLoading ? "_loading" : ""}`}
                                         onClick={handleDelete}
                                         disabled={isLoading}
                                     >
@@ -248,7 +286,7 @@ function PopBrowse() {
                             ) : (
                                 <>
                                     <button
-                                        className="pop-browse__btn-edit"
+                                        className={`pop-browse__btn-edit ${isEdit ? "_edit-mode" : "_view-mode"} ${isLoading ? "_loading" : ""}`}
                                         onClick={() => setIsEdit(true)}
                                         disabled={isLoading}
                                     >
@@ -256,7 +294,7 @@ function PopBrowse() {
                                     </button>
 
                                     <button
-                                        className="pop-browse__btn-delete"
+                                        className={`pop-browse__btn-delete ${isEdit ? "_edit-mode" : "_view-mode"} ${isLoading ? "_loading" : ""}`}
                                         onClick={handleDelete}
                                         disabled={isLoading}
                                     >
@@ -268,7 +306,7 @@ function PopBrowse() {
                             )}
 
                             <button
-                                className="pop-browse__btn-close"
+                                className={`pop-browse__btn-close ${isLoading ? "_loading" : ""}`}
                                 onClick={handleClose}
                                 disabled={isLoading}
                             >

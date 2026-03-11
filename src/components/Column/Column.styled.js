@@ -6,9 +6,9 @@ export const SColumn = styled.div`
     display: flex;
     flex-direction: column;
 
-    @media screen and (max-width: 1200px) {
+    /* @media screen and (max-width: 1200px) {
         width: 100%;
-    }
+    } */
 `;
 
 export const SColumnTitle = styled.div`
@@ -28,11 +28,12 @@ export const SCards = styled.div`
     gap: 10px;
     min-height: calc(130px * 5 + 10px * 4);
     padding-bottom: 160px;
-    
-    @media screen and (max-width: 660px) {
-        flex-direction: row;
+
+    @media (max-width: 1024px) {
         min-height: 130px;
-        padding-bottom: 0px;
+        flex-direction: row;
+        padding-bottom: 20px;
+        width: 100%;
     }
 `;
 

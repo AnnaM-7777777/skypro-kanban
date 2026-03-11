@@ -7,11 +7,29 @@ export const Wrapper = styled.div`
     box-sizing: border-box;
     padding: 40px calc(50% - 600px);
 
-    @media screen and (max-width: 660px) {
+    @media (max-width: 1024px) {
+        padding: 30px 16px;
         height: calc(100vh - 70px);
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        overflow-x: auto;
+
+        /* Включаем скролл */
+        overflow-y: hidden;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
+
+        /* === СКРЫВАЕМ СКРОЛЛБАР === */
+
+        /* Для Firefox */
+        scrollbar-width: none;
+
+        /* Для Internet Explorer и Edge (старые версии) */
+        -ms-overflow-style: none;
+
+        /* Для Chrome, Safari, Opera, Edge (новые версии) */
+        &::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
     }
 `;
 
@@ -19,43 +37,4 @@ export const NoTasksText = styled.p`
     font-size: 18px;
     color: #94a6be;
     text-align: center;
-`;
-
-export const MobileCreateButton = styled.button`
-    display: none;
-
-    @media screen and (max-width: 660px) {
-        display: flex;
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        max-width: 400px;
-        height: 50px;
-        border-radius: 8px;
-        background-color: ${({ theme }) => theme.colors.primary};
-        color: rgba(255, 255, 255, 1);
-        border: none;
-        font-size: 16px;
-        font-weight: 500;
-        justify-content: center;
-        align-items: center;
-        z-index: 999;
-        cursor: pointer;
-
-        &:hover {
-            background-color: ${({ theme }) => theme.colors.primaryHover};
-        }
-
-        a {
-            color: rgba(255, 255, 255, 1);
-            text-decoration: none;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
 `;
