@@ -14,18 +14,11 @@ export const Wrapper = styled.div`
         /* Включаем скролл */
         overflow-y: hidden;
         overflow-x: hidden;
-        -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
-
-        /* === СКРЫВАЕМ СКРОЛЛБАР === */
-
-        /* Для Firefox */
-        scrollbar-width: none;
-
-        /* Для Internet Explorer и Edge (старые версии) */
-        -ms-overflow-style: none;
-
-        /* Для Chrome, Safari, Opera, Edge (новые версии) */
-        &::-webkit-scrollbar {
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; // Для Firefox
+        -ms-overflow-style: none; // Для Internet Explorer и Edge (старые версии)
+        
+        &::-webkit-scrollbar { // Для Chrome, Safari, Opera, Edge (новые версии)
             display: none;
             width: 0;
             height: 0;

@@ -9,13 +9,12 @@ export default function LogoutPage() {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
         localStorage.removeItem("currentUser");
-        localStorage.removeItem("darkTheme"); // опционально
+        localStorage.removeItem("darkTheme");
 
         // Редирект на логин
         navigate("/login", { replace: true });
     }, [navigate]);
 
-    // Показываем loader во время выхода
     return (
         <div className="logout-page">
             <div className="logout-container">

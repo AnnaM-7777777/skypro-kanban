@@ -5,10 +5,6 @@ export const SColumn = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-
-    /* @media screen and (max-width: 1200px) {
-        width: 100%;
-    } */
 `;
 
 export const SColumnTitle = styled.div`

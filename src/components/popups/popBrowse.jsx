@@ -30,10 +30,6 @@ function PopBrowse() {
     const [isEdit, setIsEdit] = useState(false);
     const [draft, setDraft] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [isDarkTheme] = useState(
-        () => localStorage.getItem("theme") === "dark",
-    );
-
     const [titleError, setTitleError] = useState(false);
     const [descriptionError, setDescriptionError] = useState(false);
 
@@ -42,7 +38,7 @@ function PopBrowse() {
             const timeout = setTimeout(() => {
                 setDraft({
                     ...task,
-                    description: task.description?.trim() || "", // ← Обрезаем пробелы
+                    description: task.description?.trim() || "",
                 });
             }, 0);
             return () => clearTimeout(timeout);
@@ -106,13 +102,6 @@ function PopBrowse() {
         }
     };
 
-    /* const handleCancel = () => {
-        setDraft({ ...task });
-        setIsEdit(false);
-        setTitleError(false);
-        setDescriptionError(false);
-    }; */
-
     const handleCancel = () => {
         setDraft({
             ...task,
@@ -126,15 +115,13 @@ function PopBrowse() {
     if (!task || !draft) return null;
 
     const category = draft.topic || "Other";
-
-    // Получаем цвета категории через утилиту
     const categoryColors = getCategoryColors(category, theme.mode);
 
     return (
         <div className="pop-browse">
             <div className="pop-browse__container">
                 <div
-                    className={`pop-browse__block ${isDarkTheme ? "dark-mode" : ""}`}
+                    className={`pop-browse__block ${theme.mode === "dark" ? "dark-mode" : ""}`}
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className="pop-browse__content">
@@ -145,7 +132,6 @@ function PopBrowse() {
                                 {draft.title || "Без названия"}
                             </h3>
 
-                            {/* активен - скрыт в мобильной версии (495px) */}
                             <div
                                 className="pop-browse__category-theme theme-category _active-category"
                                 style={{
@@ -164,7 +150,6 @@ function PopBrowse() {
 
                             <div className="pop-browse__status-themes">
                                 {isEdit ? (
-                                    // Режим редактирования: показываем ВСЕ статусы
                                     STATUSES.map((status) => (
                                         <div
                                             key={status}
@@ -192,7 +177,6 @@ function PopBrowse() {
                                         </div>
                                     ))
                                 ) : (
-                                    // Режим просмотра: показываем только активный статус
                                     <div className="pop-browse__status-theme _active">
                                         <p>{draft.status}</p>
                                     </div>
@@ -234,7 +218,6 @@ function PopBrowse() {
                                 />
                             </div>
 
-                            {/* скрыт - активен в мобильной версии (495px) */}
                             <div className="pop-browse__category-theme-block-mobile">
                                 <p className="pop-browse__status-title subttl">
                                     Категория

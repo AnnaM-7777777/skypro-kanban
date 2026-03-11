@@ -58,27 +58,6 @@ body {
     overflow: hidden;
 }
 
-._hover03 {
-    width: 72px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    border: 1px solid rgba(86, 94, 239, 1);
-    border-radius: 4px;
-    margin-left: 36.5px;
-    background: rgba(255, 255, 255, 1);
-}
-
-._hover03:hover {
-    background-color: #33399b;
-    color: rgba(255, 255, 255, 1);
-}
-._hover03:hover a {
-    color: rgba(255, 255, 255, 1);
-}
-
 .pop-user-set:target,
 .pop-exit-confirm:target,
 .pop-new-card:target,
@@ -189,7 +168,6 @@ body {
     left: 12px;
 }
 
-/* Кнопка "Выйти" */
 .pop-user__menu button {
     width: 72px;
     height: 30px;
@@ -202,7 +180,6 @@ body {
     color: rgba(86, 94, 239, 1);
 }
 
-/* Кнопка "Выйти" hover */
 .pop-user__menu button:hover {
     background-color: rgba(86, 94, 239, 1);
     color: rgba(255, 255, 255, 1);
@@ -228,16 +205,26 @@ body {
     background-color: rgba(86, 94, 239, 1);
 }
 
-/* Кнопка "Выйти" */
 .pop-user__menu.dark-mode button {
     border: 1px solid rgba(255, 255, 255, 1);
     color: rgba(255, 255, 255, 1);
 }
 
-/* Кнопка "Выйти" hover */
 .pop-user__menu.dark-mode button:hover {
     border-color: rgba(86, 94, 239, 1);
 }
+
+/* pop-user */
+@media screen and (max-width: 660px) {
+    .pop-user__menu {
+        height: 215px;
+    }
+
+    .pop-user__menu button {
+        width: 100%;
+    }
+}
+
 
 /* pop-exit-confirm (подтверждение выхода) - light */
 .pop-exit-confirm {
@@ -369,6 +356,7 @@ body {
         height: 40px;
     }
 }
+
 
 /* pop-new-card (создание новой задачи) - light */
 .pop-new-card {
@@ -660,6 +648,7 @@ body {
         height: 37px;
     }
 }
+
 
 /* pop-browse (редактирование задачи) - light */
 .pop-browse {
@@ -985,7 +974,6 @@ body {
         display: flex;
         flex-direction: column;
         gap: 10px;
-        /* width: calc(100% - 32px); */
         padding: 0 16px;
         position: fixed;
         bottom: 38px;
@@ -1045,10 +1033,6 @@ body {
         justify-content: center;
         align-items: center;
     }
-
-    /*  .pop-browse__block {
-        overflow: hidden;
-    } */
 
     .pop-browse__content {
         flex: 1;
@@ -1111,45 +1095,3 @@ body {
         z-index: 10;
     }
 }
-
-/* ---------- */
-/* ---------- */
-/* ---------- */
-/* ---------- */
-/* ---------- */
-
-/* pop-user */
-@media screen and (max-width: 1024px) {
-    .pop-user__menu {
-        height: 215px;
-    }
-
-    .pop-user__menu button {
-        width: 100%;
-    }
-}
-
-/* 660px */
-/* @media screen and (max-width: 660px) {
-    .container {
-        width: 100%;
-        padding: 0 16px;
-    }
-
-    ._hover03 {
-        width: 142px;
-        height: 40px;
-        margin-left: 0px;
-    }
-    .header__btn-main-new {
-        z-index: 3;
-        position: fixed;
-        left: 16px;
-        bottom: 30px;
-        top: auto;
-        width: calc(100vw - 32px);
-        height: 40px;
-        border-radius: 4px;
-        margin-right: 0;
-    }
-} */
