@@ -23,13 +23,19 @@ const AuthForm = ({ isSignUp }) => {
     const [loginValue, setLoginValue] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+
+    // Ошибки полей (для визуальной подсветки)
     const [loginError, setLoginError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [nameError, setNameError] = useState(false);
+
+    // Общее состояние ошибки формы (для блокировки кнопки)
+    const [formHasError, setFormHasError] = useState(false);
+
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async (e) => {
+    /* const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
 
@@ -41,7 +47,7 @@ const AuthForm = ({ isSignUp }) => {
         let hasError = false;
         let hasEmailError = false;
 
-        // Валидация email (отдельно)
+        // Валидация email
         if (!loginValue.trim()) {
             setLoginError(true);
             hasError = true;
@@ -66,19 +72,28 @@ const AuthForm = ({ isSignUp }) => {
             hasError = true;
         }
 
-        // Показываем соответствующее сообщение
+        // Показываем сообщение об ошибке
         if (hasError) {
-            if (hasEmailError) {
-                // Некорректный email
-                setError(
-                    "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку.",
-                );
+            if (isSignUp) {
+
+                // === РЕГИСТРАЦИЯ ===
+                if (hasEmailError) {
+                    setError(
+                        "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку.",
+                    );
+                } else {
+                    setError(
+                        "Введенные вами данные не корректны. Чтобы завершить регистрацию, заполните все поля в форме.",
+                    );
+                }
             } else {
-                // Пустые поля или короткий пароль
+
+                // === ВХОД ===
                 setError(
-                    "Введенные вами данные не корректны. Чтобы завершить регистрацию, заполните все поля в форме.",
+                    "Введенные вами данные не распознаны. Проверьте свой логин и пароль и повторите попытку входа.",
                 );
             }
+            setFormHasError(true);
             return;
         }
 
@@ -101,31 +116,132 @@ const AuthForm = ({ isSignUp }) => {
             navigate("/", { replace: true });
         } catch (err) {
             setError(
-                err ||
-                    "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку.",
+                isSignUp
+                    ? "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку."
+                    : "Введенные вами данные не распознаны. Проверьте свой логин и пароль и повторите попытку входа.",
             );
             setLoginError(true);
             setPasswordError(true);
             if (isSignUp) setNameError(true);
+            setFormHasError(true);
+        } finally {
+            setLoading(false);
+        }
+    }; */
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
+
+        // Сбрасываем ошибки полей
+        setLoginError(false);
+        setPasswordError(false);
+        setNameError(false);
+
+        let hasError = false;
+        let hasEmailError = false;
+        let hasPasswordLengthError = false;
+
+        // Валидация email
+        if (!loginValue.trim()) {
+            setLoginError(true);
+            hasError = true;
+        } else if (!EMAIL_REGEX.test(loginValue.trim())) {
+            setLoginError(true);
+            hasEmailError = true;
+            hasError = true;
+        }
+
+        // Валидация пароля
+        if (!password.trim()) {
+            setPasswordError(true);
+            hasError = true;
+        } else if (password.length < 6) {
+            setPasswordError(true);
+            hasPasswordLengthError = true;
+            hasError = true;
+        }
+
+        // Валидация имени
+        if (isSignUp && !name.trim()) {
+            setNameError(true);
+            hasError = true;
+        }
+
+        // Отображение ошибок
+        if (hasError) {
+            if (isSignUp) {
+                if (hasEmailError) {
+                    setError(
+                        "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку.",
+                    );
+                } else if (hasPasswordLengthError) {
+                    setError(
+                        "Введенные вами данные не корректны. Чтобы завершить регистрацию, пароль должен содержать не менее 6 символов.",
+                    );
+                } else {
+                    setError(
+                        "Введенные вами данные не корректны. Чтобы завершить регистрацию, заполните все поля в форме.",
+                    );
+                }
+            } else {
+                setError(
+                    "Введенные вами данные не распознаны. Проверьте свой логин и пароль и повторите попытку входа.",
+                );
+            }
+            setFormHasError(true);
+            return;
+        }
+
+        try {
+            setLoading(true);
+
+            if (isSignUp) {
+                await register({
+                    login: loginValue.trim(),
+                    password: password.trim(),
+                    name: name.trim(),
+                });
+            } else {
+                await login({
+                    login: loginValue.trim(),
+                    password: password.trim(),
+                });
+            }
+
+            navigate("/", { replace: true });
+        } catch (err) {
+            setError(
+                isSignUp
+                    ? "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку."
+                    : "Введенные вами данные не распознаны. Проверьте свой логин и пароль и повторите попытку входа.",
+            );
+            setLoginError(true);
+            setPasswordError(true);
+            if (isSignUp) setNameError(true);
+            setFormHasError(true);
         } finally {
             setLoading(false);
         }
     };
 
-    // Обработчики onChange
+    // Обработчики onChange — сбрасывают formHasError при вводе в ЛЮБОЕ поле
     const handleLoginChange = (e) => {
         setLoginValue(e.target.value);
         if (loginError) setLoginError(false);
+        if (formHasError) setFormHasError(false);
     };
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
         if (passwordError) setPasswordError(false);
+        if (formHasError) setFormHasError(false);
     };
 
     const handleNameChange = (e) => {
         setName(e.target.value);
         if (nameError) setNameError(false);
+        if (formHasError) setFormHasError(false);
     };
 
     return (
@@ -134,7 +250,6 @@ const AuthForm = ({ isSignUp }) => {
                 <ModalWrapper>
                     <Title>{isSignUp ? "Регистрация" : "Вход"}</Title>
 
-                    {/* Добавляем noValidate для отключения нативной валидации браузера */}
                     <Form onSubmit={handleSubmit} noValidate>
                         {isSignUp && (
                             <Input
@@ -170,12 +285,7 @@ const AuthForm = ({ isSignUp }) => {
 
                         <Button
                             type="submit"
-                            disabled={
-                                loading ||
-                                loginError ||
-                                passwordError ||
-                                (isSignUp && nameError)
-                            }
+                            disabled={loading || formHasError}
                         >
                             {loading
                                 ? "Загрузка..."
@@ -188,7 +298,7 @@ const AuthForm = ({ isSignUp }) => {
                             <FormGroup>
                                 Нужно зарегистрироваться?{" "}
                                 <Link to="/register">
-                                    Регистрируйтесь здесь
+                                    Зарегистрируйтесь здесь
                                 </Link>
                             </FormGroup>
                         )}

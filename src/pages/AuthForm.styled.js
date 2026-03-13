@@ -83,8 +83,9 @@ export const Input = styled.input`
     &::placeholder {
         color: ${({ theme }) =>
             theme.mode === "dark"
-                ? "rgba(255,255,255,0.6)"
-                : "rgba(255, 255, 255, 1)"};
+                ? "rgba(255, 255, 255, 0.6)"
+                : "rgba(0, 0, 0, 0.5)"};
+        opacity: 1;
     }
 
     @media screen and (max-width: 660px) {
