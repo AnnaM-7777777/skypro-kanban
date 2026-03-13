@@ -11,6 +11,12 @@ export const CardWrapper = styled.div`
     padding: 13px 13px 19px;
     border-radius: 10px;
     box-sizing: border-box;
+
+    @media (max-width: 1024px) {
+        flex-direction: row;
+        padding-bottom: 20px;
+        width: 220px;
+    }
 `;
 
 const shimmer = keyframes`
@@ -34,8 +40,12 @@ export const SkeletonLine = styled.div`
     border-radius: ${({ $borderRadius }) => $borderRadius || "0px"};
     margin-bottom: 12px;
 
-    background: linear-gradient(90deg, #C1CDDC -6.32%, #E9EEF7 46.75%, #C1CDDC 106.46%);
-
+    background: linear-gradient(
+        90deg,
+        #c1cddc -6.32%,
+        #e9eef7 46.75%,
+        #c1cddc 106.46%
+    );
 
     background: ${({ $gradient, theme }) =>
         $gradient
@@ -99,7 +109,8 @@ export const SCardTitle = styled.h3`
     font-weight: 500;
     font-size: 14px;
     line-height: 100%;
-    color: ${({ theme }) => (theme.mode === "dark" ? "rgb(255, 255, 255, 1)" : "rgb(0, 0, 0, 1)")};
+    color: ${({ theme }) =>
+        theme.mode === "dark" ? "rgb(255, 255, 255, 1)" : "rgb(0, 0, 0, 1)"};
 `;
 
 export const SCardDate = styled.div`

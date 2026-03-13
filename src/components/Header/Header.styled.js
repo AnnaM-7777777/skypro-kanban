@@ -9,6 +9,11 @@ export const SHeader = styled.header`
     box-sizing: border-box;
     padding-left: calc(50% - 600px);
     padding-right: calc(50% - 600px);
+
+    @media (max-width: 1024px) {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
 `;
 
 export const SHeaderBlock = styled.div`
@@ -87,30 +92,27 @@ export const MobileCreateButton = styled.button`
     @media screen and (max-width: 660px) {
         display: flex;
         position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        max-width: 400px;
-        height: 50px;
-        border-radius: 8px;
-        color: rgba(255, 255, 255, 1);
+        bottom: 30px;
+        left: 16px;
+        right: 16px;
+        width: calc(100% - 32px);
+        height: 40px;
         border: none;
-        font-size: 16px;
-        font-weight: 500;
-        justify-content: center;
-        align-items: center;
-        z-index: 999;
-        cursor: pointer;
+        border-radius: 4px;
+        background-color: rgba(86, 94, 239, 1);
 
         a {
-            color: rgba(255, 255, 255, 1);
-            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 100%;
             height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            color: rgba(255, 255, 255, 1);
+            font-family: Roboto;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 100%;
+            cursor: pointer;
         }
     }
 `;

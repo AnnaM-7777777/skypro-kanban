@@ -1,16 +1,79 @@
 # React + Vite
+На этом курсе создан сайт с канбан-доской.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+В течение курса производилась работа над React-приложением: создавались компоненты, логика авторизации, регистрации и управления задачами, а так же добавились в него дополнительные фичи.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# 1. Блок. Знакомство с React:
 
-## React Compiler
+- Создан репозиторий на GitHub с названием skypro-kanban.
+- С помощью Vite создана заготовка (шаблон) React-приложения.
+- Из файла main.html перенесен HTML-код в компонент App.jsx.
+- Скопированы стили из main.css в App.css, а из index.css все стили удалены.
+- Картинки перенесены в папку public.
+- Подключен шрифт в index.html из Google Fonts.
+- Устранены ошибки, которые связаны с HTML-комментариями, написанием атрибутов и незакрытыми тегами.
+- App-компонент разбит на минимум 8 компонентов: Main, Header, Column, Card, Calendar, PopBrowse, PopNewCard, popExitConfirm. Создана своя папка для каждого отдельного компонента в папке /src/components/. Имя файла совпадает с названием самого компонента и с таким же регистром.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+# 2. Блок. Props и Hooks:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Модальное окно пользователя в Header появляется при клике на имя и исчезает по повторному клику, видимость управляется через useState.
+- Каждый объект массива содержит id, topic, title, date и status. Массив создан в отдельном файле.
+- Рендер карточек происходит из массива, все свойства вставлены в нужные элементы. У каждой карточки в key стоит её уникальный id, совпадений нет.
+- useState для загрузки реализован, переключение происходит строго по setTimeout, рендер в нужный момент.
+
+
+# 3. Блок. Styled Components:
+
+- Установлено расширение vscode-styled-components.
+- Все используемые цвета тем вынесены в объект и совпадают с макетом, стили обращаются к нему во всех нужных компонентах.
+- Все стили вынесены в styled-components, названия соответствуют формату Component.styled.js, отсутствует дублирование стилей у элементов. Каждый файл стилей находится в папке с компонентом.
+
+
+# 4. Блок. Routing:
+
+- Создан все нужные страницы в папке pages - все 7 компонентов присутствуют: «Логин», «Регистрация», «Доска с карточками», «Просмотр и редактирование карточки», «Добавление новой задачи», «Выход из аккаунта», 404.
+- Router корректно инициализирован, переходы мгновенные, перезагрузки нет, приложение всегда доступно.
+- Создан компонент AppRoutes, в нём прописаны все нужные маршруты: главная страница, вход, регистрация, добавление задачи, редактирование и просмотр задачи, модальное окно выхода, страница 404.
+- В App.js только импорты/роуты, логика доски полностью во вложенном компоненте.
+- id берется из useParams и отображается явно при каждом переходе.
+- Реализован защищенный маршрут. Все защищённые страницы требуют isAuth=true, неавторизованных всегда пересылает на /login. Смена состояния происходит через useState.
+- Изменение isAuth только через UI, сценарии смены статуса предсказуемы, редиректы срабатывают всегда.
+- Все страницы, кроме модальных окон, полноценно стилизованы через Styled Components.
+
+
+# 5. Блок. Работа с API:
+
+- Папка services содержит API-функции, код без дублирования, все функции экспортируемы. Запросы корректно разделены на файлы.
+- Форма валидирует все поля, запрос уходит на API, успех или ошибка приводят к уведомлению или редиректу.
+- Авторизация только через API: валидные данные дают вход, токен сохранён, ошибка отображается пользователю.
+- Во всех запросах присутствует корректная обработка ошибок.
+- Задачи приходят только с сервера, UI показывает статус загрузки и ошибки.
+
+
+# 6. Блок. Context API в React:
+
+- AuthContext создан по стандарту React Context API, код файла содержит только логику авторизации, без лишнего кода.
+- TaskContext создан по стандарту React, задачи хранятся в состоянии, для рендера используется переменная из контекста.
+- App.jsx корректно обёрнут в <AuthContext.Provider>, value содержит объекты и методы авторизации, ошибок нет.
+- App.jsx корректно обёрнут в <TaskContext.Provider>, value содержит объекты и методы работы с задачами, ошибок нет.
+- useContext используется во всех требуемых компонентах, все данные и методы контекста получены корректно.
+
+
+# Дополнительные UI/UX фичи:
+
+- Drag & Drop - Main.jsx + @hello-pangea/dnd: Перетаскивание карточек между колонками.
+- Тосты-уведомления - react-toastify: Успех/ошибка операций.
+- Состояние загрузки - isLoading: Блокировка кнопок во время запроса.
+- Скелетоны - Main.jsx: Анимация загрузки задач.
+
+
+# Дополнительные библиотеки:
+
+- react-router-dom - Роутинг
+- styled-components - Стилизация
+- react-toastify - Уведомления
+- @hello-pangea/dnd - Drag & Drop
+- react / react-dom - Ядро React
+

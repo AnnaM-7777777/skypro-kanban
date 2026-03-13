@@ -17,6 +17,14 @@ export const SCalendar = styled.div`
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
+
+    @media screen and (max-width: 660px) {
+        width: 168px;
+    }
+
+    @media screen and (max-width: 495px) {
+        width: 344px;
+    }
 `;
 
 export const SCalendarTitle = styled.p`
@@ -120,16 +128,14 @@ export const SCalendarCell = styled.div`
         pointer-events: none;
     }
 
-    @media screen and (max-width: 660px) {
-        width: 42px;
-        height: 42px;
+    @media screen and (max-width: 495px) {
+        width: 44px;
+        height: 44px;
         font-size: 14px;
     }
 `;
 
 export const SCalendarPeriod = styled.div`
-    
-
     @media screen and (max-width: 660px) {
         padding: 0px;
     }
@@ -144,8 +150,7 @@ export const SCalendarPeriodText = styled.p`
         font-weight: 500;
     }
 
-    @media screen and (max-width: 660px) {
+     @media screen and (max-width: 660px) {
         font-size: 14px;
     }
 `;
-

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
+import { useTheme } from "styled-components";
 import Calendar from "../Calendar/Calendar";
 import { useTasks } from "../../hooks/useTasks";
 import { toast } from "react-toastify";
@@ -13,12 +14,8 @@ const CATEGORY_MAP = {
 function PopNewCard() {
     const navigate = useNavigate();
     const { addTask } = useTasks();
-    const abortControllerRef = useRef(null); // Для отмены запроса
-
-    const [isDarkTheme] = useState(
-        () => localStorage.getItem("theme") === "dark",
-    );
-
+    const theme = useTheme();
+    const abortControllerRef = useRef(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [topic, setTopic] = useState("Research");
@@ -27,7 +24,6 @@ function PopNewCard() {
 
     const handleClose = () => navigate(-1);
 
-    // Очистка при размонтировании
     useEffect(() => {
         return () => {
             if (abortControllerRef.current) {
@@ -38,12 +34,11 @@ function PopNewCard() {
 
     const handleCreate = async (e) => {
         e.preventDefault();
-        if (isLoading) return; // Защита от двойного клика
+        if (isLoading) return;
 
         setIsLoading(true);
 
         try {
-            // Валидация
             if (!title.trim()) {
                 toast.warning("Введите название задачи");
                 setIsLoading(false);
@@ -54,32 +49,26 @@ function PopNewCard() {
                 title: title.trim() || "Новая задача",
                 topic: topic || "Research",
                 status: "Без статуса",
-                description: description.trim() || " ",
+                description: description.trim() || "",
                 date: date
                     ? new Date(date).toISOString()
                     : new Date().toISOString(),
             };
 
-            // Передаем сигнал отмены, если ваш addTask поддерживает AbortSignal
-            // Если нет, просто ждем промис
             const success = await addTask(taskData);
 
             if (success) {
                 toast.success("Задача успешно создана!");
                 navigate(-1);
             } else {
-                // Если addTask возвращает false, но не кидает ошибку
                 toast.error("Не удалось создать задачу (ответ сервера)");
             }
         } catch (err) {
             if (err.name === "AbortError") {
-                console.log("Запрос отменен");
                 return;
             }
-            console.error(err);
             toast.error(err.message || "Ошибка сервера при создании задачи");
         } finally {
-            // Сбрасываем загрузку только если запрос не был отменен
             if (abortControllerRef.current?.signal.aborted === false) {
                 setIsLoading(false);
             }
@@ -90,7 +79,7 @@ function PopNewCard() {
         <div className="pop-new-card" id="popNewCard">
             <div className="pop-new-card__container" onClick={handleClose}>
                 <div
-                    className={`pop-new-card__form-block ${isDarkTheme ? "dark-mode" : ""}`}
+                    className={`pop-new-card__form-block ${theme.mode === "dark" ? "dark-mode" : ""}`}
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className="pop-new-card__content">
@@ -128,7 +117,7 @@ function PopNewCard() {
                                     </label>
 
                                     <textarea
-                                        className="pop-new-card__form-area"
+                                        className="pop-new-card__form-area text-area"
                                         id="textArea"
                                         placeholder="Введите описание задачи..."
                                         value={description}

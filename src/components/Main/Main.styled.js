@@ -11,8 +11,8 @@ export const SMainContent = styled.div`
     display: flex;
     column-gap: 19px;
 
-    @media screen and (max-width: 1200px) {
-        display: block;
+    @media (max-width: 1024px) {
+        flex-direction: column;
     }
 `;
 
@@ -20,8 +20,9 @@ export const SMainColumn = styled.div`
     width: 20%;
     min-width: 220px;
 
-    @media screen and (max-width: 1200px) {
+    @media screen and (max-width: 1024px) {
         width: 100%;
+
         margin: 0 auto;
         display: block;
     }

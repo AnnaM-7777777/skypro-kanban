@@ -190,15 +190,6 @@ export default function Calendar({ date, variant = "full", onChange }) {
                         </svg>
                     </SCalendarNavAction>
                 </SCalendarNavActions>
-
-                {/* <SCalendarNavActions>
-                    <SCalendarNavAction onClick={() => changeMonth("prev")}>
-                        ‹
-                    </SCalendarNavAction>
-                    <SCalendarNavAction onClick={() => changeMonth("next")}>
-                        ›
-                    </SCalendarNavAction>
-                </SCalendarNavActions> */}
             </SCalendarNav>
 
             <SCalendarContent>
